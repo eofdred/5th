@@ -50,6 +50,7 @@ pub struct Forest {
 #[wasm_bindgen]
 impl Forest {
     pub fn new(width: u32, height: u32) -> Forest {
+        console_error_panic_hook::set_once();
         let size = (width * height) as usize;
         let now = web_sys::window().unwrap().performance().unwrap().now() / 1000.0;
         

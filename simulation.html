@@ -146,15 +146,27 @@
                 }
             });
 
+            let tickCount = 0;
             function loop() {
-                forest.tick();
-                forest.draw(ctx);
+                try {
+                    forest.tick();
+                    forest.draw(ctx);
 
-                const count = forest.trees_count();
-                const density = count / size;
-                document.getElementById('stats').innerText = `Trees: ${count} | Density: ${(density * 100).toFixed(1)}%`;
+                    const count = forest.trees_count();
+                    const density = count / size;
+                    document.getElementById('stats').innerText = `Trees: ${count} | Density: ${(density * 100).toFixed(1)}%`;
 
-                requestAnimationFrame(loop);
+                    if (tickCount < 5) {
+                        console.log(`Tick ${tickCount}: Trees=${count}`);
+                    }
+                    tickCount++;
+
+                    requestAnimationFrame(loop);
+                } catch (e) {
+                    console.error("Simulation Error:", e);
+                    document.getElementById('stats').innerText = "Simulation Error: Check Console";
+                    document.getElementById('stats').style.color = "red";
+                }
             }
 
             updateParams();
