@@ -1,0 +1,62 @@
+/* tslint:disable */
+/* eslint-disable */
+
+export enum Cell {
+  Empty = 0,
+  Tree = 1,
+  Fire = 2,
+  Burnt = 3,
+}
+
+export class Forest {
+  private constructor();
+  free(): void;
+  [Symbol.dispose](): void;
+  set_params(trees_per_sec: number, ignition_threshold: number, cooldown_seconds: number, lightning_interval: number): void;
+  trees_count(): number;
+  static new(width: number, height: number): Forest;
+  draw(ctx: CanvasRenderingContext2D): void;
+  tick(): void;
+  reset(): void;
+}
+
+export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
+
+export interface InitOutput {
+  readonly memory: WebAssembly.Memory;
+  readonly __wbg_forest_free: (a: number, b: number) => void;
+  readonly forest_draw: (a: number, b: any) => void;
+  readonly forest_new: (a: number, b: number) => number;
+  readonly forest_reset: (a: number) => void;
+  readonly forest_set_params: (a: number, b: number, c: number, d: number, e: number) => void;
+  readonly forest_tick: (a: number) => void;
+  readonly forest_trees_count: (a: number) => number;
+  readonly __wbindgen_malloc: (a: number, b: number) => number;
+  readonly __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;
+  readonly __wbindgen_exn_store: (a: number) => void;
+  readonly __externref_table_alloc: () => number;
+  readonly __wbindgen_externrefs: WebAssembly.Table;
+  readonly __wbindgen_start: () => void;
+}
+
+export type SyncInitInput = BufferSource | WebAssembly.Module;
+
+/**
+* Instantiates the given `module`, which can either be bytes or
+* a precompiled `WebAssembly.Module`.
+*
+* @param {{ module: SyncInitInput }} module - Passing `SyncInitInput` directly is deprecated.
+*
+* @returns {InitOutput}
+*/
+export function initSync(module: { module: SyncInitInput } | SyncInitInput): InitOutput;
+
+/**
+* If `module_or_path` is {RequestInfo} or {URL}, makes a request and
+* for everything else, calls `WebAssembly.instantiate` directly.
+*
+* @param {{ module_or_path: InitInput | Promise<InitInput> }} module_or_path - Passing `InitInput` directly is deprecated.
+*
+* @returns {Promise<InitOutput>}
+*/
+export default function __wbg_init (module_or_path?: { module_or_path: InitInput | Promise<InitInput> } | InitInput | Promise<InitInput>): Promise<InitOutput>;

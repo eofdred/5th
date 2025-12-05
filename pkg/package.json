@@ -1,0 +1,15 @@
+{
+  "name": "rust_web_page",
+  "type": "module",
+  "version": "0.1.0",
+  "files": [
+    "rust_web_page_bg.wasm",
+    "rust_web_page.js",
+    "rust_web_page.d.ts"
+  ],
+  "main": "rust_web_page.js",
+  "types": "rust_web_page.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
