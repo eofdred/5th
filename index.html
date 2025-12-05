@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forest Fire Simulator (Wasm)</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #222;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        canvas {
+            border: 2px solid #555;
+            background-color: #000;
+            image-rendering: pixelated;
+        }
+
+        .controls {
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        button {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            background: #444;
+            color: white;
+            border: 1px solid #666;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background: #555;
+        }
+
+        a {
+            color: #aaa;
+            margin-top: 1rem;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Forest Fire Simulator (WebAssembly)</h1>
+    <div class="controls">
+        <canvas id="fireCanvas" width="960" height="540"></canvas>
+        <div
+            style="margin-top: 10px; display: flex; justify-content: space-between; align-items: center; width: 960px;">
+            <div id="stats">Trees: 0 | Density: 0%</div>
+            <div>
+                <button id="resetBtn">Reset</button>
+                <button id="fullscreenBtn">Fullscreen ⛶</button>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem; width: 400px;">
+        <div style="display: flex; justify-content: space-between;">
+            <label for="growthRate">Growth Speed (Trees/sec):</label>
+            <span id="growthVal">50</span>
+        </div>
+        <input type="range" id="growthRate" min="1" max="10000" step="100" value="50">
+
+        <div style="display: flex; justify-content: space-between;">
+            <label for="regrowthDelay">Regrowth Delay (seconds):</label>
+            <span id="delayVal">10</span>
+        </div>
+        <input type="range" id="regrowthDelay" min="0" max="1000" step="1" value="10">
+
+        <div style="display: flex; justify-content: space-between;">
+            <label for="fireTrigger">Fire Trigger (Density %):</label>
+            <span id="triggerVal">20%</span>
+        </div>
+        <input type="range" id="fireTrigger" min="1" max="100" step="1" value="20">
+
+        <div style="display: flex; justify-content: space-between;">
+            <label for="lightningTimer">Lightning Timer (sec):</label>
+            <span id="timerVal">30</span>
+        </div>
+        <input type="range" id="lightningTimer" min="1" max="120" step="1" value="30">
+    </div>
+
+    <script type="module">
+        import init, { Forest } from './pkg/rust_web_page.js';
+
+        async function run() {
+            await init();
+
+            const canvas = document.getElementById('fireCanvas');
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            const size = width * height;
+
+            const forest = Forest.new(width, height);
+
+            // Controls
+            const growthSlider = document.getElementById('growthRate');
+            const delaySlider = document.getElementById('regrowthDelay');
+            const triggerSlider = document.getElementById('fireTrigger');
+            const timerSlider = document.getElementById('lightningTimer');
+            const resetBtn = document.getElementById('resetBtn');
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
+
+            function updateParams() {
+                const growth = parseInt(growthSlider.value);
+                const delay = parseInt(delaySlider.value);
+                const trigger = parseInt(triggerSlider.value) / 100;
+                const timer = parseInt(timerSlider.value);
+
+                document.getElementById('growthVal').innerText = growth;
+                document.getElementById('delayVal').innerText = delay;
+                document.getElementById('triggerVal').innerText = Math.round(trigger * 100) + '%';
+                document.getElementById('timerVal').innerText = timer;
+
+                forest.set_params(growth, trigger, delay, timer);
+            }
+
+            growthSlider.addEventListener('input', updateParams);
+            delaySlider.addEventListener('input', updateParams);
+            triggerSlider.addEventListener('input', updateParams);
+            timerSlider.addEventListener('input', updateParams);
+
+            resetBtn.addEventListener('click', () => forest.reset());
+            fullscreenBtn.addEventListener('click', () => {
+                if (!document.fullscreenElement) {
+                    canvas.requestFullscreen();
+                } else {
+                    document.exitFullscreen();
+                }
+            });
+
+            function loop() {
+                forest.tick();
+                forest.draw(ctx);
+
+                const count = forest.trees_count();
+                const density = count / size;
+                document.getElementById('stats').innerText = `Trees: ${count} | Density: ${(density * 100).toFixed(1)}%`;
+
+                requestAnimationFrame(loop);
+            }
+
+            updateParams();
+            loop();
+        }
+
+        run();
+    </script>
+</body>
+
+</html>

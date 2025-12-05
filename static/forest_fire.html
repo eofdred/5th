@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forest Fire Simulator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #222;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        canvas {
+            border: 2px solid #555;
+            background-color: #000;
+            image-rendering: pixelated;
+            /* Crisp pixels */
+            width: 800px;
+            /* Display width */
+            height: 600px;
+            /* Display height */
+        }
+
+        .controls {
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        button {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            background: #444;
+            color: white;
+            border: 1px solid #666;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background: #555;
+        }
+
+        a {
+            color: #aaa;
+            margin-top: 1rem;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Forest Fire Simulator</h1>
+    <div class="controls">
+        <canvas id="fireCanvas" width="960" height="540"></canvas>
+        <div
+            style="margin-top: 10px; display: flex; justify-content: space-between; align-items: center; width: 960px;">
+            <div id="stats">Trees: 0 | Density: 0%</div>
+            <div>
+                <button onclick="resetGrid()">Reset</button>
+                <button onclick="toggleFullscreen()">Fullscreen ⛶</button>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem; width: 400px;">
+        <div style="display: flex; justify-content: space-between;">
+            <label for="growthRate">Growth Speed (Trees/sec):</label>
+            <span id="growthVal">50</span>
+        </div>
+        <input type="range" id="growthRate" min="0.001" max="0.1" step="0.001" value="0.005">
+
+        <div style="display: flex; justify-content: space-between;">
+            <label for="regrowthDelay">Regrowth Delay (seconds):</label>
+            <span id="delayVal">10</span>
+        </div>
+        <input type="range" id="regrowthDelay" min="0" max="1000" step="1" value="10">
+
+        <div style="display: flex; justify-content: space-between;">
+            <label for="fireTrigger">Fire Trigger (Density %):</label>
+            <span id="triggerVal">20%</span>
+        </div>
+        <input type="range" id="fireTrigger" min="1" max="100" step="1" value="20">
+
+        <div style="display: flex; justify-content: space-between;">
+            <label for="lightningTimer">Lightning Timer (sec):</label>
+            <span id="timerVal">30</span>
+        </div>
+        <input type="range" id="lightningTimer" min="1" max="120" step="1" value="30">
+    </div>
+    <a href="/">Back to Home</a>
+
+    <script>
+        const canvas = document.getElementById('fireCanvas');
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
+        const size = width * height;
+
+        // States
+        const EMPTY = 0;
+        const TREE = 1;
+        const FIRE = 2;
+        const BURNT = 3;
+
+        let grid = new Int8Array(size);
+        let nextGrid = new Int8Array(size);
+        let burnTimes = new Float64Array(size); // Store timestamp of burn
+
+        // Parameters
+        let TREES_PER_SEC = 50; // New growth metric
+        let IGNITION_THRESHOLD = 0.20;
+        let COOLDOWN_SECONDS = 10;
+        let LIGHTNING_INTERVAL = 30; // Seconds between random strikes
+
+        // Controls
+        const growthSlider = document.getElementById('growthRate');
+        const delaySlider = document.getElementById('regrowthDelay');
+        const triggerSlider = document.getElementById('fireTrigger');
+        const timerSlider = document.getElementById('lightningTimer');
+
+        growthSlider.min = "1";
+        growthSlider.max = "10000";
+        growthSlider.step = "100";
+        growthSlider.value = "50";
+        document.getElementById('growthVal').innerText = "50";
+
+        delaySlider.min = "0";
+        delaySlider.max = "1000"; // 1000s max
+        delaySlider.value = "10";
+        document.getElementById('delayVal').innerText = "10";
+
+        // Timer slider defaults
+        timerSlider.value = "30";
+        document.getElementById('timerVal').innerText = "30";
+
+        growthSlider.addEventListener('input', (e) => {
+            TREES_PER_SEC = parseInt(e.target.value);
+            document.getElementById('growthVal').innerText = TREES_PER_SEC;
+        });
+
+        delaySlider.addEventListener('input', (e) => {
+            COOLDOWN_SECONDS = parseInt(e.target.value);
+            document.getElementById('delayVal').innerText = COOLDOWN_SECONDS;
+        });
+
+        triggerSlider.addEventListener('input', (e) => {
+            IGNITION_THRESHOLD = parseInt(e.target.value) / 100;
+            document.getElementById('triggerVal').innerText = e.target.value + '%';
+        });
+
+        timerSlider.addEventListener('input', (e) => {
+            LIGHTNING_INTERVAL = parseInt(e.target.value);
+            document.getElementById('timerVal').innerText = LIGHTNING_INTERVAL;
+        });
+
+        function toggleFullscreen() {
+            const canvas = document.getElementById('fireCanvas');
+            if (!document.fullscreenElement) {
+                canvas.requestFullscreen().catch(err => {
+                    alert(`Error attempting to enable fullscreen mode: ${err.message} (${err.name})`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        function resetGrid() {
+            for (let i = 0; i < size; i++) {
+                grid[i] = EMPTY;
+                burnTimes[i] = 0;
+            }
+        }
+
+        function getIndex(x, y) {
+            if (x < 0 || x >= width || y < 0 || y >= height) return -1;
+            return y * width + x;
+        }
+
+        let lastTime = Date.now();
+        let lastLightningTime = Date.now();
+        let growthAccumulator = 0;
+
+        function update() {
+            const currentTime = Date.now();
+            const dt = (currentTime - lastTime) / 1000; // Delta time in seconds
+            lastTime = currentTime;
+
+            let treeCount = 0;
+            let fireCount = 0;
+
+            // Pass 1: Fire dynamics and State preservation
+            for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
+                    const idx = y * width + x;
+                    const state = grid[idx];
+
+                    if (state === TREE) {
+                        treeCount++;
+                        nextGrid[idx] = TREE; // Persist
+
+                        // Check for Fire neighbors (Radius 2)
+                        // Optimization: Only check if fire exists globally? No, local check needed.
+                        let catchFire = false;
+                        search: for (let dy = -2; dy <= 2; dy++) {
+                            for (let dx = -2; dx <= 2; dx++) {
+                                if (dx === 0 && dy === 0) continue;
+                                const nIdx = getIndex(x + dx, y + dy);
+                                if (nIdx !== -1 && grid[nIdx] === FIRE) {
+                                    catchFire = true;
+                                    break search;
+                                }
+                            }
+                        }
+                        if (catchFire) {
+                            nextGrid[idx] = FIRE;
+                        }
+
+                    } else if (state === FIRE) {
+                        fireCount++;
+                        // Burn out
+                        nextGrid[idx] = BURNT;
+                        burnTimes[idx] = currentTime;
+                    } else if (state === BURNT) {
+                        // Check cooldown
+                        if (currentTime - burnTimes[idx] >= COOLDOWN_SECONDS * 1000) {
+                            nextGrid[idx] = EMPTY;
+                        } else {
+                            nextGrid[idx] = BURNT;
+                        }
+                    } else {
+                        nextGrid[idx] = EMPTY;
+                    }
+                }
+            }
+
+            // Pass 2: Growth (Precise Output)
+            // Only grow if NO active fire
+            if (fireCount === 0) {
+                growthAccumulator += TREES_PER_SEC * dt;
+                let treesToPlant = Math.floor(growthAccumulator);
+                growthAccumulator -= treesToPlant;
+
+                // Safety: Don't freeze if board is full (limit attempts relative to need)
+                // Average success chance is low (~5% in open), so we need many tries.
+                let safetyOps = treesToPlant * 50 + 1000;
+
+                while (treesToPlant > 0 && safetyOps > 0) {
+                    safetyOps--;
+                    const rIdx = Math.floor(Math.random() * size);
+
+                    // Must be currently empty in nextGrid (so we don't overwrite)
+                    if (nextGrid[rIdx] === EMPTY) {
+                        const rx = rIdx % width;
+                        const ry = Math.floor(rIdx / width);
+
+                        let neighborTrees = 0;
+                        // Check 3x3 neighbors
+                        for (let dy = -1; dy <= 1; dy++) {
+                            for (let dx = -1; dx <= 1; dx++) {
+                                if (dx === 0 && dy === 0) continue;
+                                const ni = getIndex(rx + dx, ry + dy);
+                                // Check OLD grid for neighbors to determine probability (clustering)
+                                if (ni !== -1 && grid[ni] === TREE) neighborTrees++;
+                            }
+                        }
+
+                        // Chance:
+                        // If neighbor exists -> 100% chance (Preserve cluster growth power)
+                        // If isolated -> 5% chance
+                        let chance = 0.05;
+                        if (neighborTrees > 0) chance = 1.0;
+
+                        if (Math.random() < chance) {
+                            nextGrid[rIdx] = TREE;
+                            treesToPlant--;
+                        }
+                        // If failed chance, we iterate again (treesToPlant stays same)
+                        // This creates the statistical bias towards clusters without reducing total rate.
+                    }
+                }
+            } else {
+                // If fire is active, we don't accumulate growth potential
+                growthAccumulator = 0;
+            }
+
+            // Statistics & Ignition
+            const density = treeCount / size;
+            document.getElementById('stats').innerText = `Trees: ${treeCount} | Density: ${(density * 100).toFixed(1)}%`;
+
+            // 1. Density-based Lightning
+            if (density >= IGNITION_THRESHOLD) {
+                // Ignite one tree
+                for (let i = 0; i < 50; i++) {
+                    const rIdx = Math.floor(Math.random() * size);
+                    if (nextGrid[rIdx] === TREE) {
+                        nextGrid[rIdx] = FIRE;
+                        break;
+                    }
+                }
+            }
+
+            // 2. Time-based Lightning
+            if (currentTime - lastLightningTime >= LIGHTNING_INTERVAL * 1000) {
+                lastLightningTime = currentTime;
+
+                // Robust Strike: Find ALL trees and pick one
+                // This is O(N) but happens rarely (max 1/sec), so performance impact is negligible
+                // compared to the 10x/sec update loop.
+                const trees = [];
+                for (let i = 0; i < size; i++) {
+                    if (nextGrid[i] === TREE) {
+                        trees.push(i);
+                    }
+                }
+
+                if (trees.length > 0) {
+                    const randomIdx = Math.floor(Math.random() * trees.length);
+                    nextGrid[trees[randomIdx]] = FIRE;
+                }
+            }
+
+            // Swap
+            let temp = grid;
+            grid = nextGrid;
+            nextGrid = temp;
+        }
+
+        function draw() {
+            const imgData = ctx.createImageData(width, height);
+            const data = imgData.data;
+
+            for (let i = 0; i < size; i++) {
+                const state = grid[i];
+                const pixelIdx = i * 4;
+
+                if (state === TREE) {
+                    data[pixelIdx] = 34;    // R
+                    data[pixelIdx + 1] = 139; // G
+                    data[pixelIdx + 2] = 34;  // B
+                    data[pixelIdx + 3] = 255; // A
+                } else if (state === FIRE) {
+                    data[pixelIdx] = 255;   // R
+                    data[pixelIdx + 1] = 69;  // G
+                    data[pixelIdx + 2] = 0;   // B
+                    data[pixelIdx + 3] = 255; // A
+                } else if (state === BURNT) {
+                    // Dark grey/brown for burnt
+                    data[pixelIdx] = 30;
+                    data[pixelIdx + 1] = 30;
+                    data[pixelIdx + 2] = 30;
+                    data[pixelIdx + 3] = 255;
+                } else {
+                    data[pixelIdx] = 0;
+                    data[pixelIdx + 1] = 0;
+                    data[pixelIdx + 2] = 0;
+                    data[pixelIdx + 3] = 255; // Black
+                }
+            }
+            ctx.putImageData(imgData, 0, 0);
+        }
+
+        function loop() {
+            update();
+            draw();
+            setTimeout(loop, 100);
+        }
+
+        // Start
+        loop();
+    </script>
+</body>
+
+</html>

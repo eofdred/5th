@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rust Web Page</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #1a1a1a;
+            background: radial-gradient(circle at 50% 50%, #4a90e2, #9013fe, #1a1a1a);
+            background-size: 200% 200%;
+            color: white;
+            transition: background-position 0.1s ease-out;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            max-width: 600px;
+        }
+
+        h1 {
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            color: #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Hello from Rust!</h1>
+        <p>This page is served by an Actix-web server.</p>
+        <p>Move your mouse to change the background!</p>
+        <br>
+        <a href="/forest_fire"
+            style="display: inline-block; padding: 10px 20px; background-color: #ff4500; color: white; text-decoration: none; border-radius: 5px; margin-top: 10px;">Forest
+            Fire Simulator 🔥</a>
+    </div>
+
+    <script>
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth * 100;
+            const y = e.clientY / window.innerHeight * 100;
+
+            // Move the center of the gradient
+            document.body.style.background = `radial-gradient(circle at ${x}% ${y}%, #4a90e2, #9013fe, #1a1a1a)`;
+        });
+    </script>
+</body>
+
+</html>
