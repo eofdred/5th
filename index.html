@@ -4,164 +4,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forest Fire Simulator (Wasm)</title>
+    <title>Rust Web Page</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #222;
-            color: white;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             height: 100vh;
             margin: 0;
+            background-color: #1a1a1a;
+            background: radial-gradient(circle at 50% 50%, #4a90e2, #9013fe, #1a1a1a);
+            background-size: 200% 200%;
+            color: white;
+            transition: background-position 0.1s ease-out;
             overflow: hidden;
         }
 
-        canvas {
-            border: 2px solid #555;
-            background-color: #000;
-            image-rendering: pixelated;
+        .container {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            max-width: 600px;
         }
 
-        .controls {
-            margin-top: 1rem;
-            display: flex;
-            gap: 1rem;
+        h1 {
+            color: #fff;
+            margin-bottom: 0.5rem;
         }
 
-        button {
-            padding: 0.5rem 1rem;
-            cursor: pointer;
-            background: #444;
-            color: white;
-            border: 1px solid #666;
-            border-radius: 4px;
-        }
-
-        button:hover {
-            background: #555;
-        }
-
-        a {
-            color: #aaa;
-            margin-top: 1rem;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
+        p {
+            color: #eee;
         }
     </style>
 </head>
 
 <body>
-    <h1>Forest Fire Simulator (WebAssembly)</h1>
-    <div class="controls">
-        <canvas id="fireCanvas" width="960" height="540"></canvas>
-        <div
-            style="margin-top: 10px; display: flex; justify-content: space-between; align-items: center; width: 960px;">
-            <div id="stats">Trees: 0 | Density: 0%</div>
-            <div>
-                <button id="resetBtn">Reset</button>
-                <button id="fullscreenBtn">Fullscreen ⛶</button>
-            </div>
-        </div>
+    <div class="content">
+        <h1>Welcome to my Rust Web Page</h1>
+        <p>This is a basic HTML page served by an Actix-web server written in Rust.</p>
+        <p>Move your mouse around to change the background!</p>
+        <a href="simulation.html" class="button">Go to Forest Fire Simulator</a>
     </div>
 
-    <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem; width: 400px;">
-        <div style="display: flex; justify-content: space-between;">
-            <label for="growthRate">Growth Speed (Trees/sec):</label>
-            <span id="growthVal">50</span>
-        </div>
-        <input type="range" id="growthRate" min="1" max="10000" step="100" value="50">
+    <script>
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth * 100;
+            const y = e.clientY / window.innerHeight * 100;
 
-        <div style="display: flex; justify-content: space-between;">
-            <label for="regrowthDelay">Regrowth Delay (seconds):</label>
-            <span id="delayVal">10</span>
-        </div>
-        <input type="range" id="regrowthDelay" min="0" max="1000" step="1" value="10">
-
-        <div style="display: flex; justify-content: space-between;">
-            <label for="fireTrigger">Fire Trigger (Density %):</label>
-            <span id="triggerVal">20%</span>
-        </div>
-        <input type="range" id="fireTrigger" min="1" max="100" step="1" value="20">
-
-        <div style="display: flex; justify-content: space-between;">
-            <label for="lightningTimer">Lightning Timer (sec):</label>
-            <span id="timerVal">30</span>
-        </div>
-        <input type="range" id="lightningTimer" min="1" max="120" step="1" value="30">
-    </div>
-
-    <script type="module">
-        import init, { Forest } from './pkg/rust_web_page.js';
-
-        async function run() {
-            await init();
-
-            const canvas = document.getElementById('fireCanvas');
-            const ctx = canvas.getContext('2d');
-            const width = canvas.width;
-            const height = canvas.height;
-            const size = width * height;
-
-            const forest = Forest.new(width, height);
-
-            // Controls
-            const growthSlider = document.getElementById('growthRate');
-            const delaySlider = document.getElementById('regrowthDelay');
-            const triggerSlider = document.getElementById('fireTrigger');
-            const timerSlider = document.getElementById('lightningTimer');
-            const resetBtn = document.getElementById('resetBtn');
-            const fullscreenBtn = document.getElementById('fullscreenBtn');
-
-            function updateParams() {
-                const growth = parseInt(growthSlider.value);
-                const delay = parseInt(delaySlider.value);
-                const trigger = parseInt(triggerSlider.value) / 100;
-                const timer = parseInt(timerSlider.value);
-
-                document.getElementById('growthVal').innerText = growth;
-                document.getElementById('delayVal').innerText = delay;
-                document.getElementById('triggerVal').innerText = Math.round(trigger * 100) + '%';
-                document.getElementById('timerVal').innerText = timer;
-
-                forest.set_params(growth, trigger, delay, timer);
-            }
-
-            growthSlider.addEventListener('input', updateParams);
-            delaySlider.addEventListener('input', updateParams);
-            triggerSlider.addEventListener('input', updateParams);
-            timerSlider.addEventListener('input', updateParams);
-
-            resetBtn.addEventListener('click', () => forest.reset());
-            fullscreenBtn.addEventListener('click', () => {
-                if (!document.fullscreenElement) {
-                    canvas.requestFullscreen();
-                } else {
-                    document.exitFullscreen();
-                }
-            });
-
-            function loop() {
-                forest.tick();
-                forest.draw(ctx);
-
-                const count = forest.trees_count();
-                const density = count / size;
-                document.getElementById('stats').innerText = `Trees: ${count} | Density: ${(density * 100).toFixed(1)}%`;
-
-                requestAnimationFrame(loop);
-            }
-
-            updateParams();
-            loop();
-        }
-
-        run();
+            // Move the center of the gradient
+            document.body.style.background = `radial-gradient(circle at ${x}% ${y}%, #4a90e2, #9013fe, #1a1a1a)`;
+        });
     </script>
 </body>
 
