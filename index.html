@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rust Web Page</title>
     <style>
+        :root {
+            --background: 240 10% 3.9%;
+            --foreground: 0 0% 98%;
+            --posX: 0;
+            --posY: 0;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
@@ -13,11 +20,22 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #1a1a1a;
-            background: radial-gradient(circle at 50% 50%, #4a90e2, #9013fe, #1a1a1a);
-            background-size: 200% 200%;
-            color: white;
-            transition: background-position 0.1s ease-out;
+            color: hsl(var(--foreground));
+            background-color: hsl(var(--background));
+
+            /* Dynamic Background Gradient */
+            --x: calc(var(--posX, 0) * 1px);
+            --y: calc(var(--posY, 0) * 1px);
+            background-image:
+                linear-gradient(115deg, rgb(211 255 215), rgb(0 0 0)),
+                radial-gradient(90% 100% at calc(50% + var(--x)) calc(0% + var(--y)), rgb(200 200 200), rgb(022 000 045)),
+                radial-gradient(100% 100% at calc(80% - var(--x)) calc(0% - var(--y)), rgb(250 255 000), rgb(036 000 000)),
+                radial-gradient(150% 210% at calc(100% + var(--x)) calc(0% + var(--y)), rgb(020 175 125), rgb(000 010 255)),
+                radial-gradient(100% 100% at calc(100% - var(--x)) calc(30% - var(--y)), rgb(255 077 000), rgb(000 200 255)),
+                linear-gradient(60deg, rgb(255 000 000), rgb(120 086 255));
+            background-blend-mode: overlay, overlay, difference, difference, difference, normal;
+            background-attachment: fixed;
+            background-size: cover;
             overflow: hidden;
         }
 
@@ -76,13 +94,28 @@
     </div>
 
     <script>
-        document.addEventListener('mousemove', (e) => {
-            const x = e.clientX / window.innerWidth * 100;
-            const y = e.clientY / window.innerHeight * 100;
+        // Animation Loop for Dynamic Background
+        let startTime = null;
 
-            // Move the center of the gradient
-            document.body.style.background = `radial-gradient(circle at ${x}% ${y}%, #4a90e2, #9013fe, #1a1a1a)`;
-        });
+        function animate(timestamp) {
+            if (!startTime) startTime = timestamp;
+            const elapsedTime = timestamp - startTime;
+
+            // Use sine and cosine to create a smooth, looping motion
+            const speed = 0.0005;
+            const radiusX = 200;
+            const radiusY = 150;
+
+            const posX = Math.cos(elapsedTime * speed) * radiusX;
+            const posY = Math.sin(elapsedTime * speed) * radiusY;
+
+            document.body.style.setProperty('--posX', posX);
+            document.body.style.setProperty('--posY', posY);
+
+            requestAnimationFrame(animate);
+        }
+
+        requestAnimationFrame(animate);
     </script>
 </body>
 
