@@ -60,6 +60,14 @@
         GHG Simulator
     </h1>
 
+    <!-- Global Temperature Change Display -->
+    <div class="flex flex-col items-center justify-center py-4">
+        <h2 class="text-xl text-slate-300 font-medium uppercase tracking-widest mb-1">Global temperature change</h2>
+        <div class="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 to-red-500">
+            +<span id="tempDisplay">0</span>°C
+        </div>
+    </div>
+
     <!-- Charts Container -->
     <div class="flex flex-col md:flex-row gap-8 w-full max-w-6xl">
         <!-- CO2 Chart -->
@@ -260,6 +268,7 @@
         const yearDisplay = document.getElementById('yearDisplay');
         const co2Display = document.getElementById('co2Display'); // Net CO2 Display
         const ch4Display = document.getElementById('ch4Display'); // Net CH4 Display (from sliders)
+        const tempDisplay = document.getElementById('tempDisplay'); // Global Temp Display
         const toggleBtn = document.getElementById('toggleBtn');
         const resetBtn = document.getElementById('resetBtn');
         const totalEmissionsDisplay = document.getElementById('totalEmissions'); // Sum of CO2 slider values
@@ -359,6 +368,23 @@
             updateInfoDisplay();
         }
 
+        function calculateWarming(co2_ppm, ch4_ppb) {
+            // Baselines (Pre-industrial)
+            const co2_0 = 278;
+            const ch4_0 = 722;
+
+            // 1. Calculate Forcing (Watts/m2)
+            const forcing_co2 = 5.35 * Math.log(co2_ppm / co2_0);
+            const forcing_ch4 = 0.036 * (Math.sqrt(ch4_ppb) - Math.sqrt(ch4_0));
+
+            const total_forcing = forcing_co2 + forcing_ch4;
+
+            // 2. Apply Sensitivity
+            const lambda_tcr = 0.5;
+
+            return total_forcing * lambda_tcr;
+        }
+
         function updateCharts(currCH4, currCO2) {
             // Adaptive Y Axis Logic
             // CH4
@@ -395,6 +421,14 @@
             // Actually, let's just show the TOTAL INPUT for now as that's what the UI "Total" shows.
             co2Display.textContent = formatNumber(Math.round(sumSliderValues(emissionData)));
             ch4Display.textContent = formatNumber(Math.round(sumSliderValues(ch4EmissionData)));
+
+            // Update Temp
+            // Use current simulation state values (currentCO2_PPM, currentCH4_Mass converted to ppb)
+            // But if stopped/reset, variables are reset.
+            // Note: currentCH4_Mass is tracked, but we need ppb for calc.
+            let currentCH4_PPB = currentCH4_Mass / CH4_CONVERSION;
+            const warming = calculateWarming(currentCO2_PPM, currentCH4_PPB);
+            tempDisplay.textContent = warming.toFixed(2);
         }
 
         function sumSliderValues(dataset) {
