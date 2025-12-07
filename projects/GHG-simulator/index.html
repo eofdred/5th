@@ -62,13 +62,13 @@
 
     <!-- Charts Container -->
     <div class="flex flex-col md:flex-row gap-8 w-full max-w-6xl">
-        <!-- CH4 Chart -->
-        <div class="flex-1 bg-slate-800 p-4 rounded-xl shadow-lg border border-slate-700">
-            <canvas id="ch4Chart"></canvas>
-        </div>
         <!-- CO2 Chart -->
         <div class="flex-1 bg-slate-800 p-4 rounded-xl shadow-lg border border-slate-700">
             <canvas id="co2Chart"></canvas>
+        </div>
+        <!-- CH4 Chart -->
+        <div class="flex-1 bg-slate-800 p-4 rounded-xl shadow-lg border border-slate-700">
+            <canvas id="ch4Chart"></canvas>
         </div>
     </div>
 
@@ -76,6 +76,13 @@
     <div class="flex items-center gap-8 mt-4">
         <!-- Start/Stop Button -->
         <button id="toggleBtn" class="start-stop-btn start">START</button>
+
+        <!-- Reset Button -->
+        <button id="resetBtn"
+            class="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg transform transition hover:scale-105 active:scale-95 text-xs font-bold tracking-widest uppercase border border-blue-400"
+            title="Reset Simulation">
+            RESET
+        </button>
 
         <!-- Info Squares -->
         <div class="info-square">
@@ -92,24 +99,104 @@
         </div>
     </div>
 
+    <!-- Emission Sources Container (Aligned under CO2 Chart) -->
+    <div class="flex flex-col md:flex-row gap-8 w-full max-w-6xl">
+        <!-- Left Column: Emission Sources -->
+        <div class="flex-1 bg-slate-800 p-6 rounded-xl shadow-lg border border-slate-700">
+            <div class="flex justify-between items-end mb-4 border-b border-slate-600 pb-2">
+                <h2 class="text-xl font-bold text-slate-100">CO2 Emission Sources</h2>
+                <div class="text-right">
+                    <span class="text-xs text-slate-400 uppercase">Total Emissions</span>
+                    <div class="text-2xl font-bold text-blue-400"><span id="totalEmissions">0</span> <span
+                            class="text-sm text-slate-400">Gg</span></div>
+                </div>
+            </div>
+
+            <div id="slidersContainer" class="flex flex-col gap-3">
+                <!-- Sliders will be injected here -->
+            </div>
+        </div>
+
+        <!-- Right Column: CH4 Emission Sources -->
+        <div class="flex-1 bg-slate-800 p-6 rounded-xl shadow-lg border border-slate-700">
+            <div class="flex justify-between items-end mb-4 border-b border-slate-600 pb-2">
+                <h2 class="text-xl font-bold text-slate-100">CH4 Emission Sources</h2>
+                <div class="text-right">
+                    <span class="text-xs text-slate-400 uppercase">Total Emissions</span>
+                    <div class="text-2xl font-bold text-emerald-400"><span id="totalCH4Emissions">0</span> <span
+                            class="text-sm text-slate-400">Gg</span></div>
+                </div>
+            </div>
+
+            <div id="ch4SlidersContainer"
+                class="flex flex-col gap-3 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
+                <!-- Sliders will be injected here -->
+            </div>
+        </div>
+    </div>
+
     <script>
         const ctxCH4 = document.getElementById('ch4Chart').getContext('2d');
         const ctxCO2 = document.getElementById('co2Chart').getContext('2d');
 
-        // Generate Labels (2025 - 2125)
-        const labels = Array.from({ length: 101 }, (_, i) => 2025 + i);
+        // Constants
+        const START_YEAR = 2025;
+        const END_YEAR = 2125;
+        const CO2_START_PPM = 425;
+        const CH4_START_PPB = 1925;
 
-        // --- Chart Configs ---
+        // Physics Constants
+        // 1 ppm CO2 ~ 7.82 Gt C or ~ 7820000 Gg CO2? 
+        // User said: "7820000 Gg of CO2 increases atmospheric CO2 by 1ppm"
+        const CO2_CONVERSION = 7820000; // Gg / ppm
+        const CO2_AIRBORNE_FRACTION = 0.45;
+
+        // User said: "2850 Gg of CH4 increases atmospheric methane by 1 ppb"
+        const CH4_CONVERSION = 2850; // Gg / ppb
+        const CH4_LIFETIME = 12; // Years
+
+        // State
+        let currentYear = START_YEAR;
+        // Simulator tracks mass mostly to be precise, but we can track ppm/ppb directly too
+        // Let's track Mass for CH4 for decay logic simplicity
+        let currentCH4_Mass = CH4_START_PPB * CH4_CONVERSION;
+        let currentCO2_PPM = CO2_START_PPM;
+
+        let simulationInterval = null;
+        let isRunning = false;
+
+        // Chart Data Buffers
+        // Initialize labels for static X-Axis (2025 - 2125)
+        const labels = Array.from({ length: 101 }, (_, i) => START_YEAR + i);
+
+        // Data arrays start with initial value at index 0
+        let dataCH4 = [CH4_START_PPB];
+        let dataCO2 = [CO2_START_PPM];
+
+        // Chart Range Configs
+        const Y_CO2_MIN = 200;
+        const Y_CO2_MAX = 800;
+        const Y_CH4_MIN = 1500;
+        const Y_CH4_MAX = 3000;
+
+        // Custom Plugin to handle static X-axis with progressive line
+        // Actually, for static X axis 2025-2125, we just pre-fill labels (done)
+        // and initialize data array with nulls or just push data and let chart handle it?
+        // Chart.js line chart with labels 2025...2125 and a data array of length 1 (initial) 
+        // will show the point at 2025. As we push data, it moves forward. 
+        // To keep the "frame" static, we just need the labels to be set fully (already done).
 
         const commonOptions = {
             responsive: true,
+            maintainAspectRatio: false,
+            animation: { duration: 0 }, // Disable animation for performance during sim
             plugins: {
                 legend: { labels: { color: '#cbd5e1' } },
                 title: { display: true, color: '#f8fafc', font: { size: 16 } }
             },
             scales: {
                 x: {
-                    ticks: { color: '#94a3b8' },
+                    ticks: { color: '#94a3b8', maxTicksLimit: 10 }, // Limit ticks for cleaner look
                     grid: { color: '#334155' }
                 },
                 y: {
@@ -119,18 +206,19 @@
             }
         };
 
-        // CH4 Chart (1400 - 2400 ppb)
+        // CH4 Chart
         const ch4Chart = new Chart(ctxCH4, {
             type: 'line',
             data: {
                 labels: labels,
                 datasets: [{
                     label: 'CH4 (ppb)',
-                    data: [], // Starts empty, will be 1400-2400 range logic later
-                    borderColor: '#10b981', // Emerald 500
+                    data: dataCH4,
+                    borderColor: '#10b981',
                     backgroundColor: 'rgba(16, 185, 129, 0.2)',
                     borderWidth: 2,
-                    tension: 0.4
+                    tension: 0.4,
+                    pointRadius: 0
                 }]
             },
             options: {
@@ -138,23 +226,24 @@
                 plugins: { ...commonOptions.plugins, title: { text: 'Atmospheric CH4 Levels' } },
                 scales: {
                     ...commonOptions.scales,
-                    y: { ...commonOptions.scales.y, min: 1400, max: 2400 }
+                    y: { ...commonOptions.scales.y, min: Y_CH4_MIN, max: Y_CH4_MAX } // Expanded max slightly to be safe
                 }
             }
         });
 
-        // CO2 Chart (300 - 900 ppm)
+        // CO2 Chart
         const co2Chart = new Chart(ctxCO2, {
             type: 'line',
             data: {
                 labels: labels,
                 datasets: [{
                     label: 'CO2 (ppm)',
-                    data: [], // Starts empty
-                    borderColor: '#3b82f6', // Blue 500
+                    data: dataCO2,
+                    borderColor: '#3b82f6',
                     backgroundColor: 'rgba(59, 130, 246, 0.2)',
                     borderWidth: 2,
-                    tension: 0.4
+                    tension: 0.4,
+                    pointRadius: 0
                 }]
             },
             options: {
@@ -162,30 +251,347 @@
                 plugins: { ...commonOptions.plugins, title: { text: 'Atmospheric CO2 Levels' } },
                 scales: {
                     ...commonOptions.scales,
-                    y: { ...commonOptions.scales.y, min: 300, max: 900 }
+                    y: { ...commonOptions.scales.y, min: Y_CO2_MIN, max: Y_CO2_MAX } // Adjusted range
                 }
             }
         });
 
-        // --- Controls Logic ---
+        // --- UI References ---
+        const yearDisplay = document.getElementById('yearDisplay');
+        const co2Display = document.getElementById('co2Display'); // Net CO2 Display
+        const ch4Display = document.getElementById('ch4Display'); // Net CH4 Display (from sliders)
         const toggleBtn = document.getElementById('toggleBtn');
-        let isRunning = false;
+        const resetBtn = document.getElementById('resetBtn');
+        const totalEmissionsDisplay = document.getElementById('totalEmissions'); // Sum of CO2 slider values
+        const totalCH4EmissionsDisplay = document.getElementById('totalCH4Emissions'); // Sum of CH4 slider values
 
+        // --- Emission Data State ---
+        // Stored references to the data objects to be updated by sliders
+        // (Defined below)
+
+        // --- Controls Logic ---
         toggleBtn.addEventListener('click', () => {
-            isRunning = !isRunning;
             if (isRunning) {
-                toggleBtn.textContent = 'STOP';
-                toggleBtn.classList.remove('start');
-                toggleBtn.classList.add('stop');
+                stopSimulation();
             } else {
-                toggleBtn.textContent = 'START';
-                toggleBtn.classList.remove('stop');
-                toggleBtn.classList.add('start');
+                startSimulation();
             }
         });
 
-        // Placeholder for future logic
-        // Currently purely cosmetic as requested
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => {
+                stopSimulation();
+                resetSimulation();
+            });
+        }
+
+        function startSimulation() {
+            if (currentYear >= END_YEAR) {
+                resetSimulation();
+            }
+            isRunning = true;
+            toggleBtn.textContent = 'STOP';
+            toggleBtn.classList.remove('start');
+            toggleBtn.classList.add('stop');
+
+            simulationInterval = setInterval(simulationTick, 200); // 200ms per year
+        }
+
+        function stopSimulation() {
+            isRunning = false;
+            toggleBtn.textContent = 'START';
+            toggleBtn.classList.remove('stop');
+            toggleBtn.classList.add('start');
+            clearInterval(simulationInterval);
+        }
+
+        function resetSimulation() {
+            currentYear = START_YEAR;
+            currentCH4_Mass = CH4_START_PPB * CH4_CONVERSION;
+            currentCO2_PPM = CO2_START_PPM;
+
+            // Reset only data, keep labels static
+            dataCH4.length = 0;
+            dataCO2.length = 0;
+            dataCH4.push(CH4_START_PPB);
+            dataCO2.push(CO2_START_PPM);
+
+            // Reset Chart Options (Scales)
+            ch4Chart.options.scales.y.min = Y_CH4_MIN;
+            ch4Chart.options.scales.y.max = Y_CH4_MAX;
+            co2Chart.options.scales.y.min = Y_CO2_MIN;
+            co2Chart.options.scales.y.max = Y_CO2_MAX;
+
+            updateCharts(CH4_START_PPB, CO2_START_PPM);
+            updateInfoDisplay();
+        }
+
+        function simulationTick() {
+            if (currentYear >= END_YEAR) {
+                stopSimulation();
+                return;
+            }
+
+            // 1. Get Inputs (Total Gg from sliders)
+            const inputCO2 = sumSliderValues(emissionData);
+            const inputCH4 = sumSliderValues(ch4EmissionData);
+
+            // 2. Physics - CH4
+            const ch4_sink = currentCH4_Mass / CH4_LIFETIME;
+            const ch4_net = inputCH4 - ch4_sink;
+            currentCH4_Mass += ch4_net;
+            const currentCH4_PPB = currentCH4_Mass / CH4_CONVERSION;
+
+            // 3. Physics - CO2
+            const co2_net_added_Gg = inputCO2 * CO2_AIRBORNE_FRACTION;
+            const co2_ppm_added = co2_net_added_Gg / CO2_CONVERSION;
+            currentCO2_PPM += co2_ppm_added;
+
+            // 4. Update Data Arrays
+            currentYear++;
+            // labels are already pre-filled. We just push to data arrays.
+            // Since data arrays were init with [StartVal], pushing adds to index 1, 2... matching labels.
+            dataCH4.push(currentCH4_PPB);
+            dataCO2.push(currentCO2_PPM);
+
+            // 5. Render
+            updateCharts(currentCH4_PPB, currentCO2_PPM);
+            updateInfoDisplay();
+        }
+
+        function updateCharts(currCH4, currCO2) {
+            // Adaptive Y Axis Logic
+            // CH4
+            if (currCH4 > ch4Chart.options.scales.y.max) {
+                ch4Chart.options.scales.y.max = currCH4 + 100; // Expand up
+            } else if (currCH4 < ch4Chart.options.scales.y.min) {
+                ch4Chart.options.scales.y.min = currCH4 - 100; // Expand down
+            }
+            // If completely within original bounds, we CAN revert to original static, 
+            // OR just keep them expanded. Usually keeping expanded is less jittery.
+            // But if we reset sim, we should reset axes. (Handled in resetSimulation?)
+            /* Let's strictly follow: "in case they rise above or fall below... then it can change" */
+
+            // CO2
+            if (currCO2 > co2Chart.options.scales.y.max) {
+                co2Chart.options.scales.y.max = currCO2 + 50;
+            } else if (currCO2 < co2Chart.options.scales.y.min) {
+                co2Chart.options.scales.y.min = currCO2 - 50;
+            }
+
+            ch4Chart.update();
+            co2Chart.update();
+        }
+
+        function updateInfoDisplay() {
+            yearDisplay.textContent = currentYear;
+            // Net emissions added to atmosphere (effective) could be shown, 
+            // OR just the raw input. User asked for "Current Net CO2 emissions" 
+            // usually implies what humans emit (Net of sinks? Or Net human input?)
+            // The prompt says "current net CO2 emissions" in controls.
+            // Let's show the Sum of Sliders (Human Input) as that's what "Net" usually refers to in inventories (Net of removals if negative sectors exist).
+            // here we only have positive sectors mostly.
+
+            // Actually, let's just show the TOTAL INPUT for now as that's what the UI "Total" shows.
+            co2Display.textContent = formatNumber(Math.round(sumSliderValues(emissionData)));
+            ch4Display.textContent = formatNumber(Math.round(sumSliderValues(ch4EmissionData)));
+        }
+
+        function sumSliderValues(dataset) {
+            return dataset.reduce((acc, curr) => acc + (curr.currentValue !== undefined ? curr.currentValue : curr.value), 0);
+        }
+
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        // --- Emission Sources Logic (CO2) ---
+        const emissionData = [
+            { name: "Main Activity Electricity and Heat Production", value: 15485790 },
+            { name: "Manufacturing Industries and Construction", value: 6457036 },
+            { name: "Road Transportation no resuspension", value: 6125365 },
+            { name: "Residential and other sectors", value: 3115487 },
+            { name: "Petroleum Refining - Manufacture of Solid Fuels and Other Energy Industries", value: 1674486 },
+            { name: "Cement production", value: 1465140 },
+            { name: "Civil Aviation", value: 1032632 },
+            { name: "Water-borne Navigation", value: 860276 },
+            { name: "Chemical Industry", value: 785990 },
+            { name: "Solid Fuels", value: 565222 },
+            { name: "Oil and Natural Gas", value: 460664 },
+            { name: "Metal Industry", value: 422127 },
+            { name: "Lime production", value: 319253 },
+            { name: "Other Transportation", value: 189373 },
+            { name: "Non-Specified", value: 163305 },
+            { name: "Other Process Uses of Carbonates", value: 114375 },
+            { name: "Railways", value: 91607 },
+            { name: "Non-Energy Products from Fuels and Solvent Use", value: 89028 },
+            { name: "Urea application", value: 87213 },
+            { name: "Liming", value: 56261 },
+            { name: "Fossil fuel fires", value: 47489 },
+            { name: "Incineration and Open Burning of Waste", value: 13368 },
+            { name: "Glass Production", value: 11194 },
+            { name: "Land Use Change", value: 4200000, customMin: -4200000, customMax: 8400000 }
+        ];
+
+        // --- CH4 Emission Sources Logic ---
+        const ch4EmissionData = [
+            { name: "Enteric Fermentation", value: 114367.3794 },
+            { name: "Oil and Natural Gas", value: 54332.6489 },
+            { name: "Solid Fuels", value: 53334.7482 },
+            { name: "Solid Waste Disposal", value: 31816.4208 },
+            { name: "Rice cultivations", value: 25527.9172 },
+            { name: "Wastewater Treatment and Discharge", value: 24879.3671 },
+            { name: "Manure Management", value: 12435.0738 },
+            { name: "Residential and other sectors", value: 8063.3305 },
+            { name: "Emissions from biomass burning", value: 2444.5358 },
+            { name: "Other", value: 1641.5713 },
+            { name: "Nature", value: 250000, fixed: true }
+        ];
+
+        const slidersContainer = document.getElementById('slidersContainer');
+        // totalEmissionsDisplay defined above
+
+        function renderSliders() {
+            slidersContainer.innerHTML = '';
+
+            emissionData.forEach((sector, index) => {
+                // Determine min/max
+                let min = 0;
+                let max = sector.value * 2;
+
+                if (sector.customMin !== undefined) min = sector.customMin;
+                if (sector.customMax !== undefined) max = sector.customMax;
+
+                const row = document.createElement('div');
+                row.className = 'flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 p-2 bg-slate-700/30 rounded hover:bg-slate-700/50 transition-colors';
+
+                const labelDiv = document.createElement('div');
+                labelDiv.className = 'flex-1 text-sm font-medium text-slate-300';
+                labelDiv.textContent = sector.name;
+
+                const controlDiv = document.createElement('div');
+                controlDiv.className = 'flex-1 flex items-center gap-3';
+
+                const slider = document.createElement('input');
+                slider.type = 'range';
+                slider.min = min;
+                slider.max = max;
+                slider.value = sector.value;
+                slider.className = 'w-full h-2 bg-slate-600 rounded-lg appearance-none cursor-pointer accent-blue-500';
+
+                const valueDisplay = document.createElement('span');
+                valueDisplay.className = 'text-xs text-slate-400 font-mono w-24 text-right';
+                valueDisplay.textContent = formatNumber(sector.value);
+
+                slider.addEventListener('input', (e) => {
+                    const newVal = parseInt(e.target.value);
+                    sector.currentValue = newVal;
+                    valueDisplay.textContent = formatNumber(newVal);
+                    updateTotal();
+                });
+
+                sector.currentValue = sector.value; // Init
+
+                controlDiv.appendChild(slider);
+                controlDiv.appendChild(valueDisplay);
+
+                row.appendChild(labelDiv);
+                row.appendChild(controlDiv);
+                slidersContainer.appendChild(row);
+            });
+            updateTotal();
+        }
+
+        function updateTotal() {
+            const sum = sumSliderValues(emissionData);
+            totalEmissionsDisplay.textContent = formatNumber(sum);
+            // Always update info display to show current inputs
+            updateInfoDisplay();
+        }
+
+        // Initialize
+        renderSliders();
+
+
+        const ch4SlidersContainer = document.getElementById('ch4SlidersContainer');
+        // totalCH4EmissionsDisplay defined above
+
+        function renderCH4Sliders() {
+            ch4SlidersContainer.innerHTML = '';
+
+            ch4EmissionData.forEach((sector, index) => {
+                const max = sector.value * 2;
+
+                const row = document.createElement('div');
+                row.className = 'flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 p-2 bg-slate-700/30 rounded hover:bg-slate-700/50 transition-colors';
+
+                const labelDiv = document.createElement('div');
+                labelDiv.className = 'flex-1 text-sm font-medium text-slate-300';
+                labelDiv.textContent = sector.name;
+
+                const controlDiv = document.createElement('div');
+                controlDiv.className = 'flex-1 flex items-center gap-3';
+
+                if (sector.fixed) {
+                    // Fixed Value Display (Nature)
+                    const lockedBadge = document.createElement('span');
+                    lockedBadge.className = 'text-xs bg-slate-700 text-slate-400 px-2 py-1 rounded border border-slate-600';
+                    lockedBadge.textContent = "Locked";
+
+                    const valueDisplay = document.createElement('span');
+                    valueDisplay.className = 'text-xs text-slate-400 font-mono w-24 text-right';
+                    valueDisplay.textContent = formatNumber(Math.round(sector.value));
+
+                    controlDiv.appendChild(lockedBadge);
+                    // Add spacer to align with sliders
+                    const spacer = document.createElement('div');
+                    spacer.className = 'flex-grow';
+                    controlDiv.appendChild(spacer);
+                    controlDiv.appendChild(valueDisplay);
+
+                } else {
+                    // Standard Slider
+                    const slider = document.createElement('input');
+                    slider.type = 'range';
+                    slider.min = 0;
+                    slider.max = max;
+                    slider.step = 'any';
+                    slider.value = sector.value;
+                    slider.className = 'w-full h-2 bg-slate-600 rounded-lg appearance-none cursor-pointer accent-emerald-500';
+                    slider.dataset.index = index;
+
+                    const valueDisplay = document.createElement('span');
+                    valueDisplay.className = 'text-xs text-slate-400 font-mono w-24 text-right';
+                    valueDisplay.textContent = formatNumber(Math.round(sector.value));
+
+                    slider.addEventListener('input', (e) => {
+                        const newVal = parseFloat(e.target.value);
+                        sector.currentValue = newVal;
+                        valueDisplay.textContent = formatNumber(Math.round(newVal));
+                        updateCH4Total();
+                    });
+
+                    controlDiv.appendChild(slider);
+                    controlDiv.appendChild(valueDisplay);
+                }
+
+                sector.currentValue = sector.value;
+
+                row.appendChild(labelDiv);
+                row.appendChild(controlDiv);
+                ch4SlidersContainer.appendChild(row);
+            });
+            updateCH4Total();
+        }
+
+        function updateCH4Total() {
+            const sum = sumSliderValues(ch4EmissionData);
+            totalCH4EmissionsDisplay.textContent = formatNumber(Math.round(sum));
+            // Always update info display
+            updateInfoDisplay();
+        }
+
+        renderCH4Sliders();
     </script>
 </body>
 
