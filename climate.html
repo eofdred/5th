@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İklim Sürücüsü Simülatörü</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        },
+                        rose: {
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                            900: '#881337',
+                        },
+                        blue: {
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                        },
+                        emerald: {
+                            400: '#34d399',
+                            500: '#10b981',
+                            900: '#064e3b',
+                        },
+                        amber: {
+                            400: '#fbbf24',
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Custom Slider Styling to match the React design */
+        input[type=range] {
+            -webkit-appearance: none;
+            background: transparent;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            margin-top: -4px;
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+        }
+
+        input[type=range]::-moz-range-thumb {
+            height: 16px;
+            width: 16px;
+            border: none;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .accent-rose-500::-webkit-slider-runnable-track {
+            background: #f43f5e;
+        }
+
+        .accent-blue-500::-webkit-slider-runnable-track {
+            background: #3b82f6;
+        }
+
+        .accent-amber-500::-webkit-slider-runnable-track {
+            background: #fbbf24;
+        }
+
+        .accent-emerald-500::-webkit-slider-runnable-track {
+            background: #10b981;
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        /* 2024 Marker styling handled in inline HTML/JS updates */
+    </style>
+</head>
+
+<body class="bg-slate-900 text-slate-100 min-h-screen p-4 md:p-8 font-sans">
+
+    <!-- Back Link -->
+    <a href="index.html"
+        class="inline-flex items-center text-sm text-slate-400 hover:text-white transition-colors mb-6">
+        <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i>
+        Ana Sayfaya Dön
+    </a>
+
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <!-- HEADER -->
+        <div class="lg:col-span-12 mb-4">
+            <h1 class="text-3xl font-bold bg-gradient-to-r from-blue-400 to-rose-400 bg-clip-text text-transparent">
+                İklim Sürücüsü Simülatörü: Kısa Döngü vs. Uzun Döngü
+            </h1>
+            <p className="text-slate-400 mt-2 text-lg">
+                <strong>Fosil Yakıtların (CO2)</strong> neden kalıcı hasara yol açtığını, <strong>Tarımın
+                    (Metan)</strong> ise neden geri döndürülebilir bir ısınmaya neden olduğunu görselleştirin.
+            </p>
+        </div>
+
+        <!-- CONTROLS (Left Panel) -->
+        <div class="lg:col-span-4 space-y-6">
+
+            <!-- FOSSIL FUELS -->
+            <div class="bg-slate-800 p-5 rounded-2xl border border-rose-900/50 shadow-lg relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-3 opacity-10"><i data-lucide="flame" class="w-16 h-16"></i></div>
+                <h3 class="text-xl font-bold text-rose-300 mb-4 flex items-center gap-2">
+                    <i data-lucide="flame" class="w-5 h-5"></i> Fosil Yakıtlar
+                </h3>
+
+                <!-- Fossil CO2 -->
+                <div class="mb-6 last:mb-0 slider-container" data-sector="fossil" data-type="co2" data-min="0"
+                    data-max="50" data-step="1" data-unit="Gt" data-initial="37" data-color="rose">
+                    <!-- Content injected by JS -->
+                </div>
+
+                <!-- Fossil CH4 -->
+                <div class="mb-6 last:mb-0 slider-container" data-sector="fossil" data-type="ch4" data-min="0"
+                    data-max="200" data-step="5" data-unit="Mt" data-initial="130" data-color="blue">
+                    <!-- Content injected by JS -->
+                </div>
+            </div>
+
+            <!-- AGRICULTURE -->
+            <div class="bg-slate-800 p-5 rounded-2xl border border-amber-900/50 shadow-lg relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-3 opacity-10"><i data-lucide="leaf" class="w-16 h-16"></i></div>
+                <h3 class="text-xl font-bold text-amber-300 mb-4 flex items-center gap-2">
+                    <i data-lucide="leaf" class="w-5 h-5"></i> Tarım
+                </h3>
+
+                <!-- Ag CO2 -->
+                <div class="mb-6 last:mb-0 slider-container" data-sector="agriculture" data-type="co2" data-min="-5"
+                    data-max="10" data-step="0.5" data-unit="Gt" data-initial="4" data-color="rose">
+                    <!-- Content injected by JS -->
+                </div>
+
+                <!-- Ag CH4 -->
+                <div class="mb-6 last:mb-0 slider-container" data-sector="agriculture" data-type="ch4" data-min="0"
+                    data-max="250" data-step="5" data-unit="Mt" data-initial="145" data-color="amber">
+                    <!-- Content injected by JS -->
+                </div>
+            </div>
+
+            <!-- WASTE management -->
+            <div class="bg-slate-800 p-5 rounded-2xl border border-emerald-900/50 shadow-lg relative overflow-hidden">
+                <h3 class="text-xl font-bold text-emerald-300 mb-4 flex items-center gap-2">
+                    <i data-lucide="trash-2" class="w-5 h-5"></i> Atık Yönetimi
+                </h3>
+
+                <!-- Waste CO2 -->
+                <div class="mb-6 last:mb-0 slider-container" data-sector="waste" data-type="co2" data-min="0"
+                    data-max="5" data-step="0.1" data-unit="Gt" data-initial="1" data-color="rose">
+                    <!-- Content injected by JS -->
+                </div>
+
+                <!-- Waste CH4 -->
+                <div class="mb-6 last:mb-0 slider-container" data-sector="waste" data-type="ch4" data-min="0"
+                    data-max="100" data-step="5" data-unit="Mt" data-initial="70" data-color="blue">
+                    <!-- Content injected by JS -->
+                </div>
+            </div>
+
+        </div>
+
+        <!-- VISUALIZATION (Right Panel) -->
+        <div class="lg:col-span-8 flex flex-col gap-6">
+
+            <!-- CHART AREA -->
+            <div
+                class="bg-slate-800/50 p-4 md:p-6 rounded-2xl border border-slate-700 flex-grow shadow-2xl relative min-h-[500px]">
+
+                <div class="flex flex-wrap justify-between items-center mb-6">
+                    <h2 class="text-lg md:text-xl font-semibold text-slate-100">Atmosferik Konsantrasyon (30 Yıl)</h2>
+                    <div class="flex gap-4 text-sm mt-2 md:mt-0">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-blue-500"></span>
+                            <span class="text-blue-200 font-bold">Metan (ppb)</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                            <span class="text-rose-200 font-bold">CO2 (ppm)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative w-full h-[400px]">
+                    <canvas id="climateChart"></canvas>
+                </div>
+            </div>
+
+            <!-- RESULTS ANALYSIS -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- Methane Analysis -->
+                <div id="methaneCard"
+                    class="p-5 rounded-2xl border bg-slate-800 border-slate-700 transition-colors duration-300">
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold text-blue-300">Metan Sonucu</h4>
+                        <i id="methaneIcon" data-lucide="minus" class="text-slate-400"></i>
+                    </div>
+                    <div id="methaneValue" class="text-3xl font-mono font-bold text-slate-100 mb-2">
+                        - ppb
+                    </div>
+                    <p id="methaneDesc" class="text-sm text-slate-400">
+                        ...
+                    </p>
+                </div>
+
+                <!-- Carbon Analysis -->
+                <div class="p-5 rounded-2xl border bg-slate-800 border-slate-700">
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold text-rose-300">Karbon Sonucu</h4>
+                        <i data-lucide="trending-up" class="text-rose-400"></i>
+                    </div>
+                    <div id="carbonValue" class="text-3xl font-mono font-bold text-slate-100 mb-2">
+                        - ppm
+                    </div>
+                    <p class="text-sm text-slate-400">
+                        <strong>Kalıcı Birikim.</strong> Emisyonları azaltsanız bile bu çizgi nadiren düşer, sadece
+                        düzleşir.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SCRIPT -->
+    <script>
+        // Init Icons
+        lucide.createIcons();
+
+        // Constants for Physics
+        const CH4_CONVERSION = 2.77;
+        const CH4_LIFETIME = 9.1;
+        const CH4_START_PPB = 1925;
+        const CO2_CONVERSION = 7.76;
+        const CO2_AIRBORNE_FRACTION = 0.45;
+        const CO2_START_PPM = 422;
+
+        // Initial State (mapped by sliders)
+        const initialState = {
+            fossil: { ch4: 130, co2: 37 },
+            agriculture: { ch4: 145, co2: 4 },
+            waste: { ch4: 70, co2: 1 },
+            natural: { ch4: 260, co2: 0 }
+        };
+
+        // Reactive State
+        let currentInputs = JSON.parse(JSON.stringify(initialState));
+
+        // Slider Component Generation
+        const sliderContainers = document.querySelectorAll('.slider-container');
+
+        const labels = {
+            fossil: {
+                co2: { label: "Karbon Çıktısı (CO2)", sub: "Jeolojik Karbon (Kalıcı Ek)" },
+                ch4: { label: "Metan Sızıntıları (CH4)", sub: "Madencilik ve Boru Hattı Sızıntıları" }
+            },
+            agriculture: {
+                co2: { label: "Arazi Kullanım Değişimi (CO2)", sub: "Ormansızlaşma (+) vs. Toprak Sağlığı (-)" },
+                ch4: { label: "Enteric Metan (CH4)", sub: "Biyojenik (Kısa Döngü)" }
+            },
+            waste: {
+                co2: { label: "Atık CO2", sub: "Yakma / Çürüme" },
+                ch4: { label: "Atık CH4", sub: "Çöp Depolama / Atık Su" }
+            }
+        };
+
+        function createSliderHTML(container) {
+            const sector = container.dataset.sector;
+            const type = container.dataset.type;
+            const min = parseFloat(container.dataset.min);
+            const max = parseFloat(container.dataset.max);
+            const step = parseFloat(container.dataset.step);
+            const unit = container.dataset.unit;
+            const initial = parseFloat(container.dataset.initial);
+            const color = container.dataset.color;
+
+            const info = labels[sector][type];
+            const percent = ((initial - min) / (max - min)) * 100;
+
+            const accentClass = color === 'rose' ? 'accent-rose-500' :
+                color === 'blue' ? 'accent-blue-500' :
+                    color === 'amber' ? 'accent-amber-500' :
+                        'accent-emerald-500';
+
+            const textClass = color === 'rose' ? 'text-rose-400' :
+                color === 'blue' ? 'text-blue-400' :
+                    color === 'amber' ? 'text-amber-400' :
+                        'text-emerald-400';
+
+            return `
+              <div class="flex justify-between text-sm mb-2">
+                <span class="text-slate-300 font-medium">${info.label}</span>
+                <span class="font-mono font-bold ${textClass} output-val">${initial} ${unit}</span>
+              </div>
+              
+              <div class="relative w-full h-8 flex items-center group">
+                <!-- 2024 Marker -->
+                <div 
+                  class="absolute top-0 h-full w-px bg-slate-100/30 z-0 pointer-events-none"
+                  style="left: ${percent}%"
+                >
+                   <div class="absolute -top-2 left-1/2 -translate-x-1/2 text-[9px] text-slate-400 font-mono bg-slate-900 px-1 rounded border border-slate-700/50 whitespace-nowrap">
+                     2024
+                   </div>
+                </div>
+
+                <input 
+                  type="range" 
+                  min="${min}" 
+                  max="${max}" 
+                  step="${step}"
+                  value="${initial}"
+                  class="w-full h-2 bg-slate-700/50 rounded-lg appearance-none cursor-pointer ${accentClass} z-10 relative hover:bg-slate-700 transition-all focus:outline-none focus:ring-2 focus:ring-${color}-500/50"
+                  data-sector="${sector}"
+                  data-type="${type}"
+                  data-unit="${unit}"
+                />
+              </div>
+              <p class="text-xs text-slate-500 -mt-1">${info.sub}</p>
+            `;
+        }
+
+        sliderContainers.forEach(c => {
+            c.innerHTML = createSliderHTML(c);
+        });
+
+        // Initialize Chart
+        const ctx = document.getElementById('climateChart').getContext('2d');
+        const climateChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [], // Years
+                datasets: [
+                    {
+                        label: 'Metan (ppb)',
+                        data: [],
+                        borderColor: '#3b82f6', // blue-500
+                        backgroundColor: '#3b82f6',
+                        yAxisID: 'y',
+                        borderWidth: 3,
+                        pointRadius: 0,
+                        tension: 0.4
+                    },
+                    {
+                        label: 'CO2 (ppm)',
+                        data: [],
+                        borderColor: '#f43f5e', // rose-500
+                        backgroundColor: '#f43f5e',
+                        yAxisID: 'y1',
+                        borderWidth: 3,
+                        pointRadius: 0,
+                        tension: 0.4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                plugins: {
+                    tooltip: {
+                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                        titleColor: '#f8fafc',
+                        bodyColor: '#cbd5e1',
+                        borderColor: '#334155',
+                        borderWidth: 1
+                    },
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            color: '#334155',
+                            display: true,
+                            drawBorder: false,
+                            tickColor: '#94a3b8'
+                        },
+                        ticks: {
+                            color: '#94a3b8'
+                        }
+                    },
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        min: 1400,
+                        max: 2400,
+                        grid: {
+                            color: 'rgba(51, 65, 85, 0.3)',
+                        },
+                        ticks: {
+                            color: '#60a5fa'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Metan (ppb)',
+                            color: '#60a5fa'
+                        }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        min: 420,
+                        max: 500,
+                        grid: {
+                            drawOnChartArea: false,
+                        },
+                        ticks: {
+                            color: '#f43f5e'
+                        },
+                        title: {
+                            display: true,
+                            text: 'CO2 (ppm)',
+                            color: '#f43f5e'
+                        }
+                    },
+                }
+            }
+        });
+
+        // Calculations & Updates
+        function updateSimulation() {
+            const newDataCH4 = [];
+            const newDataCO2 = [];
+            const years = [];
+
+            // Reset Mass
+            let currentCH4_Mass = CH4_START_PPB * CH4_CONVERSION;
+            let currentCO2_PPM = CO2_START_PPM;
+
+            // Total inputs
+            const totalCH4_Input = Object.values(currentInputs).reduce((a, b) => a + b.ch4, 0);
+            const totalCO2_Input = Object.values(currentInputs).reduce((a, b) => a + b.co2, 0);
+
+            for (let year = 0; year <= 30; year++) {
+                const currentYear = 2024 + year;
+                years.push(currentYear);
+
+                // Methane Logic
+                const ch4_sink = currentCH4_Mass / CH4_LIFETIME;
+                const ch4_net = totalCH4_Input - ch4_sink;
+                currentCH4_Mass += ch4_net;
+                const ch4_ppb = Math.round(currentCH4_Mass / CH4_CONVERSION);
+                newDataCH4.push(ch4_ppb);
+
+                // Carbon Logic
+                const co2_net_added_Gt = totalCO2_Input * CO2_AIRBORNE_FRACTION;
+                const co2_ppm_added = co2_net_added_Gt / CO2_CONVERSION;
+                currentCO2_PPM += co2_ppm_added;
+                newDataCO2.push(parseFloat(currentCO2_PPM.toFixed(1)));
+            }
+
+            // Update Chart
+            climateChart.data.labels = years;
+            climateChart.data.datasets[0].data = newDataCH4;
+            climateChart.data.datasets[1].data = newDataCO2;
+            climateChart.update();
+
+            // Analyze Trends
+            const finalCH4 = newDataCH4[newDataCH4.length - 1];
+            const finalCO2 = newDataCO2[newDataCO2.length - 1];
+
+            // Methane UI Update
+            const methaneCard = document.getElementById('methaneCard');
+            const methaneIcon = document.getElementById('methaneIcon');
+            const methaneValue = document.getElementById('methaneValue');
+            const methaneDesc = document.getElementById('methaneDesc');
+
+            methaneValue.textContent = `${finalCH4} ppb`;
+
+            // Clean classes
+            methaneCard.classList.remove('bg-emerald-900/20', 'border-emerald-500/30', 'bg-slate-800', 'border-slate-700');
+
+            // Re-render icon
+            // Note: Lucide icons are static SVG replacements, so we need to clear and replace for "reactivity" or just swap innerHTML if simple
+            // For simplicity, let's use Lucide's icon replacement again or manually inject svg
+
+            // Logic
+            if (finalCH4 < CH4_START_PPB - 20) {
+                // Falling
+                methaneCard.classList.add('bg-emerald-900/20', 'border-emerald-500/30');
+                // Re-render lucide icon manually for performance or use simple class swaps if available
+                methaneIcon.dataset.lucide = "trending-down";
+                methaneIcon.className = "text-emerald-400";
+                methaneDesc.textContent = "Soğuma Aktif: Emisyonlar yutak kapasitesinden düşük. Atmosfer kendini temizliyor.";
+            } else if (finalCH4 > CH4_START_PPB + 20) {
+                // Rising
+                methaneCard.classList.add('bg-slate-800', 'border-slate-700');
+                methaneIcon.dataset.lucide = "trending-up";
+                methaneIcon.className = "text-rose-400";
+                methaneDesc.textContent = "Isınma Aktif: 'Gider' taşıyor. Metan birikiyor.";
+            } else {
+                // Stable
+                methaneCard.classList.add('bg-slate-800', 'border-slate-700');
+                methaneIcon.dataset.lucide = "minus";
+                methaneIcon.className = "text-slate-400";
+                methaneDesc.textContent = "Stabil: Emisyonlar ve yutak dengede.";
+            }
+
+            // Carbon UI Update
+            document.getElementById('carbonValue').textContent = `${finalCO2} ppm`;
+
+            // Refresh Icons because we changed attributes
+            lucide.createIcons();
+        }
+
+        // Setup Listeners
+        document.querySelectorAll('input[type=range]').forEach(input => {
+            input.addEventListener('input', (e) => {
+                const sector = e.target.dataset.sector;
+                const type = e.target.dataset.type;
+                const unit = e.target.dataset.unit;
+                const val = parseFloat(e.target.value);
+
+                // Update text display
+                const display = e.target.parentElement.parentElement.querySelector('.output-val');
+                display.innerText = `${val} ${unit}`;
+
+                // Update state
+                currentInputs[sector][type] = val;
+
+                // Loop
+                updateSimulation();
+            });
+        });
+
+        // First Run
+        updateSimulation();
+
+    </script>
+</body>
+
+</html>
