@@ -1,0 +1,2035 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livestock Disease Pathway Simulation (SEIRS)</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #1a1a1a;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #e0e0e0;
+        }
+
+        #canvas-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+            overflow: hidden;
+        }
+
+        canvas {
+            image-rendering: pixelated;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            max-width: 100%;
+            max-height: 100%;
+            cursor: crosshair;
+        }
+
+        canvas.panning {
+            cursor: grabbing;
+        }
+
+        /* Top Stats Bar */
+        #top-stats-bar {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            background: rgba(30, 30, 30, 0.9);
+            padding: 8px 15px;
+            border-radius: 12px;
+            border: 1px solid #555;
+            z-index: 220;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            transition: opacity 0.3s ease;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 60px;
+            position: relative;
+        }
+
+        .stat-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 10%;
+            height: 80%;
+            width: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-val {
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 1.2;
+        }
+
+        .stat-lbl {
+            font-size: 10px;
+            color: #aaa;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        .stat-dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-right: 4px;
+            vertical-align: middle;
+        }
+
+        .stat-item.r0 .stat-val {
+            color: #4CAF50;
+            font-size: 18px;
+        }
+
+        .stat-item.r0 {
+            min-width: 70px;
+        }
+
+        body.fullscreen-active #top-stats-bar {
+            opacity: 0.5;
+            top: 10px;
+            /* Changed from none to auto so hover detection works */
+            pointer-events: auto;
+        }
+
+        body.fullscreen-active #top-stats-bar:hover {
+            opacity: 1.0;
+        }
+
+        /* Fullscreen Button */
+        #btn-fullscreen {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 200;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #aaa;
+            color: white;
+            width: 40px;
+            height: 40px;
+            font-size: 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s;
+            backdrop-filter: blur(5px);
+            line-height: 1;
+        }
+
+        #btn-fullscreen:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        /* Read Me Button & Modal */
+        #btn-readme {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 200;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #aaa;
+            color: white;
+            padding: 5px 10px;
+            font-size: 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+            backdrop-filter: blur(5px);
+            line-height: 1;
+        }
+
+        #btn-readme:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        #readme-modal {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 300;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .readme-content {
+            background: #222;
+            width: 800px;
+            max-width: 90%;
+            max-height: 90%;
+            overflow-y: auto;
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid #444;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+            position: relative;
+        }
+
+        .readme-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        .readme-close:hover {
+            color: white;
+        }
+
+        .readme-content h2 {
+            color: #4CAF50;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+
+        .readme-content h3 {
+            color: #81C784;
+            margin-top: 20px;
+            margin-bottom: 5px;
+        }
+
+        .readme-content p,
+        .readme-content li {
+            line-height: 1.6;
+            color: #ccc;
+            font-size: 14px;
+        }
+
+        .readme-content ul {
+            padding-left: 20px;
+        }
+
+        .math-block {
+            background: #111;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #ddd;
+            border-left: 3px solid #4CAF50;
+            margin: 10px 0;
+        }
+
+        /* Lasso Result Box */
+        #lasso-result {
+            display: none;
+            position: absolute;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(30, 30, 30, 0.95);
+            border: 1px solid #555;
+            border-radius: 8px;
+            padding: 15px;
+            z-index: 210;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            min-width: 250px;
+        }
+
+        #lasso-result h3 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            color: #fff;
+            border-bottom: 1px solid #444;
+            padding-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .lasso-close {
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        .lasso-close:hover {
+            color: #fff;
+        }
+
+        .lasso-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        /* Toolbox */
+        #toolbox {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(40, 40, 40, 0.9);
+            border: 1px solid #555;
+            border-radius: 8px;
+            padding: 10px;
+            display: flex;
+            gap: 10px;
+            z-index: 90;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Fullscreen Behavior for Toolbox */
+        body.fullscreen-active #toolbox {
+            opacity: 0.5;
+            /* Changed from none to auto so clicks work */
+            pointer-events: auto;
+        }
+
+        body.fullscreen-active #toolbox:hover {
+            opacity: 1.0;
+        }
+
+        .tool-btn {
+            background: #2a2a2a;
+            border: 1px solid #444;
+            color: #aaa;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            min-width: 80px;
+            user-select: none;
+        }
+
+        .tool-btn:hover {
+            background: #333;
+            color: #fff;
+        }
+
+        .tool-btn.active {
+            background: #4CAF50;
+            color: white;
+            border-color: #45a049;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.4);
+        }
+
+        .tool-btn.active.cull {
+            background: #d32f2f;
+            border-color: #b71c1c;
+            box-shadow: 0 0 10px rgba(211, 47, 47, 0.4);
+        }
+
+        .tool-btn.active.vaccinate {
+            background: #006400;
+            border-color: #004d00;
+            box-shadow: 0 0 10px rgba(0, 100, 0, 0.4);
+        }
+
+        #btn-vaccine-all:hover {
+            background: rgba(255, 255, 255, 0.5) !important;
+        }
+
+        .tool-btn.active.lasso {
+            background: #2196F3;
+            border-color: #1976D2;
+            box-shadow: 0 0 10px rgba(33, 150, 243, 0.4);
+        }
+
+        .tool-icon {
+            font-size: 16px;
+            margin-right: 8px;
+            margin-bottom: 0;
+        }
+
+        /* Toolbox Transport Switch */
+        #toolbox .switch-container {
+            margin: 0;
+            padding: 8px 15px;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            display: flex;
+            align-items: center;
+            border-radius: 6px;
+            gap: 10px;
+        }
+
+        #toolbox .switch-label {
+            font-size: 13px;
+            color: #aaa;
+            font-weight: 600;
+        }
+
+        /* Fullscreen UI Layer */
+        #ui-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 250;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            overflow: hidden;
+            pointer-events: all;
+        }
+
+        #ui-layer.minimized {
+            width: 60px;
+            height: 60px;
+            top: 20px;
+            left: 20px;
+            border-radius: 50%;
+            background: rgba(40, 40, 40, 0.8);
+            border: 2px solid #555;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            pointer-events: auto;
+        }
+
+        #ui-layer.minimized:hover {
+            background: #444;
+            transform: scale(1.1);
+        }
+
+        .ui-container {
+            width: 600px;
+            max-width: 90%;
+            max-height: 90vh;
+            background: rgba(30, 30, 30, 0.95);
+            border: 1px solid #444;
+            border-radius: 12px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+            opacity: 1;
+            transition: opacity 0.2s ease;
+        }
+
+        #ui-layer.minimized .ui-container {
+            display: none;
+            opacity: 0;
+        }
+
+        #minimized-icon {
+            display: none;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: #4CAF50;
+        }
+
+        #ui-layer.minimized #minimized-icon {
+            display: flex;
+        }
+
+        .ui-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #444;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin: 0;
+            color: #fff;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 28px;
+            cursor: pointer;
+            padding: 0 10px;
+            line-height: 1;
+        }
+
+        .close-btn:hover {
+            color: #fff;
+        }
+
+        .control-section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #4CAF50;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .slider-row {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 13px;
+            color: #ccc;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            align-items: center;
+        }
+
+        input[type=range] {
+            width: 100%;
+            height: 6px;
+            background: #333;
+            border-radius: 3px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #4CAF50;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #222;
+        }
+
+        .val-display {
+            color: #fff;
+            font-weight: bold;
+            font-family: monospace;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        button.action-btn {
+            flex: 1;
+            padding: 12px;
+            background: #333;
+            color: white;
+            border: 1px solid #555;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        button.action-btn:hover {
+            background: #444;
+            border-color: #777;
+        }
+
+        button.action-btn:active {
+            background: #222;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider-switch {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider-switch:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider-switch {
+            background-color: #2196F3;
+        }
+
+        input:focus+.slider-switch {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked+.slider-switch:before {
+            transform: translateX(20px);
+        }
+
+
+        #zoom-hint {
+            position: absolute;
+            top: 80px;
+            right: 20px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 12px;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        body.fullscreen-active .hide-in-fullscreen {
+            display: none !important;
+        }
+
+        /* Scrollbar styling */
+        .ui-container::-webkit-scrollbar,
+        .readme-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .ui-container::-webkit-scrollbar-track,
+        .readme-content::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        .ui-container::-webkit-scrollbar-thumb,
+        .readme-content::-webkit-scrollbar-thumb {
+            background: #444;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="canvas-container">
+        <canvas id="simCanvas"></canvas>
+
+        <!-- Top Stats Bar -->
+        <div id="top-stats-bar">
+            <div class="stat-item r0">
+                <span class="stat-val" id="val-r0">0.00</span>
+                <span class="stat-lbl">Real-time R<sub>t</sub></span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-val" style="color:#FF9800;" id="count-exposed">0</span>
+                <span class="stat-lbl"><span class="stat-dot" style="background:#FF9800;"></span>Exposed</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-val" style="color:#ffff00;" id="count-yellow">0</span>
+                <span class="stat-lbl"><span class="stat-dot" style="background:#ffff00;"></span>Infectious</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-val" style="color:#2196F3;" id="count-recovered">0</span>
+                <span class="stat-lbl"><span class="stat-dot" style="background:#2196F3;"></span>Immune</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-val" style="color:#ff4444;" id="count-red">0</span>
+                <span class="stat-lbl"><span class="stat-dot" style="background:#ff4444;"></span>Deaths</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-val" style="color:#00ff00;" id="count-green">0</span>
+                <span class="stat-lbl"><span class="stat-dot" style="background:#00ff00;"></span>Susc.</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-val" style="color:#006400;" id="count-vax">0</span>
+                <span class="stat-lbl"><span class="stat-dot" style="background:#006400;"></span>Vax</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-val" style="color:#aaa;" id="count-total">0</span>
+                <span class="stat-lbl">Total</span>
+            </div>
+        </div>
+
+        <button id="btn-fullscreen" class="hide-in-fullscreen" title="Fullscreen Mode">⛶</button>
+        <button id="btn-readme" class="hide-in-fullscreen" title="Documentation">📄</button>
+        <div id="zoom-hint" class="hide-in-fullscreen">Scroll to Zoom • Right-Click + Drag to Pan</div>
+
+        <div id="toolbox">
+            <div class="tool-btn active" id="tool-infect" data-tool="infect">
+                <span class="tool-icon">☣</span>
+                <span>Infect</span>
+            </div>
+            <div class="tool-btn cull" id="tool-cull" data-tool="cull">
+                <span class="tool-icon">☠</span>
+                <span>Cull</span>
+            </div>
+            <div class="tool-btn" id="tool-vaccinate" data-tool="vaccinate" style="position: relative;">
+                <span class="tool-icon">💉</span>
+                <span>Vaccine</span>
+                <div id="btn-vaccine-all"
+                    style="position: absolute; right: 2px; top: 2px; bottom: 2px; width: 25px; background: rgba(0,0,0,0.3); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; cursor: pointer; transition: background 0.2s;">
+                    All
+                </div>
+            </div>
+
+            <div class="tool-btn" id="btn-reset-sim">
+                <span class="tool-icon">🔄</span>
+                <span>Reset</span>
+            </div>
+
+            <div class="tool-btn lasso" id="tool-lasso" data-tool="lasso">
+                <span class="tool-icon">🔍</span>
+                <span>Lasso</span>
+            </div>
+
+            <div class="switch-container"
+                style="flex-direction: column; gap: 2px; align-items: flex-start; padding: 5px 12px; min-width: 120px;">
+                <div
+                    style="display: flex; justify-content: space-between; width: 100%; font-size: 10px; color: #aaa; margin-bottom: 2px;">
+                    <span>⏸</span>
+                    <span>1x</span>
+                    <span>1000x</span>
+                </div>
+                <input type="range" id="sl-time-scale" min="0" max="100" value="50" style="width: 100%; height: 4px;">
+                <div style="width: 100%; text-align: center; font-size: 10px; color: #4CAF50; font-weight: bold;"
+                    id="val-time-scale">1.0x</div>
+            </div>
+
+            <div class="switch-container">
+                <span class="switch-label">Transport</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="check-transport" checked>
+                    <span class="slider-switch"></span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Lasso Result Modal -->
+        <div id="lasso-result" class="hide-in-fullscreen">
+            <h3>Local Census <span class="lasso-close" id="btn-close-lasso">×</span></h3>
+            <div class="lasso-row">
+                <span><span class="dot" style="background:#00ff00;"></span>Susceptible</span>
+                <span id="lasso-green">0</span>
+            </div>
+            <div class="lasso-row">
+                <span><span class="dot" style="background:#FF9800;"></span>Exposed</span>
+                <span id="lasso-exposed">0</span>
+            </div>
+            <div class="lasso-row">
+                <span><span class="dot" style="background:#ffff00;"></span>Infectious</span>
+                <span id="lasso-yellow">0</span>
+            </div>
+            <div class="lasso-row">
+                <span><span class="dot" style="background:#2196F3;"></span>Immune</span>
+                <span id="lasso-recovered">0</span>
+            </div>
+            <div class="lasso-row">
+                <span><span class="dot" style="background:#006400;"></span>Vaccinated</span>
+                <span id="lasso-vax">0</span>
+            </div>
+            <div class="lasso-row" style="margin-top:8px; border-top:1px solid #444; padding-top:4px;">
+                <span style="color:#aaa;">Total Animals</span>
+                <span id="lasso-total" style="color:#fff; font-weight:bold;">0</span>
+            </div>
+        </div>
+
+        <!-- Read Me Modal -->
+        <div id="readme-modal" class="hide-in-fullscreen">
+            <div class="readme-content">
+                <div class="readme-close" id="btn-close-readme">×</div>
+                <h1 style="color:#fff; margin-bottom:10px;">Simulation Documentation</h1>
+                <p>This is a spatial, stochastic Agent-Based Model (ABM) simulating disease dynamics in a metapopulation
+                    structure.</p>
+
+                <h2>1. Dynamic Network Model (Transport)</h2>
+                <p>Disease spread between cities is modeled via <strong>Mobile Agents (Trucks)</strong> rather than
+                    contiguous diffusion.</p>
+                <ul>
+                    <li><strong>The Cycle:</strong> A truck picks up an animal state from City A -> Waits 5s (mixing) ->
+                        Travels along the faint grey road -> Arrives at City B -> Waits 5s (mixing) -> Returns to City
+                        A.</li>
+                    <li><strong>Interaction:</strong> While waiting in a city, the truck acts as a temporary neighbor to
+                        local animals. If the truck is Infectious, it can infect locals. If the truck is Susceptible, it
+                        can catch the disease from locals.</li>
+                    <li><strong>Transport Ban:</strong> Disabling transport freezes and hides all trucks, effectively
+                        cutting the edges of the network graph.</li>
+                </ul>
+
+                <h2>2. S.E.I.R.S. Compartmental Model</h2>
+                <ul>
+                    <li><strong style="color:#00ff00">Susceptible (Green):</strong> Healthy.</li>
+                    <li><strong style="color:#FF9800">Exposed (Orange):</strong> Infected but latent (not shedding).
+                    </li>
+                    <li><strong style="color:#FFFF00">Infectious (Yellow):</strong> Actively shedding virus.</li>
+                    <li><strong style="color:#2196F3">Recovered (Blue):</strong> Immune (temporary).</li>
+                    <li><strong style="color:#ff4444">Removed (Red):</strong> Dead.</li>
+                </ul>
+
+                <h2>3. Mathematical Framework</h2>
+                <p><strong>Force of Infection:</strong> P(infection) = 1 - (1 - β)^n. Naturally handles density
+                    dependence.</p>
+                <p><strong>Rt (Reproduction Number):</strong> Tracks average secondary infections per agent in
+                    real-time.</p>
+            </div>
+        </div>
+
+        <div id="ui-layer" class="hide-in-fullscreen">
+            <div id="minimized-icon">⚙</div>
+
+            <div class="ui-container">
+                <div class="ui-header">
+                    <h1>Disease Simulation Control</h1>
+                    <button class="close-btn" id="btn-minimize" title="Minimize to Map">×</button>
+                </div>
+
+                <div class="control-section">
+                    <div class="section-title">Actions</div>
+                    <div class="btn-row">
+                        <button class="action-btn" id="btn-reset">Heal All</button>
+                        <button class="action-btn" id="btn-regen">Regenerate Map</button>
+                    </div>
+                </div>
+
+                <div class="control-section">
+                    <div class="section-title">Transport Settings</div>
+                    <div class="slider-row">
+                        <label>Transport Density (Trucks) <span id="val-transport-density"
+                                class="val-display">20</span></label>
+                        <input type="range" id="sl-transport-density" min="0" max="200" value="20">
+                    </div>
+                </div>
+
+                <div class="control-section">
+                    <div class="section-title">S.E.I.R.S. Parameters</div>
+
+                    <div class="control-group">
+                        <label>Latency Period (d)</label>
+                        <div class="slider-container">
+                            <input type="range" id="sl-latency" min="0" max="60" value="2">
+                            <span class="value-display" id="val-latency">2 d</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label>Infectious Period (d)</label>
+                        <div class="slider-container">
+                            <input type="range" id="sl-sickness" min="0" max="60" value="5">
+                            <span class="value-display" id="val-sickness">5 d</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label>Immunity Duration (d)</label>
+                        <div class="slider-container">
+                            <input type="range" id="sl-immunity" min="0" max="1000" value="10">
+                            <span class="value-display" id="val-immunity">10 d</span>
+                        </div>
+                    </div>
+                    <div class="slider-row">
+                        <label>Mortality Rate <span id="val-mortality" class="val-display">10%</span></label>
+                        <input type="range" id="sl-mortality" min="0" max="100" value="10">
+                    </div>
+
+                    <div class="control-group">
+                        <label>Replacement Time (d)</label>
+                        <div class="slider-container">
+                            <input type="range" id="sl-replacement" min="0" max="60" value="2">
+                            <span class="value-display" id="val-replacement">2 d</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label>Cull Replace Time (d)</label>
+                        <div class="slider-container">
+                            <input type="range" id="sl-cull-replacement" min="0" max="120" value="30">
+                            <span class="value-display" id="val-cull-replacement">30 d</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-section">
+                    <div class="section-title">Vaccination Efficiency</div>
+                    <div class="slider-row">
+                        <label title="Susceptibility compared to unvaccinated">Vaccine Morbidity Factor <span
+                                id="val-vax-susc" class="val-display">1%</span></label>
+                        <input type="range" id="sl-vax-susc" min="0" max="100" value="1">
+                    </div>
+                    <div class="slider-row">
+                        <label title="Death rate compared to unvaccinated">Vaccine Mortality Factor <span
+                                id="val-vax-mort" class="val-display">10%</span></label>
+                        <input type="range" id="sl-vax-mort" min="0" max="100" value="10">
+                    </div>
+                </div>
+
+                <div class="control-section">
+                    <div class="section-title">Transmission Rates (Max 100%)</div>
+
+                    <div class="slider-row">
+                        <label title="Spread to immediate neighbors">Close Contact (Neighbor) <span id="val-close"
+                                class="val-display">20.00%</span></label>
+                        <input type="range" id="sl-close" min="0" max="100" step="0.01" value="20.00">
+                    </div>
+
+                    <div class="slider-row">
+                        <label title="Spread 10-100px away">Medium Range (Airborne) <span id="val-medium"
+                                class="val-display">0.50%</span></label>
+                        <input type="range" id="sl-medium" min="0" max="100" step="0.01" value="0.50">
+                    </div>
+
+                    <div class="slider-row">
+                        <label title="Spread anywhere globally">Long Range (Vector) <span id="val-long"
+                                class="val-display">0.01%</span></label>
+                        <input type="range" id="sl-long" min="0" max="100" step="0.01" value="0.01">
+                    </div>
+                </div>
+
+                <p style="text-align:center; color:#666; font-size:12px; margin-top:20px;">
+                    Minimize to use Toolbox.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Configuration Constants ---
+        const WIDTH = 1920;
+        const HEIGHT = 1080;
+        const FPS = 30;
+        const FRAME_TIME = 1000 / FPS;
+
+        // --- Dynamic Parameters ---
+        let PARAMS = {
+            latencyDurationMs: 2000,
+            sicknessDurationMs: 5000,
+            immunityDurationMs: 10000,
+            mortalityRate: 0.1,
+            replacementTimeMs: 2000,
+            cullReplacementTimeMs: 30000,
+            transportDensity: 20, // Number of active trucks
+            rateClose: 0.20,
+            rateMedium: 0.005,
+            rateLong: 0.0001,
+            vaccineSusceptibility: 0.01,
+            vaccineMortality: 0.1,
+            transportAllowed: true
+        };
+
+        // --- Time Control Integation ---
+        const slTimeScale = document.getElementById('sl-time-scale');
+        const valTimeScale = document.getElementById('val-time-scale');
+        let timeScale = 1.0;
+
+        function updateTimeScale() {
+            const val = parseInt(slTimeScale.value);
+            if (val === 0) {
+                timeScale = 0;
+                valTimeScale.innerText = "PAUSED";
+                valTimeScale.style.color = "#aaa";
+            } else if (val <= 50) {
+                // 0 to 50 maps to 0.1x to 1x
+                // Linear mapping
+                timeScale = val / 50;
+                valTimeScale.innerText = timeScale.toFixed(1) + "x";
+                valTimeScale.style.color = "#fff";
+            } else {
+                // 51 to 100 maps to 1x to 1000x
+                // Exponential mapping: y = a * e^(bx)
+                // 1 = a * e^(b*50)
+                // 1000 = a * e^(b*100)
+                // 1000 = e^(50b) -> ln(1000) = 50b -> b = ln(1000)/50 = 6.9/50 = 0.138
+                // a = 1 / e^(0.138*50) = 1/1000 ?? No wait.
+                // Simpler power log: 
+                // Normalized x from 0 to 1 (for 50 to 100 range)
+                const t = (val - 50) / 50;
+                // 10^3 = 1000. 
+                timeScale = Math.pow(1000, t);
+
+                if (timeScale > 100) valTimeScale.innerText = Math.round(timeScale) + "x";
+                else valTimeScale.innerText = timeScale.toFixed(1) + "x";
+
+                valTimeScale.style.color = "#4CAF50";
+            }
+        }
+
+        slTimeScale.addEventListener('input', updateTimeScale);
+        updateTimeScale(); // Init
+
+        function getFrameProb(ratePerSec, dt) {
+            if (ratePerSec <= 0) return 0;
+            // ratePerSec is prob over 1 second.
+            // P(t) = 1 - (1 - P(1s)) ^ (t / 1s)
+            const dtSec = dt / 1000;
+            if (dtSec <= 0) return 0;
+
+            // Use approximation for small exponents to avoid precision issues if needed, but standard pow is fine here
+            return 1 - Math.pow(1 - ratePerSec, dtSec);
+        }
+
+        // --- DOM Elements ---
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Background Buffer (Roads + Static Map features)
+        const bgCanvas = document.createElement('canvas');
+        bgCanvas.width = WIDTH;
+        bgCanvas.height = HEIGHT;
+        const bgCtx = bgCanvas.getContext('2d');
+
+        // Simulation Buffer (Animals)
+        const bufferCanvas = document.createElement('canvas');
+        bufferCanvas.width = WIDTH;
+        bufferCanvas.height = HEIGHT;
+        const bufferCtx = bufferCanvas.getContext('2d', { alpha: true }); // Enable alpha for overlay
+
+        const uiLayer = document.getElementById('ui-layer');
+        const btnMinimize = document.getElementById('btn-minimize');
+        const minimizedIcon = document.getElementById('minimized-icon');
+
+        // Stats
+        const uiR0 = document.getElementById('val-r0');
+        const uiCountGreen = document.getElementById('count-green');
+        const uiCountVax = document.getElementById('count-vax');
+        const uiCountExposed = document.getElementById('count-exposed');
+        const uiCountYellow = document.getElementById('count-yellow');
+        const uiCountRecovered = document.getElementById('count-recovered');
+        const uiCountRed = document.getElementById('count-red');
+        const uiCountTotal = document.getElementById('count-total');
+
+        // Lasso Result UI
+        const lassoResult = document.getElementById('lasso-result');
+        const btnCloseLasso = document.getElementById('btn-close-lasso');
+        const lassoGreen = document.getElementById('lasso-green');
+        const lassoExposed = document.getElementById('lasso-exposed');
+        const lassoYellow = document.getElementById('lasso-yellow');
+        const lassoRecovered = document.getElementById('lasso-recovered');
+        const lassoVax = document.getElementById('lasso-vax');
+        const lassoTotal = document.getElementById('lasso-total');
+
+        // Read Me
+        const btnReadme = document.getElementById('btn-readme');
+        const readmeModal = document.getElementById('readme-modal');
+        const btnCloseReadme = document.getElementById('btn-close-readme');
+
+        // Fullscreen Button
+        const btnFullscreen = document.getElementById('btn-fullscreen');
+
+        // Controls
+        const checkTransport = document.getElementById('check-transport');
+
+        // Sliders
+        const slLatency = document.getElementById('sl-latency');
+        const slSickness = document.getElementById('sl-sickness');
+        const slImmunity = document.getElementById('sl-immunity');
+        const slMortality = document.getElementById('sl-mortality');
+        const slReplacement = document.getElementById('sl-replacement');
+        const slCullReplacement = document.getElementById('sl-cull-replacement');
+        const slTransportDensity = document.getElementById('sl-transport-density');
+        const slClose = document.getElementById('sl-close');
+        const slMedium = document.getElementById('sl-medium');
+        const slLong = document.getElementById('sl-long');
+        const slVaxSusc = document.getElementById('sl-vax-susc');
+        const slVaxMort = document.getElementById('sl-vax-mort');
+
+        const valLatency = document.getElementById('val-latency');
+        const valSickness = document.getElementById('val-sickness');
+        const valImmunity = document.getElementById('val-immunity');
+        const valMortality = document.getElementById('val-mortality');
+        const valReplacement = document.getElementById('val-replacement');
+        const valCullReplacement = document.getElementById('val-cull-replacement');
+        const valTransportDensity = document.getElementById('val-transport-density');
+        const valClose = document.getElementById('val-close');
+        const valMedium = document.getElementById('val-medium');
+        const valLong = document.getElementById('val-long');
+        const valVaxSusc = document.getElementById('val-vax-susc');
+        const valVaxMort = document.getElementById('val-vax-mort');
+
+        const toolBtns = document.querySelectorAll('.tool-btn');
+        let currentTool = 'infect';
+
+        canvas.width = WIDTH;
+        canvas.height = HEIGHT;
+
+        // --- Viewport State ---
+        const view = {
+            zoom: 1,
+            panX: 0,
+            panY: 0,
+            isDragging: false,
+            dragStartX: 0,
+            dragStartY: 0
+        };
+
+        // --- State Management ---
+        const SIZE = WIDTH * HEIGHT;
+
+        // States
+        const STATE_EMPTY = 0;
+        const STATE_GREEN = 1;          // Susceptible
+        const STATE_YELLOW = 2;         // Infectious
+        const STATE_RED = 3;            // Dead
+        const STATE_VACCINATED = 4;     // Vaccinated (Resistant)
+        const STATE_SICK_VACCINATED = 5;// Infectious (Vaccinated breakthrough)
+        const STATE_RED_CULLED = 6;     // Culled
+        const STATE_EXPOSED = 8;        // Latent (SEIR)
+        const STATE_RECOVERED = 9;      // Immune (SIRS)
+
+        let grid = new Uint8Array(SIZE);
+        let nextGrid = new Uint8Array(SIZE);
+        let timers = new Uint32Array(SIZE);
+        let infectionsCaused = new Uint16Array(SIZE);
+
+        let activeIndices = [];
+
+        // Transport System
+        let routes = []; // Array of path coordinates
+        let trucks = []; // Moving agents
+
+        // Lasso State
+        let isDrawingLasso = false;
+        let lassoPoints = [];
+
+        const imageData = bufferCtx.createImageData(WIDTH, HEIGHT);
+        const buf = new Uint32Array(imageData.data.buffer);
+
+        // ABGR Colors
+        const COL_EMPTY = 0x00000000; // Transparent for empty
+        const COL_GREEN = 0xFF00FF00;
+        const COL_DARK_GREEN = 0xFF006400;
+        const COL_YELLOW = 0xFF00FFFF;
+        const COL_ORANGE = 0xFF0098FF; // Exposed
+        const COL_RED = 0xFF0000FF;
+        const COL_BLUE = 0xFFF39621; // Recovered (Blueish in ABGR is R=243, G=150, B=33 -> 0xFF2196F3) 
+
+        // --- Simulation Logic ---
+
+        let totalDeaths = 0;
+        let r0Sum = 0;
+        let r0Count = 0;
+        let r0DisplayValue = 0;
+        let r0Timer = 0;
+
+        function drawOrganicLine(x0, y0, x1, y1) {
+            let x = x0; let y = y0;
+            const path = [];
+            let dx = x1 - x; let dy = y1 - y;
+            let dist = Math.sqrt(dx * dx + dy * dy);
+            let iter = 0;
+            while (dist > 5 && iter < 10000) {
+                iter++;
+                dx = x1 - x; dy = y1 - y;
+                let angle = Math.atan2(dy, dx) + (Math.random() - 0.5) * 0.5; // Less noise for trucks
+                const speed = 4;
+                x += Math.cos(angle) * speed;
+                y += Math.sin(angle) * speed;
+                path.push({ x: x, y: y });
+                dist = Math.sqrt((x1 - x) * (x1 - x) + (y1 - y) * (y1 - y));
+            }
+            return path;
+        }
+
+        function initMap() {
+            grid.fill(STATE_EMPTY);
+            timers.fill(0);
+            infectionsCaused.fill(0);
+            activeIndices = [];
+            routes = [];
+            trucks = [];
+            totalDeaths = 0;
+
+            // Clear Background
+            bgCtx.fillStyle = '#1a1a1a';
+            bgCtx.fillRect(0, 0, WIDTH, HEIGHT);
+
+            const numCities = 25;
+            const walkersPerCity = 5;
+            const stepsPerWalker = 5000;
+            const cityCenters = [];
+
+            // 1. Generate Cities
+            for (let c = 0; c < numCities; c++) {
+                let cx = Math.floor(Math.random() * (WIDTH - 200)) + 100;
+                let cy = Math.floor(Math.random() * (HEIGHT - 200)) + 100;
+                cityCenters.push({ x: cx, y: cy });
+
+                for (let w = 0; w < walkersPerCity; w++) {
+                    let x = cx;
+                    let y = cy;
+                    for (let s = 0; s < stepsPerWalker; s++) {
+                        x += Math.floor(Math.random() * 3) - 1;
+                        y += Math.floor(Math.random() * 3) - 1;
+                        if (x < 0) x = 0; if (x >= WIDTH) x = WIDTH - 1;
+                        if (y < 0) y = 0; if (y >= HEIGHT) y = HEIGHT - 1;
+                        const idx = y * WIDTH + x;
+                        if (grid[idx] === STATE_EMPTY) {
+                            grid[idx] = STATE_GREEN;
+                            activeIndices.push(idx);
+                        }
+                    }
+                }
+            }
+
+            // 2. Generate Roads (Visual Only + Route Data)
+            let unvisited = [...cityCenters];
+            let visited = [unvisited.pop()];
+            let edges = [];
+
+            while (unvisited.length > 0) {
+                let minDist = Infinity;
+                let bestU = null; let bestV = null; let bestIdx = -1;
+                for (let v of visited) {
+                    for (let i = 0; i < unvisited.length; i++) {
+                        let u = unvisited[i];
+                        let d = Math.sqrt((u.x - v.x) ** 2 + (u.y - v.y) ** 2);
+                        if (d < minDist) { minDist = d; bestU = u; bestV = v; bestIdx = i; }
+                    }
+                }
+                if (bestU) {
+                    edges.push({ from: bestV, to: bestU });
+                    visited.push(bestU);
+                    unvisited.splice(bestIdx, 1);
+                }
+            }
+            for (let i = 0; i < numCities / 2; i++) {
+                let c1 = cityCenters[Math.floor(Math.random() * numCities)];
+                let c2 = cityCenters[Math.floor(Math.random() * numCities)];
+                if (c1 !== c2) edges.push({ from: c1, to: c2 });
+            }
+
+            bgCtx.strokeStyle = '#333';
+            bgCtx.lineWidth = 2;
+            bgCtx.lineCap = 'round';
+
+            edges.forEach(edge => {
+                const path = drawOrganicLine(edge.from.x, edge.from.y, edge.to.x, edge.to.y);
+                routes.push(path); // Store for trucks
+
+                // Draw visual road to background
+                bgCtx.beginPath();
+                bgCtx.moveTo(path[0].x, path[0].y);
+                for (let i = 1; i < path.length; i++) {
+                    bgCtx.lineTo(path[i].x, path[i].y);
+                }
+                bgCtx.stroke();
+            });
+
+            // --- ADD THIS LINE ---
+            // Set the composite operation to ensure the black background is drawn correctly.
+            bgCtx.globalCompositeOperation = 'destination-over';
+
+            // Draw a large black rectangle to fill the rest of the background canvas
+            bgCtx.fillStyle = '#000000';
+            bgCtx.fillRect(0, 0, WIDTH, HEIGHT);
+
+            // Reset the composite operation to default
+            bgCtx.globalCompositeOperation = 'source-over';
+            // --- END OF ADDED LINES ---
+
+            initTrucks();
+            render();
+            uiCountTotal.innerText = activeIndices.length.toLocaleString();
+        }
+
+        function initTrucks() {
+            trucks = [];
+            if (routes.length === 0) return;
+
+            for (let i = 0; i < PARAMS.transportDensity; i++) {
+                const routeIdx = Math.floor(Math.random() * routes.length);
+                trucks.push({
+                    routeIdx: routeIdx,
+                    pathIdx: 0,
+                    direction: 1, // 1 or -1
+                    mode: 'staying', // 'staying', 'moving'
+                    stayTimer: Math.random() * 5000, // Random start offset
+                    state: STATE_GREEN,
+                    diseaseTimer: 0,
+                    x: routes[routeIdx][0].x,
+                    y: routes[routeIdx][0].y
+                });
+            }
+        }
+
+        function updateTrucks(dt) {
+            if (!PARAMS.transportAllowed) return;
+
+            // Ensure we have correct number of trucks (if slider changed)
+            if (trucks.length < PARAMS.transportDensity) {
+                const diff = PARAMS.transportDensity - trucks.length;
+                for (let k = 0; k < diff; k++) {
+                    const routeIdx = Math.floor(Math.random() * routes.length);
+                    trucks.push({
+                        routeIdx: routeIdx,
+                        pathIdx: 0,
+                        direction: 1,
+                        mode: 'staying',
+                        stayTimer: 5000,
+                        state: STATE_GREEN,
+                        diseaseTimer: 0,
+                        x: routes[routeIdx][0].x,
+                        y: routes[routeIdx][0].y
+                    });
+                }
+            } else if (trucks.length > PARAMS.transportDensity) {
+                trucks.length = PARAMS.transportDensity;
+            }
+
+            const probClose = getFrameProb(PARAMS.rateClose, dt);
+
+            for (let i = 0; i < trucks.length; i++) {
+                let t = trucks[i];
+                const route = routes[t.routeIdx];
+
+                // 1. Movement Logic
+                if (t.mode === 'staying') {
+                    t.stayTimer -= dt;
+
+                    // Interaction with Local Grid while Staying
+                    const tx = Math.floor(t.x);
+                    const ty = Math.floor(t.y);
+
+                    for (let dy = -2; dy <= 2; dy++) {
+                        for (let dx = -2; dx <= 2; dx++) {
+                            const idx = (ty + dy) * WIDTH + (tx + dx);
+                            if (idx >= 0 && idx < SIZE) {
+                                const gState = grid[idx];
+
+                                // Truck Infects Local
+                                if ((t.state === STATE_YELLOW || t.state === STATE_SICK_VACCINATED) &&
+                                    (gState === STATE_GREEN || gState === STATE_VACCINATED)) {
+                                    if (Math.random() < probClose) {
+                                        // Local gets sick
+                                        grid[idx] = STATE_EXPOSED;
+                                        timers[idx] = 0;
+                                        infectionsCaused[idx] = 0;
+                                    }
+                                }
+
+                                // Local Infects Truck
+                                if ((t.state === STATE_GREEN || t.state === STATE_VACCINATED) &&
+                                    (gState === STATE_YELLOW || gState === STATE_SICK_VACCINATED)) {
+                                    if (Math.random() < probClose) {
+                                        t.state = STATE_EXPOSED;
+                                        t.diseaseTimer = 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (t.stayTimer <= 0) {
+                        t.mode = 'moving';
+                    }
+                } else {
+                    // Moving
+                    // Normalize speed: 2 points per 33ms (approx 60 points/sec)
+                    const speedPerMs = 2.0 / 33.33;
+                    const moveDist = speedPerMs * dt;
+
+                    t.pathIdx += moveDist * t.direction;
+
+                    // Check End of path
+                    if (t.pathIdx >= route.length - 1) {
+                        t.pathIdx = route.length - 1;
+                        t.direction = -1;
+                        t.mode = 'staying';
+                        t.stayTimer = 5000;
+                    } else if (t.pathIdx <= 0) {
+                        t.pathIdx = 0;
+                        t.direction = 1;
+                        t.mode = 'staying';
+                        t.stayTimer = 5000;
+                    }
+
+                    // Update position
+                    const pt = route[Math.floor(t.pathIdx)];
+                    if (pt) {
+                        t.x = pt.x;
+                        t.y = pt.y;
+                    }
+                }
+
+                // 2. Disease Progression Logic
+                if (t.state === STATE_EXPOSED) {
+                    t.diseaseTimer += dt;
+                    if (t.diseaseTimer >= PARAMS.latencyDurationMs) {
+                        t.state = STATE_YELLOW;
+                        t.diseaseTimer = 0;
+                    }
+                } else if (t.state === STATE_YELLOW || t.state === STATE_SICK_VACCINATED) {
+                    t.diseaseTimer += dt;
+                    if (t.diseaseTimer >= PARAMS.sicknessDurationMs) {
+                        let mort = PARAMS.mortalityRate;
+                        if (t.state === STATE_SICK_VACCINATED) mort *= PARAMS.vaccineMortality;
+
+                        if (Math.random() < mort) {
+                            t.state = STATE_GREEN;
+                        } else {
+                            t.state = STATE_RECOVERED;
+                        }
+                        t.diseaseTimer = 0;
+                    }
+                } else if (t.state === STATE_RECOVERED || t.state === STATE_VACCINATED) {
+                    t.diseaseTimer += dt;
+                    if (t.diseaseTimer >= PARAMS.immunityDurationMs) {
+                        t.state = STATE_GREEN;
+                        t.diseaseTimer = 0;
+                    }
+                }
+            }
+        }
+
+        function applyTool(x, y) {
+            let radius = 10;
+            if (currentTool === 'cull' || currentTool === 'vaccinate') radius = 100;
+
+            const r2 = radius * radius;
+            for (let dy = -radius; dy <= radius; dy++) {
+                for (let dx = -radius; dx <= radius; dx++) {
+                    if (dx * dx + dy * dy <= r2) {
+                        const nx = x + dx; const ny = y + dy;
+                        if (nx >= 0 && nx < WIDTH && ny >= 0 && ny < HEIGHT) {
+                            const idx = ny * WIDTH + nx;
+                            const state = grid[idx];
+                            if (state !== STATE_EMPTY && state !== STATE_RED && state !== STATE_RED_CULLED) {
+                                if (currentTool === 'infect') {
+                                    if (state === STATE_GREEN || state === STATE_VACCINATED || state === STATE_RECOVERED) {
+                                        grid[idx] = STATE_EXPOSED;
+                                        timers[idx] = 0;
+                                        infectionsCaused[idx] = 0;
+                                    }
+                                } else if (currentTool === 'cull') {
+                                    grid[idx] = STATE_RED_CULLED; timers[idx] = 0; totalDeaths++;
+                                } else if (currentTool === 'vaccinate') {
+                                    if (state === STATE_GREEN || state === STATE_RECOVERED) {
+                                        grid[idx] = STATE_VACCINATED;
+                                        timers[idx] = 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            render();
+        }
+
+        // Ray-Casting algorithm for Point In Polygon
+        function isPointInPolygon(x, y, poly) {
+            let inside = false;
+            for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+                let xi = poly[i].x, yi = poly[i].y;
+                let xj = poly[j].x, yj = poly[j].y;
+                let intersect = ((yi > y) != (yj > y)) && (x < (xj - xi) * (y - yi) + xi);
+                if (intersect) inside = !inside;
+            }
+            return inside;
+        }
+
+        function calculateLassoStats() {
+            if (lassoPoints.length < 3) return;
+
+            let counts = { green: 0, exposed: 0, yellow: 0, recovered: 0, vax: 0, total: 0 };
+
+            let minX = WIDTH, maxX = 0, minY = HEIGHT, maxY = 0;
+            for (let p of lassoPoints) {
+                if (p.x < minX) minX = p.x;
+                if (p.x > maxX) maxX = p.x;
+                if (p.y < minY) minY = p.y;
+                if (p.y > maxY) maxY = p.y;
+            }
+
+            for (let idx of activeIndices) {
+                let x = idx % WIDTH;
+                let y = Math.floor(idx / WIDTH);
+
+                if (x >= minX && x <= maxX && y >= minY && y <= maxY) {
+                    if (isPointInPolygon(x, y, lassoPoints)) {
+                        let s = grid[idx];
+                        counts.total++;
+                        if (s === STATE_GREEN) counts.green++;
+                        else if (s === STATE_EXPOSED) counts.exposed++;
+                        else if (s === STATE_YELLOW || s === STATE_SICK_VACCINATED) counts.yellow++;
+                        else if (s === STATE_RECOVERED) counts.recovered++;
+                        else if (s === STATE_VACCINATED) counts.vax++;
+                    }
+                }
+            }
+
+            lassoGreen.innerText = counts.green.toLocaleString();
+            lassoExposed.innerText = counts.exposed.toLocaleString();
+            lassoYellow.innerText = counts.yellow.toLocaleString();
+            lassoRecovered.innerText = counts.recovered.toLocaleString();
+            lassoVax.innerText = counts.vax.toLocaleString();
+            lassoTotal.innerText = counts.total.toLocaleString();
+
+            lassoResult.style.display = 'block';
+        }
+
+        const offsets = [
+            -WIDTH - 1, -WIDTH, -WIDTH + 1,
+            -1, 1,
+            WIDTH - 1, WIDTH, WIDTH + 1
+        ];
+
+        function update(dt) {
+            let changed = false;
+            nextGrid.set(grid);
+
+            let g = 0, v = 0, y = 0, r = 0, exposed = 0, rec = 0;
+
+            // Adjust probabilities for current time step
+            const probClose = getFrameProb(PARAMS.rateClose, dt);
+            const probMedium = getFrameProb(PARAMS.rateMedium, dt);
+            const probLong = getFrameProb(PARAMS.rateLong, dt);
+
+            for (let i = 0; i < activeIndices.length; i++) {
+                const idx = activeIndices[i];
+                const state = grid[idx];
+
+                // --- SUSCEPTIBLE STATES ---
+                if (state === STATE_GREEN || state === STATE_VACCINATED || state === STATE_RECOVERED) {
+                    if (state === STATE_GREEN) g++;
+                    else if (state === STATE_VACCINATED) v++;
+                    else rec++;
+
+                    if (state === STATE_RECOVERED || state === STATE_VACCINATED) {
+                        timers[idx] += dt;
+                        if (timers[idx] >= PARAMS.immunityDurationMs) {
+                            nextGrid[idx] = STATE_GREEN;
+                            timers[idx] = 0;
+                            changed = true;
+                        }
+                    }
+
+                    if (probClose > 0) {
+                        let infectiousNeighbors = 0;
+                        let neighborIndices = [];
+
+                        for (let k = 0; k < 8; k++) {
+                            let nIdx = idx + offsets[k];
+                            let ns = grid[nIdx];
+                            if (ns === STATE_YELLOW || ns === STATE_SICK_VACCINATED) {
+                                infectiousNeighbors++;
+                                neighborIndices.push(nIdx);
+                            }
+                        }
+
+                        if (infectiousNeighbors > 0) {
+                            let effectiveProb = probClose;
+                            if (state === STATE_VACCINATED) effectiveProb *= PARAMS.vaccineSusceptibility;
+                            if (state === STATE_RECOVERED) effectiveProb = 0;
+
+                            if (effectiveProb > 0) {
+                                const p = 1 - Math.pow(1 - effectiveProb, infectiousNeighbors);
+                                if (Math.random() < p) {
+                                    nextGrid[idx] = STATE_EXPOSED;
+                                    timers[idx] = 0;
+                                    infectionsCaused[idx] = 0;
+                                    changed = true;
+
+                                    if (neighborIndices.length > 0) {
+                                        const source = neighborIndices[Math.floor(Math.random() * neighborIndices.length)];
+                                        infectionsCaused[source]++;
+                                    }
+                                    continue;
+                                }
+                            }
+                        }
+                    }
+
+                    // --- EXPOSED (LATENCY) ---
+                } else if (state === STATE_EXPOSED) {
+                    exposed++;
+                    timers[idx] += dt;
+                    if (timers[idx] >= PARAMS.latencyDurationMs) {
+                        nextGrid[idx] = STATE_YELLOW;
+                        timers[idx] = 0;
+                        changed = true;
+                    }
+
+                    // --- INFECTIOUS STATES ---
+                } else if (state === STATE_YELLOW || state === STATE_SICK_VACCINATED) {
+                    y++;
+                    timers[idx] += dt;
+
+                    if (timers[idx] >= PARAMS.sicknessDurationMs) {
+                        r0Sum += infectionsCaused[idx];
+                        r0Count++;
+
+                        let effectiveMortality = PARAMS.mortalityRate;
+                        if (state === STATE_SICK_VACCINATED) effectiveMortality *= PARAMS.vaccineMortality;
+
+                        if (Math.random() < effectiveMortality) {
+                            nextGrid[idx] = STATE_RED;
+                            totalDeaths++;
+                        } else {
+                            nextGrid[idx] = STATE_RECOVERED;
+                        }
+                        timers[idx] = 0;
+                        changed = true;
+                    }
+                    else {
+                        if (probMedium > 0 && Math.random() < probMedium) {
+                            const angle = Math.random() * Math.PI * 2;
+                            const dist = 10 + Math.random() * 90;
+                            const cx = idx % WIDTH; const cy = Math.floor(idx / WIDTH);
+                            const tx = Math.floor(cx + Math.cos(angle) * dist);
+                            const ty = Math.floor(cy + Math.sin(angle) * dist);
+
+                            if (tx >= 0 && tx < WIDTH && ty >= 0 && ty < HEIGHT) {
+                                const tIdx = ty * WIDTH + tx;
+                                infectTarget(tIdx, idx);
+                            }
+                        }
+
+                        if (probLong > 0 && Math.random() < probLong) {
+                            const randIdx = activeIndices[Math.floor(Math.random() * activeIndices.length)];
+                            infectTarget(randIdx, idx);
+                        }
+                    }
+
+                    // --- DEAD STATES ---
+                } else if (state === STATE_RED) {
+                    r++;
+                    timers[idx] += dt;
+                    if (timers[idx] >= PARAMS.replacementTimeMs) {
+                        nextGrid[idx] = STATE_GREEN; timers[idx] = 0; changed = true;
+                    }
+                } else if (state === STATE_RED_CULLED) {
+                    r++;
+                    timers[idx] += dt;
+                    if (timers[idx] >= PARAMS.cullReplacementTimeMs) {
+                        nextGrid[idx] = STATE_GREEN; timers[idx] = 0; changed = true;
+                    }
+                }
+            }
+
+            function infectTarget(targetIdx, sourceIdx) {
+                const tState = grid[targetIdx];
+                if (tState === STATE_GREEN || tState === STATE_VACCINATED) {
+                    let spreadChance = 1.0;
+                    if (tState === STATE_VACCINATED) spreadChance = PARAMS.vaccineSusceptibility;
+
+                    if (Math.random() < spreadChance) {
+                        if (nextGrid[targetIdx] === tState) {
+                            nextGrid[targetIdx] = STATE_EXPOSED;
+                            timers[targetIdx] = 0;
+                            infectionsCaused[targetIdx] = 0;
+                            infectionsCaused[sourceIdx]++;
+                            changed = true;
+                        }
+                    }
+                }
+            }
+
+            if (changed) {
+                grid.set(nextGrid);
+            }
+
+            updateTrucks(dt);
+
+            r0Timer += dt;
+            if (r0Timer >= 1000) {
+                if (r0Count > 0) {
+                    r0DisplayValue = r0Sum / r0Count;
+                } else {
+                    r0DisplayValue = 0;
+                }
+                r0Sum = 0;
+                r0Count = 0;
+                r0Timer = 0;
+            }
+
+            return { g, v, y, r, exposed, rec };
+        }
+
+        function render() {
+            // Clear buffer
+            buf.fill(COL_EMPTY);
+
+            // 1. Draw Animals to buffer
+            for (let i = 0; i < activeIndices.length; i++) {
+                const idx = activeIndices[i];
+                const state = grid[idx];
+
+                if (state === STATE_GREEN) buf[idx] = COL_GREEN;
+                else if (state === STATE_VACCINATED) buf[idx] = COL_DARK_GREEN;
+                else if (state === STATE_YELLOW || state === STATE_SICK_VACCINATED) buf[idx] = COL_YELLOW;
+                else if (state === STATE_RED || state === STATE_RED_CULLED) buf[idx] = COL_RED;
+                else if (state === STATE_EXPOSED) buf[idx] = COL_ORANGE;
+                else if (state === STATE_RECOVERED) buf[idx] = COL_BLUE;
+            }
+            bufferCtx.putImageData(imageData, 0, 0);
+
+            // 2. Draw Background (Static Roads)
+            ctx.drawImage(bgCanvas, view.panX, view.panY, WIDTH * view.zoom, HEIGHT * view.zoom);
+
+            // 3. Draw Simulation Grid
+            ctx.save();
+            ctx.translate(view.panX, view.panY);
+            ctx.scale(view.zoom, view.zoom);
+            ctx.drawImage(bufferCanvas, 0, 0);
+
+            // 4. Draw Trucks
+            if (PARAMS.transportAllowed) {
+                for (let t of trucks) {
+                    let color = '#00ff00';
+                    if (t.state === STATE_YELLOW) color = '#ffff00';
+                    else if (t.state === STATE_EXPOSED) color = '#FF9800';
+                    else if (t.state === STATE_RECOVERED) color = '#2196F3';
+
+                    ctx.fillStyle = color;
+                    ctx.fillRect(t.x - 3, t.y - 3, 6, 6);
+                    // Box border for high visibility
+                    ctx.strokeStyle = '#fff';
+                    ctx.lineWidth = 1 / view.zoom;
+                    ctx.strokeRect(t.x - 3, t.y - 3, 6, 6);
+                }
+            }
+
+            // Draw Lasso if drawing
+            if (isDrawingLasso && lassoPoints.length > 0) {
+                ctx.beginPath();
+                ctx.strokeStyle = 'white';
+                ctx.lineWidth = 2 / view.zoom;
+                ctx.setLineDash([5 / view.zoom, 5 / view.zoom]);
+                ctx.moveTo(lassoPoints[0].x, lassoPoints[0].y);
+                for (let i = 1; i < lassoPoints.length; i++) {
+                    ctx.lineTo(lassoPoints[i].x, lassoPoints[i].y);
+                }
+                ctx.stroke();
+                ctx.setLineDash([]);
+            }
+            ctx.restore();
+        }
+
+        let lastTime = 0;
+        let counts = { g: 0, v: 0, y: 0, r: 0, exposed: 0, rec: 0 };
+
+        function loop(timestamp) {
+            if (!lastTime) lastTime = timestamp;
+            let deltaTime = timestamp - lastTime;
+            if (deltaTime > 100) deltaTime = 100;
+            lastTime = timestamp;
+
+            if (timeScale > 0) {
+                let simDt = deltaTime * timeScale;
+
+                // If simDt is very large, update in chunks to preserve stability? 
+                // For now, let's trust the prob math handle it, but clamp visually if needed.
+                // Actually, if we jump 1000 * 16ms = 16 seconds in one frame, 
+                // the transition prob 1 - (1-p)^16 might be high but valid.
+                // However, disease timers might overshoot significantly.
+                // Better to slice it if it's too huge, but performance hit.
+                // Let's rely on the math.
+
+                counts = update(simDt);
+            }
+
+            render();
+            uiCountGreen.innerText = counts.g.toLocaleString();
+            uiCountVax.innerText = counts.v.toLocaleString();
+            uiCountYellow.innerText = counts.y.toLocaleString();
+            uiCountRed.innerText = totalDeaths.toLocaleString();
+            uiCountExposed.innerText = counts.exposed.toLocaleString();
+            uiCountRecovered.innerText = counts.rec.toLocaleString();
+            uiR0.innerText = r0DisplayValue.toFixed(2);
+            uiCountTotal.innerText = activeIndices.length.toLocaleString();
+
+            requestAnimationFrame(loop);
+        }
+
+        // --- Interaction ---
+
+        // Read Me
+        btnReadme.addEventListener('click', () => { readmeModal.style.display = 'flex'; });
+        btnCloseReadme.addEventListener('click', () => { readmeModal.style.display = 'none'; });
+
+        // Fullscreen Toggle
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.body.requestFullscreen().catch(err => {
+                    alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        btnFullscreen.addEventListener('click', toggleFullscreen);
+
+        document.addEventListener('fullscreenchange', () => {
+            if (document.fullscreenElement) {
+                document.body.classList.add('fullscreen-active');
+            } else {
+                document.body.classList.remove('fullscreen-active');
+            }
+        });
+
+        // Lasso UI
+        btnCloseLasso.addEventListener('click', () => {
+            lassoResult.style.display = 'none';
+            lassoPoints = [];
+            isDrawingLasso = false;
+            render();
+        });
+
+        checkTransport.addEventListener('change', (e) => {
+            PARAMS.transportAllowed = e.target.checked;
+            if (PARAMS.transportAllowed) initTrucks();
+            render();
+        });
+
+        canvas.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+            const worldX = (mouseX - view.panX) / view.zoom;
+            const worldY = (mouseY - view.panY) / view.zoom;
+
+            const zoomSensitivity = 0.1;
+            if (e.deltaY < 0) {
+                view.zoom *= (1 + zoomSensitivity);
+            } else {
+                view.zoom /= (1 + zoomSensitivity);
+            }
+
+            if (view.zoom < 0.1) view.zoom = 0.1;
+            if (view.zoom > 10) view.zoom = 10;
+
+            view.panX = mouseX - worldX * view.zoom;
+            view.panY = mouseY - worldY * view.zoom;
+            render();
+        }, { passive: false });
+
+        // MouseDown Handler
+        canvas.addEventListener('mousedown', (e) => {
+            if (e.button === 2) {
+                view.isDragging = true;
+                view.dragStartX = e.clientX;
+                view.dragStartY = e.clientY;
+                canvas.classList.add('panning');
+            } else if (e.button === 0) {
+                if (currentTool === 'lasso') {
+                    isDrawingLasso = true;
+                    lassoResult.style.display = 'none';
+                    lassoPoints = [];
+                    const worldPos = getMouseWorldPos(e);
+                    lassoPoints.push(worldPos);
+                } else {
+                    handleToolClick(e);
+                }
+            }
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (view.isDragging) {
+                const dx = e.clientX - view.dragStartX;
+                const dy = e.clientY - view.dragStartY;
+                view.panX += dx;
+                view.panY += dy;
+                view.dragStartX = e.clientX;
+                view.dragStartY = e.clientY;
+                render();
+            } else if (isDrawingLasso) {
+                const worldPos = getMouseWorldPos(e);
+                lassoPoints.push(worldPos);
+                render();
+            }
+        });
+
+        window.addEventListener('mouseup', (e) => {
+            if (e.button === 2) {
+                view.isDragging = false;
+                canvas.classList.remove('panning');
+            } else if (e.button === 0 && isDrawingLasso) {
+                isDrawingLasso = false;
+                calculateLassoStats();
+                render();
+            }
+        });
+
+        canvas.addEventListener('contextmenu', (e) => e.preventDefault());
+
+        function getMouseWorldPos(e) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const rawX = (e.clientX - rect.left) * scaleX;
+            const rawY = (e.clientY - rect.top) * scaleY;
+            const worldX = (rawX - view.panX) / view.zoom;
+            const worldY = (rawY - view.panY) / view.zoom;
+            return { x: worldX, y: worldY };
+        }
+
+        function handleToolClick(e) {
+            const pos = getMouseWorldPos(e);
+            applyTool(Math.floor(pos.x), Math.floor(pos.y));
+        }
+
+        toolBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                toolBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentTool = btn.getAttribute('data-tool');
+
+                if (currentTool !== 'lasso') {
+                    isDrawingLasso = false;
+                    lassoPoints = [];
+                    lassoResult.style.display = 'none';
+                    render();
+                }
+            });
+        });
+
+        function toggleMinimize() {
+            uiLayer.classList.toggle('minimized');
+        }
+
+        btnMinimize.addEventListener('click', toggleMinimize);
+        minimizedIcon.addEventListener('click', toggleMinimize);
+
+        document.getElementById('btn-reset').addEventListener('click', () => {
+            for (let i = 0; i < activeIndices.length; i++) {
+                const idx = activeIndices[i];
+                if (grid[idx] !== STATE_ROADBLOCK) {
+                    grid[idx] = STATE_GREEN;
+                    timers[idx] = 0;
+                }
+            }
+        });
+        document.getElementById('btn-regen').addEventListener('click', initMap);
+
+        // --- Vaccinate All Logic ---
+        document.getElementById('btn-vaccine-all').addEventListener('click', function (e) {
+            e.stopPropagation(); // Prevent selecting the tool
+
+            // Vaccinate Grid Agents
+            for (let i = 0; i < activeIndices.length; i++) {
+                const idx = activeIndices[i];
+                if (grid[idx] !== STATE_RED && grid[idx] !== STATE_RED_CULLED) {
+                    grid[idx] = STATE_VACCINATED;
+                    timers[idx] = 0; // Reset timer for immunity duration tracking? 
+                    // Actually, STATE_VACCINATED usually means permanent or resistant. 
+                    // In this logic: 
+                    // STATE_VACCINATED -> immunityDurationMs -> STATE_GREEN.
+                    // So yes, reset timer.
+                }
+            }
+
+            // Vaccinate Trucks
+            trucks.forEach(t => {
+                t.state = STATE_VACCINATED;
+                t.diseaseTimer = 0;
+            });
+
+            render();
+        });
+
+        // --- Reset Button Logic ---
+        document.getElementById('btn-reset-sim').addEventListener('click', function (e) {
+            initMap();
+        });
+
+        function updateVal(slider, label, suffix, paramKey, scale = 1) {
+            slider.addEventListener('input', (e) => {
+                const val = parseFloat(e.target.value);
+                label.innerText = val + suffix;
+                PARAMS[paramKey] = val * scale;
+            });
+        }
+
+        // --- Event Listeners for Sliders ---
+        slLatency.addEventListener('input', function () {
+            valLatency.innerText = this.value + " d";
+            PARAMS.latencyDurationMs = parseInt(this.value) * 1000;
+        });
+        slSickness.addEventListener('input', function () {
+            valSickness.innerText = this.value + " d";
+            PARAMS.sicknessDurationMs = parseInt(this.value) * 1000;
+        });
+        slImmunity.addEventListener('input', function () {
+            valImmunity.innerText = this.value + " d";
+            PARAMS.immunityDurationMs = parseInt(this.value) * 1000;
+        });
+        slMortality.addEventListener('input', function () {
+            valMortality.innerText = (this.value) + "%"; // Changed from (this.value * 100).toFixed(0)
+            PARAMS.mortalityRate = parseFloat(this.value) / 100; // Changed to divide by 100
+        });
+        slReplacement.addEventListener('input', function () {
+            valReplacement.innerText = this.value + " d";
+            PARAMS.replacementTimeMs = parseInt(this.value) * 1000;
+        });
+        slCullReplacement.addEventListener('input', function () {
+            valCullReplacement.innerText = this.value + " d";
+            PARAMS.cullReplacementTimeMs = parseInt(this.value) * 1000;
+        });
+        updateVal(slTransportDensity, valTransportDensity, "", "transportDensity", 1);
+        updateVal(slVaxSusc, valVaxSusc, "%", "vaccineSusceptibility", 0.01);
+        updateVal(slVaxMort, valVaxMort, "%", "vaccineMortality", 0.01);
+
+        function setupPercentSlider(slider, label, paramKey) {
+            slider.addEventListener('input', (e) => {
+                const v = parseFloat(e.target.value).toFixed(2);
+                label.innerText = v + "%";
+                PARAMS[paramKey] = parseFloat(v) / 100;
+            });
+        }
+
+        setupPercentSlider(slClose, valClose, "rateClose");
+        setupPercentSlider(slMedium, valMedium, "rateMedium");
+        setupPercentSlider(slLong, valLong, "rateLong");
+
+        initMap();
+        requestAnimationFrame(loop);
+
+    </script>
+</body>
+
+</html>
