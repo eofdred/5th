@@ -499,7 +499,11 @@
             <div class="generated-prompt-box" id="prompt-solo">
                 <!-- Prompt will appear here -->
             </div>
-            <button class="copy-btn" onclick="copyToClipboard('prompt-solo')">COPY PROMPT</button>
+            <div style="display: flex; gap: 1rem;">
+                <button class="copy-btn" onclick="randomizeSolo()"
+                    style="background: yellow; color: black;">RANDOMIZE</button>
+                <button class="copy-btn" onclick="copyToClipboard('prompt-solo')">COPY PROMPT</button>
+            </div>
         </div>
 
         <!-- Duo Pictures Tab -->
@@ -890,7 +894,11 @@
             <div class="generated-prompt-box" id="prompt-duo">
                 <!-- Prompt will appear here -->
             </div>
-            <button class="copy-btn" onclick="copyToClipboard('prompt-duo')">COPY PROMPT</button>
+            <div style="display: flex; gap: 1rem;">
+                <button class="copy-btn" onclick="randomizeDuo()"
+                    style="background: yellow; color: black;">RANDOMIZE</button>
+                <button class="copy-btn" onclick="copyToClipboard('prompt-duo')">COPY PROMPT</button>
+            </div>
         </div>
     </div>
 
@@ -993,6 +1001,26 @@
             if (Object.keys(p2).length > 0) promptObj["Person 2"] = p2;
 
             document.getElementById('prompt-duo').innerText = JSON.stringify(promptObj, null, 4);
+        }
+
+        function randomizeSolo() {
+            const selects = document.querySelectorAll('#solo .form-select');
+            selects.forEach(select => {
+                const options = Array.from(select.options).filter(opt => !opt.disabled && opt.value !== "");
+                const randomOption = options[Math.floor(Math.random() * options.length)];
+                select.value = randomOption.value;
+            });
+            updateSoloPrompt();
+        }
+
+        function randomizeDuo() {
+            const selects = document.querySelectorAll('#duo .form-select');
+            selects.forEach(select => {
+                const options = Array.from(select.options).filter(opt => !opt.disabled && opt.value !== "");
+                const randomOption = options[Math.floor(Math.random() * options.length)];
+                select.value = randomOption.value;
+            });
+            updateDuoPrompt();
         }
 
         // Initialize
