@@ -6,3 +6,10 @@
    - Environments: .env.local
 
    Creating an optimized production build ...
+ ✓ Compiled successfully in 5.0s
+   Skipping validation of types
+   Skipping linting
+   Collecting page data ...
+
+> Build error occurred
+[Error: Page "/topics/[slug]" is missing "generateStaticParams()" so it cannot be used with "output: export" config.]

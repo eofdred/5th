@@ -16,10 +16,6 @@ import dynamic from 'next/dynamic';
 import { Skeleton } from '@/components/ui/skeleton';
 import { X, Loader2 } from 'lucide-react';
 import type { PhotoViewerRef } from '@/components/photo-viewer';
-// import { useAuthState } from 'react-firebase-hooks/auth'; // Removed
-// import { auth } from '@/lib/firebase'; // Removed
-// import { useRouter } from 'next/navigation'; // Removed
-// import { Button } from '@/components/ui/button'; // Removed Button since only used for logout
 
 const PhotoViewer = dynamic(() => import('@/components/photo-viewer'), {
   ssr: false,
@@ -30,7 +26,7 @@ const Header = () => {
   return (
     <header className="py-4 px-4 md:px-8 bg-background/80 backdrop-blur-sm sticky top-0 z-50 border-b">
       <div className="container mx-auto flex justify-between items-center">
-        <Link href="/" className="flex items-center gap-2" aria-label="Vet-XR Home">
+        <Link href="#" className="flex items-center gap-2" aria-label="Vet-XR Home" onClick={() => window.location.reload()}>
           <div className="p-2 bg-primary rounded-lg">
             <Logo className="h-6 w-6 text-primary-foreground" />
           </div>
