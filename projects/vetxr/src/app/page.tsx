@@ -66,6 +66,11 @@ export default function Home() {
   const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const photoViewerRef = useRef<PhotoViewerRef>(null);
+  const [isFileSystem, setIsFileSystem] = useState(false);
+
+  useEffect(() => {
+    setIsFileSystem(window.location.protocol === 'file:');
+  }, []);
 
   useEffect(() => {
     if (selectedTopic && selectedTopic.audio) {
@@ -137,19 +142,41 @@ export default function Home() {
           </DialogHeader>
           {selectedTopic?.view360 && (
             <>
-              <PhotoViewer
-                ref={photoViewerRef}
-                key={selectedTopic.slug}
-                imageSrc={selectedTopic.view360.image}
-                markers={selectedTopic.markers}
-              />
-              <button
-                onClick={() => photoViewerRef.current?.toggleGyroscope()}
-                className="absolute right-20 top-6 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-sm font-bold uppercase text-white opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                aria-label="Toggle Gyroscope"
-              >
-                vr
-              </button>
+              {isFileSystem ? (
+                <div className="w-full h-full flex flex-col items-center justify-center text-white p-8 text-center bg-zinc-900">
+                  <div className="max-w-md bg-zinc-800 p-6 rounded-lg border border-zinc-700 shadow-xl">
+                    <h3 className="text-xl font-bold mb-4 text-red-500">Feature Limitation</h3>
+                    <p className="mb-4">
+                      Browser security blocks 360° panoramas when viewing directly from the file system.
+                    </p>
+                    <p className="text-sm text-zinc-400 mb-6">
+                      Audio is playing normally, but to see the visual experience, please use a local server (e.g. <code>npx serve out</code>) or view on the hosted website.
+                    </p>
+                    <button
+                      onClick={() => handleDialogClose()}
+                      className="px-4 py-2 bg-zinc-700 hover:bg-zinc-600 rounded text-sm transition-colors"
+                    >
+                      Close Viewer
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <PhotoViewer
+                    ref={photoViewerRef}
+                    key={selectedTopic.slug}
+                    imageSrc={selectedTopic.view360.image}
+                    markers={selectedTopic.markers}
+                  />
+                  <button
+                    onClick={() => photoViewerRef.current?.toggleGyroscope()}
+                    className="absolute right-20 top-6 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-sm font-bold uppercase text-white opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                    aria-label="Toggle Gyroscope"
+                  >
+                    vr
+                  </button>
+                </>
+              )}
             </>
           )}
           <DialogClose className="absolute right-6 top-6 z-50 rounded-full bg-black/50 p-1 text-white opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none">
