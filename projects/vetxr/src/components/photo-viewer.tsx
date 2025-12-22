@@ -48,7 +48,7 @@ const PhotoViewer = forwardRef<PhotoViewerRef, PhotoViewerProps>(({ imageSrc, ma
 
   useEffect(() => {
     const container = containerRef.current;
-    
+
     // Use a timeout to delay initialization. This ensures the container element
     // is fully rendered and sized by the browser, especially inside an animated
     // dialog. This avoids race conditions that cause initialization errors.
@@ -87,19 +87,25 @@ const PhotoViewer = forwardRef<PhotoViewerRef, PhotoViewerProps>(({ imageSrc, ma
 
           viewerRef.current.on('error', (e) => {
             console.error('Photo Sphere Viewer error:', e);
+            let description = 'The image could not be loaded. Please ensure the file path is correct.';
+
+            if (window.location.protocol === 'file:') {
+              description = 'Browser security (CORS) prevents loading 360 images directly from the file system. Please view this page via a local server (e.g., "npx serve out") or deploy it to the web.';
+            }
+
             toast({
               variant: 'destructive',
-              title: 'Failed to load image',
-              description: 'The image could not be loaded. Please ensure the file path is correct and the file is not corrupt.',
+              title: '360 View Error',
+              description: description,
             });
           });
         } catch (e) {
-           console.error('Photo Sphere Viewer initialization error:', e);
-           toast({
-                variant: 'destructive',
-                title: 'Viewer Error',
-                description: 'The 360-degree viewer failed to start.',
-            });
+          console.error('Photo Sphere Viewer initialization error:', e);
+          toast({
+            variant: 'destructive',
+            title: 'Viewer Error',
+            description: 'The 360-degree viewer failed to start.',
+          });
         }
       }
     }, 150); // 150ms delay is sufficient for the DOM to settle.
