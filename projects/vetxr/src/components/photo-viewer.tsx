@@ -1,17 +1,17 @@
 
 'use client';
 
-import { useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
+import { useEffect, useRef, forwardRef, useImperativeHandle, useState } from 'react';
 import { Viewer } from 'photo-sphere-viewer';
-import 'photo-sphere-viewer/dist/photo-sphere-viewer.css';
 import { MarkersPlugin } from 'photo-sphere-viewer/dist/plugins/markers';
-import 'photo-sphere-viewer/dist/plugins/markers.css';
 import { GyroscopePlugin } from 'photo-sphere-viewer/dist/plugins/gyroscope';
+import 'photo-sphere-viewer/dist/photo-sphere-viewer.css';
+import 'photo-sphere-viewer/dist/plugins/markers.css';
 import { useToast } from '@/hooks/use-toast';
-import type { Marker } from '@/lib/topics';
+import { type Marker } from '@/lib/topics';
 
 interface PhotoViewerProps {
-  imageSrc: string;
+  imageSrc: string | (() => Promise<{ default: string }>);
   markers?: Marker[];
 }
 
@@ -23,13 +23,22 @@ const PhotoViewer = forwardRef<PhotoViewerRef, PhotoViewerProps>(({ imageSrc, ma
   const containerRef = useRef<HTMLDivElement>(null);
   const viewerRef = useRef<Viewer | null>(null);
   const { toast } = useToast();
+  const [resolvedImage, setResolvedImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof imageSrc === 'function') {
+      imageSrc().then(mod => {
+        setResolvedImage(mod.default);
+      });
+    } else {
+      setResolvedImage(imageSrc as string);
+    }
+  }, [imageSrc]);
 
   useImperativeHandle(ref, () => ({
     toggleGyroscope() {
       const gyroscopePlugin = viewerRef.current?.getPlugin(GyroscopePlugin);
       if (gyroscopePlugin) {
-        // The library seems to return an object where `isStarted` is a property,
-        // not a function, causing a runtime error. This checks the property directly.
         if ((gyroscopePlugin as any).isStarted) {
           (gyroscopePlugin as any).stop();
         } else {
@@ -49,17 +58,15 @@ const PhotoViewer = forwardRef<PhotoViewerRef, PhotoViewerProps>(({ imageSrc, ma
   useEffect(() => {
     const container = containerRef.current;
 
-    // Use a timeout to delay initialization. This ensures the container element
-    // is fully rendered and sized by the browser, especially inside an animated
-    // dialog. This avoids race conditions that cause initialization errors.
+    // Only init if we have a resolved image data string
+    if (!resolvedImage) return;
+
     const initTimeout = setTimeout(() => {
       if (container && !viewerRef.current) {
         try {
-          // The 'any' cast is a workaround for a type mismatch issue between
-          // 'three' and the viewer's plugin system. It is safe in this context.
           viewerRef.current = new Viewer({
             container: container,
-            panorama: imageSrc,
+            panorama: resolvedImage, // Use resolved string
             loadingTxt: 'Loading...',
             navbar: ['zoom', 'fullscreen', 'caption'],
             defaultZoomLvl: 30,
@@ -78,27 +85,23 @@ const PhotoViewer = forwardRef<PhotoViewerRef, PhotoViewerProps>(({ imageSrc, ma
             }
           }
 
-          // Log click coordinates to the console
-          viewerRef.current.on('click', (e, data) => {
+          viewerRef.current.on('click', (e: any, data: any) => {
             console.log(
               `User clicked at: latitude ${data.latitude}, longitude ${data.longitude}`
             );
           });
 
-          viewerRef.current.on('error', (e) => {
+          viewerRef.current.on('error', (e: any) => {
             console.error('Photo Sphere Viewer error:', e);
-            let description = 'The image could not be loaded. Please ensure the file path is correct.';
-
-            if (window.location.protocol === 'file:') {
-              description = 'Browser security (CORS) prevents loading 360 images directly from the file system. Please view this page via a local server (e.g., "npx serve out") or deploy it to the web.';
-            }
-
+            // Since we are using embedded images, file protocol error is unlikely for the image itself
+            // but good to keep generic handler
             toast({
               variant: 'destructive',
-              title: '360 View Error',
-              description: description,
+              title: 'Viewer Error',
+              description: 'Failed to render 360 image.',
             });
           });
+
         } catch (e) {
           console.error('Photo Sphere Viewer initialization error:', e);
           toast({
@@ -108,10 +111,8 @@ const PhotoViewer = forwardRef<PhotoViewerRef, PhotoViewerProps>(({ imageSrc, ma
           });
         }
       }
-    }, 150); // 150ms delay is sufficient for the DOM to settle.
+    }, 150);
 
-    // The cleanup function is critical for preventing memory leaks and errors.
-    // It runs when the component unmounts.
     return () => {
       clearTimeout(initTimeout);
       if (viewerRef.current) {
@@ -124,10 +125,7 @@ const PhotoViewer = forwardRef<PhotoViewerRef, PhotoViewerProps>(({ imageSrc, ma
         }
       }
     };
-    // By including imageSrc and markers in the dependency array, we ensure that if the source
-    // changes while the component is mounted, the old viewer is destroyed and
-    // a new one is created with the new markers.
-  }, [imageSrc, markers, toast]);
+  }, [resolvedImage, markers, toast]); // Dependency on resolvedImage, not imageSrc
 
   return <div ref={containerRef} className="w-full h-full" />;
 });

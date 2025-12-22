@@ -1,4 +1,3 @@
-
 import { type LucideIcon, Footprints } from 'lucide-react';
 
 export interface Marker {
@@ -20,13 +19,16 @@ export interface Topic {
   details: string;
   category: 'biosecurity' | 'animal-husbandry' | 'animal-trade' | 'animal-barn';
   view360?: {
-    image: string;
+    image: string | (() => Promise<{ default: string }>);
   };
   audio?: string;
   markers?: Marker[];
 }
 
 const details = 'Effective grazing management for small ruminants like sheep and goats is essential for their health, productivity, and the sustainability of pastures. Implement rotational grazing systems to prevent overgrazing, reduce parasite load, and allow forage to recover. Explore the 360-degree interactive view below to see an example of a grazing environment.';
+
+// Helper to get embedded image
+const getImg = (name: string) => () => import(`./images/${name}`).then(m => m);
 
 export const topics: Topic[] = [
   {
@@ -36,7 +38,7 @@ export const topics: Topic[] = [
     details: details,
     category: 'animal-husbandry',
     view360: {
-      image: 'pictures/koyunlarda-yaylim-1.jpg',
+      image: getImg('koyunlarda-yaylim-1.jpg.ts'),
     },
     audio: 'pictures/koyunlarda-yaylim-1.wav',
     markers: [
@@ -52,30 +54,6 @@ export const topics: Topic[] = [
         content: `<div style="max-width: 640px; padding: 1rem; color: black; background: white; border-radius: 0.5rem; font-family: sans-serif;"><h1><b>Zayıf Meraların Zorlukları</b></h1><p>Düşük kaliteli meralardan kaynaklanan yetersiz beslenme, koyunların refahı ve normal davranışları için doğrudan ve ciddi bir tehdit oluşturur.</p><h2>Refah Üzerindeki Etkileri:</h2><ul><li><b>Beslenme Yetersizlikleri ve Kötü Vücut Kondisyonu:</b> Bu en doğrudan sonuçtur. Koyunlar, yiyecek aramak için tükettiklerinden daha fazla enerji harcadıklarından kilo ve vücut kondisyonu kaybederler. Bu durum bağışıklık sistemlerini zayıflatarak onları hastalıklara ve parazitlere karşı daha savunmasız hale getirir.</li><li><b>Azalan Verimlilik:</b> Zayıf meralardaki dişi koyunların gebe kalma oranları düşer, daha az sayıda ve daha küçük kuzular doğururlar ve yavrularını beslemek için yeterli süt üretemezler. Yün gelişimi ve kalitesi de olumsuz etkilenir.</li><li><b>Artan Stres:</b> Sürekli yiyecek arayışı ve açlığın fizyolojik etkileri, hayvanın genel sağlığını kademeli olarak olumsuz etkileyen önemli stres faktörleridir.</li></ul><h2>Davranışsal Etkileri:</h2><ul><li><b>Artan Otlama Süresi ve Mesafesi:</b> Koyunlar günün çok daha büyük bir bölümünü otlayarak geçirir ve lezzetli yem bulmak için daha uzak mesafelere giderler. Bu artan aktivite, zaten sınırlı olan enerji rezervlerini daha da tüketir.</li><li><b>Daha Az Seçici Otlama:</b> Zayıf meralardaki koyunlar, zorunluluktan dolayı daha az lezzetli ve besin değeri düşük olanlar da dahil olmak üzere çok daha çeşitli bitkileri tüketirler.</li><li><b>Değişen Sosyal Davranışlar:</b> Beslenme stresi, sürü içindeki sosyal gerilimleri şiddetlendirebilir.</li><ul><li><b>Artan Rekabet:</b> Sınırlı yem için rekabet arttıkça, süründeki baskınlık hiyerarşisi daha belirgin hale gelir. Genellikle genç veya zayıf olan alt düzeydeki hayvanlar dışlanabilir ve yetersiz beslenmeden en çok onlar etkilenir.</li><li><b>Sürü Bütünlüğündeki Değişiklikler:</b> Koyunların korunmak için güçlü bir sürü içgüdüsü olsa da, şiddetli yiyecek kıtlığı sosyal dinamiklerde değişikliklere yol açabilir. Sürü, yem aramak için daha geniş bir alana yayılabilir ve normal sosyal bağlar, hayatta kalma rekabeti nedeniyle zayıflayabilir.</li></ul></ul></div>`,
         tooltip: 'More Information',
       },
-      {
-        id: 'info-marker-2',
-        longitude: 2.2941929472433147,
-        latitude: -0.1304712404331032,
-        image: 'pictures/i.png',
-        width: 32,
-        height: 32,
-        anchor: 'center center',
-        // kümelenmiş koyunlar
-        content: `<div style="max-width: 640px; padding: 1rem; color: black; background: white; border-radius: 0.5rem; font-family: sans-serif;"><p>Burada yer yer kümelenmiş gibi görünselerde koyunların küçük gruplar halinde geniş bir alana yayıldıklarını görüyoruz. Bu kümelenme davranışı farklı durumlarda ortaya çıkabilir. Bunlardan en yaygını <b>avcı tehditidir</b>. Bu durum <b>bencil sürü teorisine</b> göre <b>dilüsyon etkisi</b> ile açıklanır. Bir avcıya karşı en güvende olan birey, kalabalığın en ortasına olanlardır. Bu, ortaya doğru ilerlemeye iter ve sürü çapında yalım alanı küçülür. Tek başına sürünün dışında kalan bir birey için tehlike sadece o birey için çok yüksek seviyededir ancak o bireyde bu kümelenmeye dahil olduğunda artık <b>risk bireyler arasında bölünür</b> ve tehlikenin seviyesi o birey için çok büyük oranda azalırken diğer bireyler için çok az miktarda artar. Tehlikenin bu şekilde paylaşılması sebebi ile duruma dilüsyon etkisi denir.</p></div>`,
-        tooltip: 'More Information',
-      },
-      {
-        id: 'info-marker-3',
-        longitude: 0.48685152225452416,
-        latitude: -0.09481387221356785,
-        image: 'pictures/i.png',
-        width: 32,
-        height: 32,
-        anchor: 'center center',
-        // aynı anda otlayan koyunlar
-        content: `<div style="max-width: 640px; padding: 1rem; color: black; background: white; border-radius: 0.5rem; font-family: sans-serif;"><p>Koyunların hepsi aynı anda otlanıyor. Bu durum senkronizasyonun %100 olduğunu gösterir.</p><h2>Koyunlarda Yem Yeme Senkronizasyonu</h2><p><strong>Sürü Dinamiği ve Güvenlik:</strong> Koyunlar sosyal hayvanlardır ve sürü halinde yaşamayı tercih ederler. Toplu halde yem yeme, avcılardan korunma içgüdüsünün bir sonucudur. Sürü üyeleri etrafta tehlike sezdiklerinde toplu halde kaçış veya savunma davranışlarını uyarmak için tetikte beklerler ve bu durumda senkronizasyonun oranı çok düşüktür.</p><p><strong>Davranışsal Taklit (Allelomimetik Davranış):</strong> Sürüdeki bir veya birkaç koyun yem yemeye başladığında, diğerleri de bu davranışı taklit ederek otlamaya başlar. Bu taklitçi davranış (allelomimetik davranış), sürünün büyük bir kısmının aynı anda yem yemesini sağlar. Bu durum, özellikle meralarda otlayan koyunlarda belirgin olarak gözlemlenir.</p><p><strong>Zamanlama ve Ritim:</strong> Koyunlar genellikle gün içinde belirli periyotlarda yoğun bir şekilde otlarlar. Bu periyotlar genellikle sabahın erken saatleri ve akşamüstü/gün batımı zamanlarına denk gelir. Bu zamanlar hava şartları ile ilgili olarak otlamanın hayvanlar için en konforlu olduğu zamanlardır. Bir otlama periyodunu takiben genellikle geviş getirme ve dinlenme periyotları gelir, ve bu döngüler de sürü içinde senkronize olma eğilimindedir.</p><p><strong>Stres ve Rekabetin Azalması:</strong> Yem yeme senkronizasyonu, sürü içinde stres ve rekabeti azaltmaya yardımcı olabilir. Yeterli yem kaynağı olduğunda, tüm koyunlar aynı anda yeme erişim sağladığında, yem kaynakları üzerindeki çekişme azalır.</p><hr><p>Özetle, koyunlarda yem yeme senkronizasyonu, onların sosyal doğalarından kaynaklanan, güvenlik, davranışsal taklit ve doğal ritimlerle şekillenen bir davranıştır. Bu senkronizasyon, hem bireysel koyunların refahı hem de sürünün genel verimliliği ve mera yönetimi açısından önemli faydalar sunar.</p></div>`,
-        tooltip: 'More Information',
-      },
     ],
   },
   {
@@ -85,7 +63,7 @@ export const topics: Topic[] = [
     details: details,
     category: 'animal-husbandry',
     view360: {
-      image: 'pictures/koyunlarda-yaylim-2.jpg',
+      image: getImg('koyunlarda-yaylim-2.jpg.ts'),
     },
     audio: 'pictures/koyunlarda-yaylim-2.wav',
     markers: [
@@ -98,9 +76,9 @@ export const topics: Topic[] = [
         height: 32,
         anchor: 'center center',
         // kuyruk kesimi
-        content: `<div style="max-width: 640px; padding: 1rem; color: black; background: white; border-radius: 0.5rem; font-family: sans-serif;"><h3 style="margin-top: 0; margin-bottom: 0.5rem; font-size: 1.1rem;">Koyun Kuyrukları Neden Kesilir?</h3><p>Koyunlarda kuyruk kesiminin başlıca nedenleri şunlardır:</p><ul><li><strong>Miyazisi Önleme:</strong> Bu en önemli nedendir. Uzun, yünlü kuyruklu koyunlarda, arka bölgelerde (kuyruk altı) dışkı ve idrar birikebilir. Bu sıcak ve nemli ortam, sinekler için oldukça çekicidir ve sinekler yumurtalarını kirli yünlere bırakır. Yumurtalar larva haline gelir ve koyunun etine girerek büyük acı, rahatsızlık, ikincil bakteriyel enfeksiyonlar, toksinler ve tedavi edilmezse ölüme neden olabilir. Kuyruk kesimi, dışkı birikme alanını önemli ölçüde azaltarak sinek saldırısı riskini düşürür.</li><li><strong>Dışkı Bulaşmasını (Dagging) Azaltma:</strong> Daha kısa bir kuyruk, dışkı ve idrarla kirlenecek daha az yün anlamına gelir, bu da daha temiz hayvanlara yol açar. Bu aynı zamanda kırkımı kolaylaştırır ve kesimhanede karkas hijyenini artırır.</li><li><strong>Estetik Nedenler (Gösteri Koyunları İçin):</strong> Bazı durumlarda, özellikle gösteri koyunlarında, kuyruklar daha büyük ve etli bir arka görünümü vermek için çok kısa kesilebilir. Ancak, bu uygulama ciddi refah endişeleri nedeniyle büyük ölçüde teşvik edilmemektedir.</li></ul><h3>Hayvan Refahı Üzerindeki Etkileri</h3><ul><li><strong>Acı ve Stres:</strong><ul><li><strong>Akut Acı:</strong> Kuyruk kesimi, kullanılan yöntem ne olursa olsun (kauçuk halkalar, sıcak demir veya cerrahi müdahale) ağrılı bir işlemdir. Kuzular huzursuzluk, tekmeleme, damgalama, kafa çevirme ve ses çıkarma gibi ağrı davranışları gösterir. Yükselmiş kortizol seviyeleri gibi fizyolojik göstergeler de ağrı ve stresi doğrular.</li><li><strong>Kronik Acı:</strong> Özellikle daha kısa kuyruk kesimlerinde, kuyruk güdüğünde nöroma (kesilen sinirlerin anormal büyümesi) nedeniyle uzun süreli rahatsızlık ve kronik ağrı riski vardır.</li></ul></li><li><strong>Rektal Prolapsus Riskinde Artış:</strong> Eğer kuyruk çok kısa kesilirse, özellikle kaudal kıvrımın (rektumun her iki tarafındaki deri kıvrımları) distal ucundan daha kısa kesilirse, dışkılamayı kontrol eden kaslara müdahale edebilir. Bu, rektal prolapsus insidansını artırır; bu, rektumun bir kısmının anüsten dışarı çıkmasıyla oluşan ağrılı ve potansiyel olarak ölümcül bir durumdur.</li><li><strong>Perineal Kanser ve Artrit Riskinde Artış:</strong> Ultra-kısa kuyruk kesimi, hassas dokuların güneşe maruz kalması nedeniyle perineal kanser riskini artırabilir ve kuzularda daha yüksek bakteriyel artrit ve poliartrit insidansı ile ilişkilendirilmiştir.</li><li><strong>Doğal Fonksiyonun Bozulması:</strong> Kuyruk, anüsü ve vulvayı güneş yanığı ve donmaya karşı doğal olarak korur ve sinekleri uzaklaştırmak için kullanılır. Kuyruğun çok fazla kısmının çıkarılması bu koruyucu işlevleri tehlikeye atar.</li></ul><p><strong>Refah Endişeleri İçin Azaltma Stratejileri:</strong></p><ul><li><strong>Kesim Yaşı:</strong> Kesim, mümkün olan en genç yaşta, genellikle kuzunun hayatının ilk haftasında yapılmalıdır, çünkü ağrı yanıtı genellikle daha az şiddetlidir.</li><li><strong>Uygun Uzunluk:</strong> Kuyruk, dişi hayvanlarda vulvayı ve erkek hayvanlarda anüsü kapatacak kadar uzun olmasını sağlayacak şekilde, kaudal kıvrımın distal ucundan daha kısa olmamalıdır. Bu uzunluk, uygun işlevi sürdürmek ve sağlık risklerini en aza indirmek için çok önemlidir.</li><li><strong>Ağrı Kesici:</strong> Lokal anestezi ve sistemik analjezi (NSAID'ler gibi ağrı kesiciler) kullanımı, prosedürle ilişkili ağrı ve stresi azaltmak için şiddetle tavsiye edilir ve bazı bölgelerde yasal olarak zorunludur.</li><li><strong>Yetkili Personel:</strong> Kuyruk kesimi sadece eğitimli ve yetkili personel tarafından, bakımı iyi yapılmış ekipman ve kabul görmüş teknikler kullanılarak yapılmalıdır.</li><li><strong>Alternatif Yönetim:</strong> Bazı ırklar (örn. kıllı koyunlar veya doğal olarak kısa kuyruklular) veya düşük sinek saldırısı riski olan bölgelerde, rutin kuyruk kesimi gerekli olmayabilir. Kırkım (kuyruk ve kuyruk altı etrafındaki yünün kesilmesi), düzenli izleme ve böcek ilacı uygulamaları gibi diğer yönetim uygulamaları sinek saldırısını önlemeye yardımcı olabilir.</li></ul><h3>Hayvan Davranışları Üzerindeki Etkileri</h3><p>Kuyruk kesiminin davranışsal etkileri hala araştırılmaktadır, ancak bazı potansiyel etkiler şunlardır:</p><ul><li><strong>Ağrıya Bağlı Kısa Süreli Davranışsal Değişiklikler:</strong> Yukarıda bahsedildiği gibi, kuzular kesimden hemen sonra ağrıya karşı akut davranışsal tepkiler gösterirler; örneğin huzursuzluk, duruş değişikliği ve ses çıkarma. Bu, emzirme ve anne ile etkileşim gibi normal kuzu davranışlarını bozabilir.</li><li><strong>Potansiyel Uzun Vadeli Sosyal ve Annelik Davranışı Etkileri:</strong> Gelişmekte olan araştırmalar, kuyruk kesiminin neden olduğu gibi erken yaşam stresinin, bir hayvanın daha sonraki yaşamında sosyal davranışlarını, cinsel performansını ve hatta annelik davranışlarını potansiyel olarak uzun vadeli etkileyebileceğini düşündürmektedir. Örneğin, kuyruğu kesilmiş ve yapay olarak yetiştirilmiş kuzuların daha az sosyal bağ kurup kurmadığı veya daha az annelik davranışı gösterip göstermediği araştırılmaktadır. Ancak, bu karmaşık uzun vadeli davranışsal etkileri tam olarak anlamak için daha fazla araştırmaya ihtiyaç vardır.</li><li><strong>Değişen Dışkılama Duruşu:</strong> Çok kısa bir kuyruk, koyunun dışkılama sırasında kuyruğunu normal şekilde kaldırmasını veya hareket ettirmesini engelleyebilir, bu da kesime rağmen arka bölgelerin daha fazla kirlenmesine neden olabilir ve sinekleri uzaklaştırmak için doğal pervaneyi engelleyebilir.</li></ul><p>Sonuç olarak, kuyruk kesimi, sinek saldırısı gibi ciddi sağlık sorunlarını önlemeyi amaçlayan yaygın bir uygulama olsa da, ağrı ve potansiyel olumsuz uzun vadeli sağlık ve davranışsal etkileri nedeniyle önemli bir refah endişesidir. En iyi uygulamalar, <strong>yalnızca gerektiğinde</strong>, uygun yaş ve uzunlukta ve ağrı kesici kullanılarak kesim yapılmasını vurgulayarak acıyı en aza indirmeyi ve genel hayvan refahını teşvik etmeyi amaçlar.</p></div>`,
+        content: `<div style="max-width: 640px; padding: 1rem; color: black; background: white; border-radius: 0.5rem; font-family: sans-serif;"><h3 style="margin-top: 0; margin-bottom: 0.5rem; font-size: 1.1rem;">Koyun Kuyrukları Neden Kesilir?</h3><p>Koyunlarda kuyruk kesiminin başlıca nedenleri şunlardır:</p><ul><li><strong>Miyazisi Önleme:</strong> Bu en önemli nedendir. Uzun, yünlü kuyruklu koyunlarda, arka bölgelerde (kuyruk altı) dışkı ve idrar birikebilir. Bu sıcak ve nemli ortam, sinekler için oldukça çekicidir ve sinekler yumurtalarını kirli yünlere bırakır. Yumurtalar larva haline gelir ve koyunun etine girerek büyük acı, rahatsızlık, ikincil bakteriyel enfeksiyonlar, toksinler ve tedavi edilmezse ölüme neden olabilir. Kuyruk kesimi, dışkı birikme alanını önemli ölçüde azaltarak sinek saldırısı riskini düşürür.</li><li><strong>Dışkı Bulaşmasını(Dagging) Azaltma:</strong> Daha kısa bir kuyruk, dışkı ve idrarla kirlenecek daha az yün anlamına gelir, bu da daha temiz hayvanlara yol açar. Bu aynı zamanda kırkımı kolaylaştırır ve kesimhanede karkas hijyenini artırır.</li><li><strong>Estetik Nedenler(Gösteri Koyunları İçin):</strong> Bazı durumlarda, özellikle gösteri koyunlarında, kuyruklar daha büyük ve etli bir arka görünümü vermek için çok kısa kesilebilir. Ancak, bu uygulama ciddi refah endişeleri nedeniyle büyük ölçüde teşvik edilmemektedir.</li></ul><h3>Hayvan Refahı Üzerindeki Etkileri</h3><ul><li><strong>Acı ve Stres:</strong><ul><li><strong>Akut Acı:</strong> Kuyruk kesimi, kullanılan yöntem ne olursa olsun(kauçuk halkalar, sıcak demir veya cerrahi müdahale) ağrılı bir işlemdir. Kuzular huzursuzluk, tekmeleme, damgalama, kafa çevirme ve ses çıkarma gibi ağrı davranışları gösterir. Yükselmiş kortizol seviyeleri gibi fizyolojik göstergeler de ağrı ve stresi doğrular.</li><li><strong>Kronik Acı:</strong> Özellikle daha kısa kuyruk kesimlerinde, kuyruk güdüğünde nöroma(kesilen sinirlerin anormal büyümesi) nedeniyle uzun süreli rahatsızlık ve kronik ağrı riski vardır.</li></ul></li><li><strong>Rektal Prolapsus Riskinde Artış:</strong> Eğer kuyruk çok kısa kesilirse, özellikle kaudal kıvrımın(rektumun her iki tarafındaki deri kıvrımları) distal ucundan daha kısa kesilirse, dışkılamayı kontrol eden kaslara müdahale edebilir. Bu, rektal prolapsus insidansını artırır; bu, rektumun bir kısmının anüsten dışarı çıkmasıyla oluşan ağrılı ve potansiyel olarak ölümcül bir durumdur.</li><li><strong>Perineal Kanser ve Artrit Riskinde Artış:</strong> Ultra - kısa kuyruk kesimi, hassas dokuların güneşe maruz kalması nedeniyle perineal kanser riskini artırabilir ve kuzularda daha yüksek bakteriyel artrit ve poliartrit insidansı ile ilişkilendirilmiştir.</li><li><strong>Doğal Fonksiyonun Bozulması:</strong> Kuyruk, anüsü ve vulvayı güneş yanığı ve donmaya karşı doğal olarak korur ve sinekleri uzaklaştırmak için kullanılır. Kuyruğun çok fazla kısmının çıkarılması bu koruyucu işlevleri tehlikeye atar.</li></ul><p><strong>Refah Endişeleri İçin Azaltma Stratejileri: </strong></p><ul><li><strong>Kesim Yaşı:</strong> Kesim, mümkün olan en genç yaşta, genellikle kuzunun hayatının ilk haftasında yapılmalıdır, çünkü ağrı yanıtı genellikle daha az şiddetlidir.</li><li><strong>Uygun Uzunluk:</strong> Kuyruk, dişi hayvanlarda vulvayı ve erkek hayvanlarda anüsü kapatacak kadar uzun olmasını sağlayacak şekilde, kaudal kıvrımın distal ucundan daha kısa olmamalıdır. Bu uzunluk, uygun işlevi sürdürmek ve sağlık risklerini en aza indirmek için çok önemlidir.</li><li><strong>Ağrı Kesici:</strong> Lokal anestezi ve sistemik analjezi (NSAID'ler gibi ağrı kesiciler) kullanımı, prosedürle ilişkili ağrı ve stresi azaltmak için şiddetle tavsiye edilir ve bazı bölgelerde yasal olarak zorunludur.</li><li><strong>Yetkili Personel:</strong> Kuyruk kesimi sadece eğitimli ve yetkili personel tarafından, bakımı iyi yapılmış ekipman ve kabul görmüş teknikler kullanılarak yapılmalıdır.</li><li><strong>Alternatif Yönetim:</strong> Bazı ırklar (örn. kıllı koyunlar veya doğal olarak kısa kuyruklular) veya düşük sinek saldırısı riski olan bölgelerde, rutin kuyruk kesimi gerekli olmayabilir. Kırkım (kuyruk ve kuyruk altı etrafındaki yünün kesilmesi), düzenli izleme ve böcek ilacı uygulamaları gibi diğer yönetim uygulamaları sinek saldırısını önlemeye yardımcı olabilir.</li></ul><h3>Hayvan Davranışları Üzerindeki Etkileri</h3><p>Kuyruk kesiminin davranışsal etkileri hala araştırılmaktadır, ancak bazı potansiyel etkiler şunlardır: </p><ul><li><strong>Ağrıya Bağlı Kısa Süreli Davranışsal Değişiklikler:</strong> Yukarıda bahsedildiği gibi, kuzular kesimden hemen sonra ağrıya karşı akut davranışsal tepkiler gösterirler; örneğin huzursuzluk, duruş değişikliği ve ses çıkarma. Bu, emzirme ve anne ile etkileşim gibi normal kuzu davranışlarını bozabilir.</li><li><strong>Potansiyel Uzun Vadeli Sosyal ve Annelik Davranışı Etkileri:</strong> Gelişmekte olan araştırmalar, kuyruk kesiminin neden olduğu gibi erken yaşam stresinin, bir hayvanın daha sonraki yaşamında sosyal davranışlarını, cinsel performansını ve hatta annelik davranışlarını potansiyel olarak uzun vadeli etkileyebileceğini düşündürmektedir. Örneğin, kuyruğu kesilmiş ve yapay olarak yetiştirilmiş kuzuların daha az sosyal bağ kurup kurmadığı veya daha az annelik davranışı gösterip göstermediği araştırılmaktadır. Ancak, bu karmaşık uzun vadeli davranışsal etkileri tam olarak anlamak için daha fazla araştırmaya ihtiyaç vardır.</li><li><strong>Değişen Dışkılama Duruşu:</strong> Çok kısa bir kuyruk, koyunun dışkılama sırasında kuyruğunu normal şekilde kaldırmasını veya hareket ettirmesini engelleyebilir, bu da kesime rağmen arka bölgelerin daha fazla kirlenmesine neden olabilir ve sinekleri uzaklaştırmak için doğal pervaneyi engelleyebilir.</li></ul><p>Sonuç olarak, kuyruk kesimi, sinek saldırısı gibi ciddi sağlık sorunlarını önlemeyi amaçlayan yaygın bir uygulama olsa da, ağrı ve potansiyel olumsuz uzun vadeli sağlık ve davranışsal etkileri nedeniyle önemli bir refah endişesidir. En iyi uygulamalar, <strong>yalnızca gerektiğinde</strong>, uygun yaş ve uzunlukta ve ağrı kesici kullanılarak kesim yapılmasını vurgulayarak acıyı en aza indirmeyi ve genel hayvan refahını teşvik etmeyi amaçlar.</p></div>`,
         tooltip: 'More Information',
-      },
+      }
     ],
   },
   {
@@ -110,7 +88,7 @@ export const topics: Topic[] = [
     details: details,
     category: 'animal-husbandry',
     view360: {
-      image: 'pictures/koyunlarda-yaylim-3.jpg',
+      image: getImg('koyunlarda-yaylim-3.jpg.ts'),
     },
     audio: 'pictures/koyunlarda-yaylim-3.wav',
     markers: [
@@ -145,7 +123,7 @@ export const topics: Topic[] = [
     details: details,
     category: 'animal-husbandry',
     view360: {
-      image: 'pictures/koyunlarda-yaylim-4.jpg',
+      image: getImg('koyunlarda-yaylim-4.jpg.ts'),
     },
     audio: 'pictures/koyunlarda-yaylim-4.wav',
     markers: [
@@ -191,7 +169,7 @@ export const topics: Topic[] = [
     details: details,
     category: 'animal-husbandry',
     view360: {
-      image: 'pictures/koyunlarda-yaylim-5.jpg',
+      image: getImg('koyunlarda-yaylim-5.jpg.ts'),
     },
     audio: 'pictures/koyunlarda-yaylim-5.wav',
     markers: [
@@ -226,7 +204,7 @@ export const topics: Topic[] = [
     details: details,
     category: 'animal-trade',
     view360: {
-      image: 'pictures/hayvan-pazari-1.jpg',
+      image: getImg('hayvan-pazari-1.jpg.ts'),
     },
     audio: 'pictures/hayvan-pazari-1.wav',
     markers: [
@@ -272,7 +250,7 @@ export const topics: Topic[] = [
     details: details,
     category: 'animal-trade',
     view360: {
-      image: 'pictures/hayvan-pazari-2.jpg',
+      image: getImg('hayvan-pazari-2.jpg.ts'),
     },
     audio: 'pictures/hayvan-pazari-2.wav',
     markers: [
@@ -312,7 +290,7 @@ export const topics: Topic[] = [
     details: details,
     category: 'animal-trade',
     view360: {
-      image: 'pictures/hayvan-pazari-3.jpg',
+      image: getImg('hayvan-pazari-3.jpg.ts'),
     },
     audio: 'pictures/hayvan-pazari-3.wav',
     markers: [
@@ -364,7 +342,7 @@ export const topics: Topic[] = [
     details: details,
     category: 'animal-trade',
     view360: {
-      image: 'pictures/hayvan-pazari-4.jpg',
+      image: getImg('hayvan-pazari-4.jpg.ts'),
     },
     audio: 'pictures/hayvan-pazari-4.wav',
     markers: [
@@ -403,7 +381,7 @@ export const topics: Topic[] = [
     details: details,
     category: 'animal-trade',
     view360: {
-      image: 'pictures/hayvan-pazari-5.jpg',
+      image: getImg('hayvan-pazari-5.jpg.ts'),
     },
     audio: 'pictures/hayvan-pazari-5.wav',
     markers: [
@@ -429,7 +407,7 @@ export const topics: Topic[] = [
     details: details,
     category: 'animal-trade',
     view360: {
-      image: 'pictures/hayvan-pazari-6.jpg',
+      image: getImg('hayvan-pazari-6.jpg.ts'),
     },
     audio: 'pictures/hayvan-pazari-6.wav',
     markers: [
@@ -481,7 +459,7 @@ export const topics: Topic[] = [
     details: details,
     category: 'animal-barn',
     view360: {
-      image: 'pictures/koyun-barinak-1.jpg',
+      image: getImg('koyun-barinak-1.jpg.ts'),
     },
     audio: 'pictures/koyun-barinak-1.wav',
   },
@@ -492,7 +470,7 @@ export const topics: Topic[] = [
     details: details,
     category: 'animal-barn',
     view360: {
-      image: 'pictures/koyun-barinak-2.jpg',
+      image: getImg('koyun-barinak-2.jpg.ts'),
     },
     audio: 'pictures/koyun-barinak-2.wav',
   },
