@@ -99,7 +99,17 @@
             box-shadow: 0 0 10px hsl(var(--primary));
         }
 
-        /* Tab Content */
+        /* Main Tab Content - Top Level */
+        .main-tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .main-tab-content.active {
+            display: block;
+        }
+
+        /* Inner Tab Content */
         .tab-content {
             display: none;
             animation: fadeIn 0.4s ease;
@@ -287,723 +297,307 @@
 <body>
 
     <div class="container">
-        <!-- Main Top Navigation -->
-        <div class="main-tabs">
-            <button class="main-tab-btn active" onclick="switchMainView('picture-maker-view')">PICTURE MAKER</button>
-            <button class="main-tab-btn" onclick="switchMainView('mock-maker-view')">MOCK MAKER</button>
+        <!-- Unified Navigation -->
+        <div class="tabs">
+            <button class="tab-button active" onclick="openMainTab('first')">First Picture</button>
+            <button class="tab-button" onclick="openMainTab('solo')">Solo Pictures</button>
+            <button class="tab-button" onclick="openMainTab('mock-maker')">Mock Maker</button>
         </div>
 
-        <!-- PICTURE MAKER VIEW -->
-        <div id="picture-maker-view" class="main-view active">
-            <div class="tabs">
-                <button class="tab-button active" onclick="openTab('first')">First Picture</button>
-                <button class="tab-button" onclick="openTab('solo')">Solo Pictures</button>
-                <button class="tab-button" onclick="openTab('duo')">Duo Pictures</button>
+        <!-- First Picture Section -->
+        <div id="first" class="main-tab-content active">
+            <div class="prompt-box" id="prompt-first">photo of a person, front view, passport photo style, mugshot,
+                neutral expression with serene smile, looking directly at camera, head and shoulders, bare
+                shoulders,
+                clear facial features, raw photo, hyperrealistic, pure white background, simple background, flat
+                lighting, soft uniform lighting, 8k uhd, sharp focus</div>
+            <button class="copy-btn" onclick="copyToClipboard('prompt-first')">COPY PROMPT</button>
+        </div>
+
+        <!-- Solo Pictures Tab -->
+        <div id="solo" class="main-tab-content">
+            <div class="form-group">
+                <label class="form-label">Scene</label>
+                <select class="form-select" onchange="updateSoloPrompt()">
+                    <option value="" disabled selected>Select a scene...</option>
+                    <option
+                        value="Adventure/Wilderness: A rugged, snow-capped mountain peak during a blizzard, with a dark cave entrance nearby.">
+                        Adventure/Wilderness Peak</option>
+                    <option
+                        value="Cappadocia: A stony Cappadocia courtyard, before noon, Sunbeams seeping through an arched doorway, earthenware pots and planters around">
+                        Cappadocia Courtyard</option>
+                    <option value="A dark street lit by dim street lamps. weather is clouded and streets are wet.">
+                        Dark
+                        Rainy Street</option>
+                    <option
+                        value="Fantasy/Magical: The interior of an ancient, ruined temple overgrown with jungle vines, with a mystical artifact glowing in the center.">
+                        Fantasy Magical Temple</option>
+                    <option
+                        value="Historical/War: A muddy, shell-scarred WWI trench with barbed wire and a low, gray sky.">
+                        Historical War Trench</option>
+                    <option value="An oldschool kentucky bar with wooden decors">Kentucky Bar</option>
+                    <option
+                        value="Medieval Castle Hall: A vast, cold, stone-walled castle hall, lit primarily by the flickering light of a massive fireplace and a few high, narrow windows. Dust motes dance in the faint light.">
+                        Medieval Castle Hall</option>
+                    <option
+                        value="A Mediterranean beach with golden sand and turquiose water. It is noon, scene is bright and sunny.">
+                        Mediterranean beach</option>
+                    <option
+                        value="Modern/Domestic: A sleek, minimalist penthouse apartment overlooking a city skyline at dawn.">
+                        Modern Penthouse</option>
+                    <option
+                        value="Mystical: A dense, fog-shrouded ancient forest with moss-covered ruins and shafts of moonlight breaking through the canopy.">
+                        Mystical Forest</option>
+                    <option
+                        value="post-apocalyptic: A desolate, sand-swept highway with the remains of rusted vehicles and a setting sun casting long shadows">
+                        Post-Apocalyptic Highway</option>
+                    <option
+                        value="Roaring Twenties/Speakeasy: A smoky, dimly lit speakeasy or jazz club, with people dancing, art deco patterns on the walls, and a spotlight on a microphone stand or a grand piano.">
+                        Roaring Twenties Speakeasy</option>
+                    <option
+                        value="Sci-Fi/Industrial: A vast, dimly-lit, high-tech factory floor filled with glowing machinery and steam, on an off-world colony.">
+                        Sci-Fi Industrial Factory</option>
+                    <option
+                        value="scifi: The bridge of a sleek, futuristic starship looking out onto a distant, colorful nebula">
+                        Sci-Fi Starship Bridge</option>
+                    <option
+                        value="Technologically Advanced Veterinary Clinic: A bright, sterile clinic interior dominated by smooth, white, antimicrobial surfaces and blue LED accent lighting. Large windows look out">
+                        Tech Vet Clinic</option>
+                    <option
+                        value="Toscana: The stone-paved courtyard of an old Tuscan villa, before noon, Sunbeams seeping through an arched doorway, Terracotta pots with lush greenery line the walls">
+                        Toscana Villa Courtyard</option>
+                    <option
+                        value="Turkish Hamam: White marble turkish bath with traditional decorative tiles. There are other people in the bhamam but they are not clearly seen due to steam.">
+                        Turkish Hamam</option>
+                    <option
+                        value="Urban/Noir: A gritty, rainy back alley in a 1940s city at night, illuminated by a single flickering neon sign.">
+                        Urban/Noir Alley</option>
+                </select>
             </div>
 
-            <!-- First Picture Tab -->
-            <div id="first" class="tab-content active">
-                <div class="prompt-box" id="prompt-first">photo of a person, front view, passport photo style, mugshot,
-                    neutral expression with serene smile, looking directly at camera, head and shoulders, bare
-                    shoulders,
-                    clear facial features, raw photo, hyperrealistic, pure white background, simple background, flat
-                    lighting, soft uniform lighting, 8k uhd, sharp focus</div>
-                <button class="copy-btn" onclick="copyToClipboard('prompt-first')">COPY PROMPT</button>
+            <div class="form-group">
+                <label class="form-label">Outfit</label>
+                <select class="form-select" onchange="updateSoloPrompt()">
+                    <option value="" disabled selected>Select an outfit...</option>
+                    <option
+                        value="thin lace blouse with deep v-neck If there is a woman OR a white linen poet shirt If there is a man">
+                        Blouse</option>
+                    <option
+                        value="A sleek, high-tech jacket with integrated glowing lines, cargo pants, and reinforced combat boots. inside the jacket: man has a tactical vest and woman have a khaki tanktop.">
+                        Cyberpunk</option>
+                    <option
+                        value="wearing random colored scrubs with slight v neck and a white lab coat over it. she has a stethoscope around neck. it is obvious that her coat pockets have something in it">
+                        Medical Scrubs</option>
+                    <option
+                        value="Full plate armor (perhaps scarred or slightly damaged), a heavy, dyed wool cloak, and a simple, broad leather belt holding sword and shield">
+                        Medieval Knight</option>
+                    <option
+                        value="A sharp, three-piece suit (pinstripe or solid dark color), a silk tie, a polished gold ring, and shiny dress shoes.">
+                        Modern Gangster</option>
+                    <option
+                        value="A well-tailored, dark trench coat, a fedora, a crisp white shirt, and dark leather gloves.">
+                        Noir Detective</option>
+                    <option
+                        value="Heavily layered, tattered clothing, gas mask slung around neck, bandoliers of scavenged items, and protective leather wrist guards.">
+                        Post-Apocalyptic Nomad</option>
+                    <option
+                        value="A sequined flapper dress (If there is a woman) or suit (If there is a man) with a feather boa and long pearl necklace (woman) or a fancy pocketwatch (man).">
+                        Roaring
+                        Twenties</option>
+                    <option
+                        value="Black, reinforced body armor with glowing blue or red accents, tactical helmet with visor, and utility straps across the chest.">
+                        Sci-Fi Mercenary</option>
+                    <option value="a cream suit with a white shirt with open neck">Suit</option>
+                    <option
+                        value="Rugged, thick canvas jacket, layered thermal shirt, heavy-duty hiking boots, and a well-worn leather backpack.">
+                        Survivalist/Hunter</option>
+                    <option value="tight gray tanktop (If there is a woman: crop top, spagetti strap shoulders)">
+                        Tanktop
+                    </option>
+                    <option value="Full traditional layered kimono and hakama, with a katana sheathed at the waist.">
+                        Traditional Samurai</option>
+                    <option
+                        value="padded leather van helsing costume. alluring v neck and padded breast caps (If there is a woman) or padded leather armor (If there is a man). a leather cape. leather pants should be holding wooden sticks and a small crossbow.">
+                        Van Helsing</option>
+                    <option
+                        value="primal warrior with tattered clothes that show a lot of skin, leather shoulder plates adorned with wild animal teeth, long boots adorned with animal fangs and exessive accessories and a primal axe in hand">
+                        Primal Warrior</option>
+                    <option
+                        value="If there is a Woman: two piece swimming outfit with pastel colors, If there is a Man: swimming short with pastel colors.">
+                        Swimwear</option>
+                    <option
+                        value="A long, black velvet gown with lace accents, high collar, and antique silver jewelry.">
+                        Victorian Gothic</option>
+                    <option
+                        value="If there is a Woman: white long dress with long sleeves and long skirt, deep and wide v-neck. If there is a man: white on white suit with white tie and white shirt.">
+                        White Dress
+                    </option>
+                </select>
             </div>
 
-            <!-- Solo Pictures Tab -->
-            <div id="solo" class="tab-content">
-                <div class="form-group">
-                    <label class="form-label">Scene</label>
-                    <select class="form-select" onchange="updateSoloPrompt()">
-                        <option value="" disabled selected>Select a scene...</option>
-                        <option
-                            value="Adventure/Wilderness: A rugged, snow-capped mountain peak during a blizzard, with a dark cave entrance nearby.">
-                            Adventure/Wilderness Peak</option>
-                        <option
-                            value="Cappadocia: A stony Cappadocia courtyard, before noon, Sunbeams seeping through an arched doorway, earthenware pots and planters around">
-                            Cappadocia Courtyard</option>
-                        <option value="A dark street lit by dim street lamps. weather is clouded and streets are wet.">
-                            Dark
-                            Rainy Street</option>
-                        <option
-                            value="Fantasy/Magical: The interior of an ancient, ruined temple overgrown with jungle vines, with a mystical artifact glowing in the center.">
-                            Fantasy Magical Temple</option>
-                        <option
-                            value="Historical/War: A muddy, shell-scarred WWI trench with barbed wire and a low, gray sky.">
-                            Historical War Trench</option>
-                        <option value="An oldschool kentucky bar with wooden decors">Kentucky Bar</option>
-                        <option
-                            value="Medieval Castle Hall: A vast, cold, stone-walled castle hall, lit primarily by the flickering light of a massive fireplace and a few high, narrow windows. Dust motes dance in the faint light.">
-                            Medieval Castle Hall</option>
-                        <option
-                            value="Modern/Domestic: A sleek, minimalist penthouse apartment overlooking a city skyline at dawn.">
-                            Modern Penthouse</option>
-                        <option
-                            value="Mystical: A dense, fog-shrouded ancient forest with moss-covered ruins and shafts of moonlight breaking through the canopy.">
-                            Mystical Forest</option>
-                        <option
-                            value="post-apocalyptic: A desolate, sand-swept highway with the remains of rusted vehicles and a setting sun casting long shadows">
-                            Post-Apocalyptic Highway</option>
-                        <option
-                            value="Roaring Twenties/Speakeasy: A smoky, dimly lit speakeasy or jazz club, with people dancing, art deco patterns on the walls, and a spotlight on a microphone stand or a grand piano.">
-                            Roaring Twenties Speakeasy</option>
-                        <option
-                            value="Sci-Fi/Industrial: A vast, dimly-lit, high-tech factory floor filled with glowing machinery and steam, on an off-world colony.">
-                            Sci-Fi Industrial Factory</option>
-                        <option
-                            value="scifi: The bridge of a sleek, futuristic starship looking out onto a distant, colorful nebula">
-                            Sci-Fi Starship Bridge</option>
-                        <option
-                            value="Technologically Advanced Veterinary Clinic: A bright, sterile clinic interior dominated by smooth, white, antimicrobial surfaces and blue LED accent lighting. Large windows look out">
-                            Tech Vet Clinic</option>
-                        <option
-                            value="Toscana: The stone-paved courtyard of an old Tuscan villa, before noon, Sunbeams seeping through an arched doorway, Terracotta pots with lush greenery line the walls">
-                            Toscana Villa Courtyard</option>
-                        <option
-                            value="Urban/Noir: A gritty, rainy back alley in a 1940s city at night, illuminated by a single flickering neon sign.">
-                            Urban/Noir Alley</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Outfit</label>
-                    <select class="form-select" onchange="updateSoloPrompt()">
-                        <option value="" disabled selected>Select an outfit...</option>
-                        <option value="thin lace blouse with a-line deep v-neck">Blouse</option>
-                        <option
-                            value="A sleek, high-tech jacket with integrated glowing lines, cargo pants, and reinforced combat boots.">
-                            Cyberpunk</option>
-                        <option
-                            value="wearing dark blue scrubs with slight v neck and a white lab coat over it. she has a stethoscope around her neck. it is obvious that her coat pockets have something in it">
-                            Medical Scrubs</option>
-                        <option
-                            value="Full plate armor (perhaps scarred or slightly damaged), a heavy, dyed wool cloak, and a simple, broad leather belt.holding sword and shield">
-                            Medieval Knight</option>
-                        <option
-                            value="A sharp, three-piece suit (pinstripe or solid dark color), a silk tie, a polished gold ring, and shiny dress shoes.">
-                            Modern Gangster</option>
-                        <option
-                            value="A well-tailored, dark trench coat, a fedora, a crisp white shirt, and dark leather gloves.">
-                            Noir Detective</option>
-                        <option
-                            value="Heavily layered, distressed clothing, a gas mask slung around the neck, bandoliers of scavenged items, and protective leather wrist guards.">
-                            Post-Apocalyptic Nomad</option>
-                        <option value="A sequined flapper dress with a feather boa and long pearl necklace.">Roaring
-                            Twenties</option>
-                        <option
-                            value="Black, reinforced body armor with glowing blue or red accents, tactical helmet with visor, and utility straps across the chest.">
-                            Sci-Fi Mercenary</option>
-                        <option value="a cream suit with a white shirt with open neck">Suit</option>
-                        <option
-                            value="Rugged, thick canvas jacket, layered thermal shirt, heavy-duty hiking boots, and a well-worn leather backpack.">
-                            Survivalist/Hunter</option>
-                        <option value="gray tanktop (crop top, spagetti strap shoulders)">Tanktop</option>
-                        <option
-                            value="Full traditional layered kimono and hakama, with a katana sheathed at the waist.">
-                            Traditional Samurai</option>
-                        <option
-                            value="padded leather femme fatale costume. she should have a leather cape. her leather pants should be holding wooden sticks and a small crossbow.">
-                            Van Helsing</option>
-                        <option
-                            value="primal warrior with tattered clothes that show a lot of skin, leather shoulder plates, long boots and exessive accessories and a primal axe in hand">
-                            Primal Warrior</option>
-                        <option
-                            value="A long, black velvet gown with lace accents, high collar, and antique silver jewelry.">
-                            Victorian Gothic</option>
-                        <option value="white long dress with long sleeves, long skirt, deep and wide v-neck">White Dress
-                        </option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Pose</label>
-                    <select class="form-select" onchange="updateSoloPrompt()">
-                        <option value="" disabled selected>Select a pose...</option>
-                        <option
-                            value="Action/Dynamic: Leaning forward with one hand resting on a raised knee, a determined gaze, suggesting readiness for action.">
-                            Action/Dynamic</option>
-                        <option
-                            value="Alluring: Reclining on a surface (like a couch or a table), body partially turned towards the camera, a soft, inviting expression.">
-                            Alluring</option>
-                        <option
-                            value="Candid/Natural: Caught mid-movement, perhaps a slight turn of the head or a hand reaching for something, looking over the shoulder.">
-                            Candid/Natural</option>
-                        <option
-                            value="Commanding/Authority: Standing upright with a broad posture, hands clasped behind the back or resting on a table/desk, direct and confident eye contact with the camera.">
-                            Commanding/Authority</option>
-                        <option
-                            value="Duel/Mid-Fight: Caught in the middle of a motion (e.g., drawing a sword, throwing a punch, or bracing for impact), showing dynamic movement and tension.">
-                            Duel/Mid-Fight</option>
-                        <option
-                            value="Heroic/Triumphant: Standing on elevated ground (like a cliff or ruined wall), facing away or in profile, with arms raised or hands on hips, gazing at the horizon.">
-                            Heroic/Triumphant</option>
-                        <option
-                            value="Pensive/Contemplative: Standing with arms crossed or one hand near the chin, looking slightly off-camera or down, conveying deep thought.">
-                            Pensive/Contemplative</option>
-                        <option
-                            value="Powerful/Imposing: Standing with feet slightly apart (power stance), shoulders back, holding a weapon or staff firmly, gazing intensely at the camera.">
-                            Powerful/Imposing</option>
-                        <option
-                            value="Relaxed/Confident: Standing tall with a slight hip tilt, one hand casually resting in a pocket or on a prop (like a sword hilt or a chair back), direct eye contact.">
-                            Relaxed/Confident</option>
-                        <option
-                            value="Riding/Motorcycle: Sitting on a classic American-style chopper motorcycle, leaning forward slightly, with a confident, road-ready posture.">
-                            Riding/Motorcycle</option>
-                        <option value="sitting on a chair, a high table in front of her">Sitting on Chair</option>
-                        <option
-                            value="gracefully sitting on the edge of a table, one leg drawn up, looking to the camera">
-                            Sitting on Table Edge</option>
-                        <option
-                            value="Supernatural/Ghost: Floating mid-air, with a semi-transparent, ethereal appearance, perhaps with a soft glow or wisps of vapor around the figure. slight smile.">
-                            Supernatural/Ghost</option>
-                        <option
-                            value="Thoughtful/Brooding: Sitting slouched on a chair or the floor, head slightly down, with one arm resting across the knee or forehead, conveying deep introspection or sorrow.">
-                            Thoughtful/Brooding</option>
-                        <option
-                            value="Vigilant/Scout: Crouched low behind cover or a rock, one hand on a weapon or the ground, eyes scanning the distance (looking slightly off-camera), conveying alertness.">
-                            Vigilant/Scout</option>
-                        <option
-                            value="Wounded/Resilient: Leaning against a wall or resting on one knee, showing signs of wear and tear, but with a determined, unbroken expression.">
-                            Wounded/Resilient</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Body</label>
-                    <select class="form-select" onchange="updateSoloPrompt()">
-                        <option value="" disabled selected>Select a body type...</option>
-                        <option
-                            value="Average/Dad Bod: Realistic build with a moderate amount of muscle and body fat, conveying relatability or casualness.">
-                            Average/Dad Bod</option>
-                        <option
-                            value="Average/Realistic: Normal, everyday build, comfortable and familiar proportions.">
-                            Average/Realistic</option>
-                        <option
-                            value="Burly/Hulking: Large and powerfully built, broad shoulders, thick neck, conveying strength and intimidation.">
-                            Burly/Hulking</option>
-                        <option
-                            value="Elderly/Weathered: Thin or frail, with aged, wrinkled skin, pronounced bone structure, conveying wisdom or hardship.">
-                            Elderly/Weathered</option>
-                        <option value="Full figure, hourglass shape, soft curves, and a naturally healthy appearance.">
-                            Full
-                            Figure/Hourglass</option>
-                        <option
-                            value="Heavily Tattooed: Covered in detailed, visible tattoos on arms, chest, and legs.">
-                            Heavily Tattooed</option>
-                        <option
-                            value="Lean/Wiry: Slender and athletic, with visible tone but not bulky, conveying speed and agility.">
-                            Lean/Wiry</option>
-                        <option
-                            value="Muscular/Athletic: Lean, defined muscles, toned arms, strong core, athletic build.">
-                            Muscular/Athletic</option>
-                        <option
-                            value="Muscular/Shredded: Extremely low body fat, highly defined muscles, prominent veins, typical of a bodybuilder or action hero.">
-                            Muscular/Shredded</option>
-                        <option value="Slim waist, large bust and hips">Slim Waist/Curvy</option>
-                        <option
-                            value="Slim/Ethereal: Slender and graceful, delicate frame, long limbs, and an almost ethereal appearance.">
-                            Slim/Ethereal</option>
-                        <option value="thin body, thin arms, prominent collarbones, thin face">Thin Body</option>
-                        <option
-                            value="Toned/Swimmer's Build: Smooth, defined musculature without extreme bulk, conveying fitness and grace.">
-                            Toned/Swimmer's Build</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Camera</label>
-                    <select class="form-select" onchange="updateSoloPrompt()">
-                        <option value="" disabled selected>Select a camera angle...</option>
-                        <option
-                            value="Cinematic/Wide Shot: A wide shot with a deep focus, emphasizing the scale of the environment (like a castle hall or mountain), making the subject appear powerful yet part of a grand setting.">
-                            Cinematic/Wide Shot</option>
-                        <option
-                            value="Dramatic Lighting/Shadow: Focus is placed on how the lighting creates deep, hard shadows across the subject's face and body (typical of film noir), emphasizing mystery and intensity.">
-                            Dramatic Lighting/Shadow</option>
-                        <option
-                            value="Dutch Angle/Tension: The camera is tilted on its axis, giving the horizon a slant, to create a sense of unease, tension, or a psychological effect.">
-                            Dutch Angle/Tension</option>
-                        <option
-                            value="High-Angle/Dominance: Shot from above the subject, making them appear smaller or more vulnerable.">
-                            High-Angle/Dominance</option>
-                        <option
-                            value="Low-Angle/Power: Shot from below the subject, making them appear larger, more dominant, or heroic.">
-                            Low-Angle/Power</option>
-                        <option
-                            value="Low-Angle/Silhouetted: A shot from very low, looking up at the subject against a dramatic sky or light source, creating a powerful, imposing silhouette.">
-                            Low-Angle/Silhouetted</option>
-                        <option
-                            value="Medium Close-Up/Intense Focus: A shot from the chest up, focusing sharply on the face and upper body to highlight expression and detail (like scars or armor damage), using shallow depth of field.">
-                            Medium Close-Up/Intense Focus</option>
-                        <option
-                            value="Over the Shoulder/Viewpoint: Shot from slightly behind a companion or a prop, focusing on the male subject who is looking into the distance, conveying a sense of shared journey or vulnerability.">
-                            Over the Shoulder/Viewpoint</option>
-                        <option
-                            value="Telephoto/Compressed: A telephoto lens from a distance, flattening the perspective, compressing the background, and creating shallow depth of field (strong bokeh).">
-                            Telephoto/Compressed</option>
-                        <option
-                            value="Telephoto/Intimate Close-Up: Used from a moderate distance to isolate the subject's face or upper body.">
-                            Telephoto/Intimate Close-Up</option>
-                        <option
-                            value="Tracking Shot/Action: The camera appears to be moving alongside or slightly ahead of the subject, capturing them mid-run or mid-motion, creating a dynamic, action-movie feel.">
-                            Tracking Shot/Action</option>
-                        <option
-                            value="Wide-Angle/Close-Up: A wide-angle lens used close to the subject, creating dramatic perspective distortion and emphasizing the foreground.">
-                            Wide-Angle/Close-Up</option>
-                        <option
-                            value="Shot with a wide-angle lens from a medium distance, capturing the full subject and a large, dramatic portion of the scene/environment.">
-                            Wide-Angle/Medium</option>
-                    </select>
-                </div>
-
-                <div class="generated-prompt-box" id="prompt-solo">
-                    <!-- Prompt will appear here -->
-                </div>
-                <div style="display: flex; gap: 1rem;">
-                    <button class="copy-btn" onclick="randomizeSolo()"
-                        style="background: yellow; color: black;">RANDOMIZE</button>
-                    <button class="copy-btn" onclick="copyToClipboard('prompt-solo')">COPY PROMPT</button>
-                </div>
+            <div class="form-group">
+                <label class="form-label">Pose</label>
+                <select class="form-select" onchange="updateSoloPrompt()">
+                    <option value="" disabled selected>Select a pose...</option>
+                    <option
+                        value="Action/Dynamic: Leaning forward with one hand resting on a raised knee, a determined gaze, suggesting readiness for action.">
+                        Action/Dynamic</option>
+                    <option
+                        value="Alluring: Reclining on a surface (like a couch or a table), body partially turned towards the camera, a soft, inviting expression.">
+                        Alluring</option>
+                    <option
+                        value="Candid/Natural: Caught mid-movement, perhaps a slight turn of the head or a hand reaching for something, looking over the shoulder.">
+                        Candid/Natural</option>
+                    <option
+                        value="Commanding/Authority: Standing upright with a broad posture, hands clasped behind the back or resting on a table/desk, direct and confident eye contact with the camera.">
+                        Commanding/Authority</option>
+                    <option
+                        value="Duel/Mid-Fight: Caught in the middle of a motion (e.g., drawing a sword, throwing a punch, or bracing for impact), showing dynamic movement and tension.">
+                        Duel/Mid-Fight</option>
+                    <option
+                        value="Heroic/Triumphant: Standing on elevated ground (like a cliff or ruined wall), facing away or in profile, with arms raised or hands on hips, gazing at the horizon.">
+                        Heroic/Triumphant</option>
+                    <option
+                        value="Pensive/Contemplative: Standing with arms crossed or one hand near the chin, looking slightly off-camera or down, conveying deep thought.">
+                        Pensive/Contemplative</option>
+                    <option
+                        value="Powerful/Imposing: Standing with feet slightly apart (power stance), shoulders back, holding a weapon or staff firmly, gazing intensely at the camera.">
+                        Powerful/Imposing</option>
+                    <option
+                        value="Relaxed/Confident: Standing tall with a slight hip tilt, one hand casually resting in a pocket or on a prop (like a sword hilt or a chair back), direct eye contact.">
+                        Relaxed/Confident</option>
+                    <option
+                        value="Riding/Motorcycle: Sitting on a classic American-style chopper motorcycle, leaning forward slightly, with a confident, road-ready posture.">
+                        Riding/Motorcycle</option>
+                    <option value="sitting on a chair, a high table in front of her">Sitting on Chair</option>
+                    <option value="gracefully sitting on the edge of a table, one leg drawn up, looking to the camera">
+                        Sitting on Table Edge</option>
+                    <option
+                        value="Supernatural/Ghost: Floating mid-air, with a semi-transparent, ethereal appearance, perhaps with a soft glow or wisps of vapor around the figure. slight smile.">
+                        Supernatural/Ghost</option>
+                    <option
+                        value="Thoughtful/Brooding: Sitting slouched on a chair or the floor, head slightly down, with one arm resting across the knee or forehead, conveying deep introspection or sorrow.">
+                        Thoughtful/Brooding</option>
+                    <option
+                        value="Vigilant/Scout: Crouched low behind cover or a rock, one hand on a weapon or the ground, eyes scanning the distance (looking slightly off-camera), conveying alertness.">
+                        Vigilant/Scout</option>
+                    <option
+                        value="Wounded/Resilient: Leaning against a wall or resting on one knee, showing signs of wear and tear, but with a determined, unbroken expression.">
+                        Wounded/Resilient</option>
+                </select>
             </div>
 
-            <!-- Duo Pictures Tab -->
-            <div id="duo" class="tab-content">
-                <h2 style="color: hsl(var(--primary)); margin-top: 1rem; font-size: 1.2rem;">Shared Environment</h2>
-                <div class="form-group duogroup">
-                    <label class="form-label">Scene</label>
-                    <select class="form-select scene-select" onchange="updateDuoPrompt()">
-                        <!-- Copied options will be here, I will use JS to populate to avoid duplication if possible but simpler to just copy-paste for now to ensure robustness -->
-                        <option value="" disabled selected>Select a scene...</option>
-                        <option
-                            value="Adventure/Wilderness: A rugged, snow-capped mountain peak during a blizzard, with a dark cave entrance nearby.">
-                            Adventure/Wilderness Peak</option>
-                        <option
-                            value="Cappadocia: A stony Cappadocia courtyard, before noon, Sunbeams seeping through an arched doorway, earthenware pots and planters around">
-                            Cappadocia Courtyard</option>
-                        <option value="A dark street lit by dim street lamps. weather is clouded and streets are wet.">
-                            Dark
-                            Rainy Street</option>
-                        <option
-                            value="Fantasy/Magical: The interior of an ancient, ruined temple overgrown with jungle vines, with a mystical artifact glowing in the center.">
-                            Fantasy Magical Temple</option>
-                        <option
-                            value="Historical/War: A muddy, shell-scarred WWI trench with barbed wire and a low, gray sky.">
-                            Historical War Trench</option>
-                        <option value="An oldschool kentucky bar with wooden decors">Kentucky Bar</option>
-                        <option
-                            value="Medieval Castle Hall: A vast, cold, stone-walled castle hall, lit primarily by the flickering light of a massive fireplace and a few high, narrow windows. Dust motes dance in the faint light.">
-                            Medieval Castle Hall</option>
-                        <option
-                            value="Modern/Domestic: A sleek, minimalist penthouse apartment overlooking a city skyline at dawn.">
-                            Modern Penthouse</option>
-                        <option
-                            value="Mystical: A dense, fog-shrouded ancient forest with moss-covered ruins and shafts of moonlight breaking through the canopy.">
-                            Mystical Forest</option>
-                        <option
-                            value="post-apocalyptic: A desolate, sand-swept highway with the remains of rusted vehicles and a setting sun casting long shadows">
-                            Post-Apocalyptic Highway</option>
-                        <option
-                            value="Roaring Twenties/Speakeasy: A smoky, dimly lit speakeasy or jazz club, with people dancing, art deco patterns on the walls, and a spotlight on a microphone stand or a grand piano.">
-                            Roaring Twenties Speakeasy</option>
-                        <option
-                            value="Sci-Fi/Industrial: A vast, dimly-lit, high-tech factory floor filled with glowing machinery and steam, on an off-world colony.">
-                            Sci-Fi Industrial Factory</option>
-                        <option
-                            value="scifi: The bridge of a sleek, futuristic starship looking out onto a distant, colorful nebula">
-                            Sci-Fi Starship Bridge</option>
-                        <option
-                            value="Technologically Advanced Veterinary Clinic: A bright, sterile clinic interior dominated by smooth, white, antimicrobial surfaces and blue LED accent lighting. Large windows look out">
-                            Tech Vet Clinic</option>
-                        <option
-                            value="Toscana: The stone-paved courtyard of an old Tuscan villa, before noon, Sunbeams seeping through an arched doorway, Terracotta pots with lush greenery line the walls">
-                            Toscana Villa Courtyard</option>
-                        <option
-                            value="Urban/Noir: A gritty, rainy back alley in a 1940s city at night, illuminated by a single flickering neon sign.">
-                            Urban/Noir Alley</option>
-                    </select>
-                </div>
-                <div class="form-group duogroup">
-                    <label class="form-label">Camera</label>
-                    <select class="form-select camera-select" onchange="updateDuoPrompt()">
-                        <option value="" disabled selected>Select a camera angle...</option>
-                        <option
-                            value="Cinematic/Wide Shot: A wide shot with a deep focus, emphasizing the scale of the environment (like a castle hall or mountain), making the subject appear powerful yet part of a grand setting.">
-                            Cinematic/Wide Shot</option>
-                        <option
-                            value="Dramatic Lighting/Shadow: Focus is placed on how the lighting creates deep, hard shadows across the subject's face and body (typical of film noir), emphasizing mystery and intensity.">
-                            Dramatic Lighting/Shadow</option>
-                        <option
-                            value="Dutch Angle/Tension: The camera is tilted on its axis, giving the horizon a slant, to create a sense of unease, tension, or a psychological effect.">
-                            Dutch Angle/Tension</option>
-                        <option
-                            value="High-Angle/Dominance: Shot from above the subject, making them appear smaller or more vulnerable.">
-                            High-Angle/Dominance</option>
-                        <option
-                            value="Low-Angle/Power: Shot from below the subject, making them appear larger, more dominant, or heroic.">
-                            Low-Angle/Power</option>
-                        <option
-                            value="Low-Angle/Silhouetted: A shot from very low, looking up at the subject against a dramatic sky or light source, creating a powerful, imposing silhouette.">
-                            Low-Angle/Silhouetted</option>
-                        <option
-                            value="Medium Close-Up/Intense Focus: A shot from the chest up, focusing sharply on the face and upper body to highlight expression and detail (like scars or armor damage), using shallow depth of field.">
-                            Medium Close-Up/Intense Focus</option>
-                        <option
-                            value="Over the Shoulder/Viewpoint: Shot from slightly behind a companion or a prop, focusing on the male subject who is looking into the distance, conveying a sense of shared journey or vulnerability.">
-                            Over the Shoulder/Viewpoint</option>
-                        <option
-                            value="Telephoto/Compressed: A telephoto lens from a distance, flattening the perspective, compressing the background, and creating shallow depth of field (strong bokeh).">
-                            Telephoto/Compressed</option>
-                        <option
-                            value="Telephoto/Intimate Close-Up: Used from a moderate distance to isolate the subject's face or upper body.">
-                            Telephoto/Intimate Close-Up</option>
-                        <option
-                            value="Tracking Shot/Action: The camera appears to be moving alongside or slightly ahead of the subject, capturing them mid-run or mid-motion, creating a dynamic, action-movie feel.">
-                            Tracking Shot/Action</option>
-                        <option
-                            value="Wide-Angle/Close-Up: A wide-angle lens used close to the subject, creating dramatic perspective distortion and emphasizing the foreground.">
-                            Wide-Angle/Close-Up</option>
-                        <option
-                            value="Shot with a wide-angle lens from a medium distance, capturing the full subject and a large, dramatic portion of the scene/environment.">
-                            Wide-Angle/Medium</option>
-                    </select>
-                </div>
+            <div class="form-group">
+                <label class="form-label">Body</label>
+                <select class="form-select" onchange="updateSoloPrompt()">
+                    <option value="" disabled selected>Select a body type...</option>
+                    <option value="Average/Realistic: Normal, everyday build, comfortable and familiar proportions.">
+                        Average/Realistic</option>
+                    <option
+                        value="Burly/Hulking: Large and powerfully built, broad shoulders, thick neck, conveying strength and intimidation.">
+                        Burly/Hulking</option>
+                    <option
+                        value="Elderly/Weathered: Thin or frail, with aged, wrinkled skin, pronounced bone structure, conveying wisdom or hardship.">
+                        Elderly/Weathered</option>
+                    <option value="Heavily Tattooed: Covered in detailed, visible tattoos on arms, chest, and legs.">
+                        Heavily Tattooed</option>
+                    <option
+                        value="Lean/Wiry: Slender and athletic, with visible tone but not bulky, conveying speed and agility.">
+                        Lean/Wiry</option>
+                    <option
+                        value="Average/Dad Bod: Realistic build with a moderate amount of muscle and body fat, conveying relatability or casualness.">
+                        Man: Average/Dad Bod</option>
+                    <option value="Muscular/Athletic: Lean, defined muscles, toned arms, strong core, athletic build.">
+                        Muscular/Athletic</option>
+                    <option
+                        value="Muscular/Shredded: Extremely low body fat, highly defined muscles, prominent veins, typical of a bodybuilder or action hero.">
+                        Muscular/Shredded</option>
+                    <option
+                        value="Slim/Ethereal: Slender and graceful, delicate frame, long limbs, and an almost ethereal appearance.">
+                        Slim/Ethereal</option>
+                    <option value="thin body, thin arms, prominent collarbones, thin face">Thin Body</option>
+                    <option
+                        value="Toned/Swimmer's Build: Smooth, defined musculature without extreme bulk, conveying fitness and grace.">
+                        Toned/Swimmer's Build</option>
+                    <option value="Full figure, hourglass shape, soft curves, and a naturally healthy appearance.">
+                        Woman: Full Figure/Hourglass</option>
+                    <option value="Slim waist, large bust and hips">Woman:Slim Waist/Curvy</option>
 
-                <h2 style="color: hsl(var(--primary)); margin-top: 2rem; font-size: 1.2rem;">Person 1</h2>
-                <div id="p1-container">
-                    <div class="form-group">
-                        <label class="form-label">Body</label>
-                        <select class="form-select body-select" onchange="updateDuoPrompt()">
-                            <option value="" disabled selected>Select a body type...</option>
-                            <option
-                                value="Average/Dad Bod: Realistic build with a moderate amount of muscle and body fat, conveying relatability or casualness.">
-                                Average/Dad Bod</option>
-                            <option
-                                value="Average/Realistic: Normal, everyday build, comfortable and familiar proportions.">
-                                Average/Realistic</option>
-                            <option
-                                value="Burly/Hulking: Large and powerfully built, broad shoulders, thick neck, conveying strength and intimidation.">
-                                Burly/Hulking</option>
-                            <option
-                                value="Elderly/Weathered: Thin or frail, with aged, wrinkled skin, pronounced bone structure, conveying wisdom or hardship.">
-                                Elderly/Weathered</option>
-                            <option
-                                value="Full figure, hourglass shape, soft curves, and a naturally healthy appearance.">
-                                Full Figure/Hourglass</option>
-                            <option
-                                value="Heavily Tattooed: Covered in detailed, visible tattoos on arms, chest, and legs.">
-                                Heavily Tattooed</option>
-                            <option
-                                value="Lean/Wiry: Slender and athletic, with visible tone but not bulky, conveying speed and agility.">
-                                Lean/Wiry</option>
-                            <option
-                                value="Muscular/Athletic: Lean, defined muscles, toned arms, strong core, athletic build.">
-                                Muscular/Athletic</option>
-                            <option
-                                value="Muscular/Shredded: Extremely low body fat, highly defined muscles, prominent veins, typical of a bodybuilder or action hero.">
-                                Muscular/Shredded</option>
-                            <option value="Slim waist, large bust and hips">Slim Waist/Curvy</option>
-                            <option
-                                value="Slim/Ethereal: Slender and graceful, delicate frame, long limbs, and an almost ethereal appearance.">
-                                Slim/Ethereal</option>
-                            <option value="thin body, thin arms, prominent collarbones, thin face">Thin Body</option>
-                            <option
-                                value="Toned/Swimmer's Build: Smooth, defined musculature without extreme bulk, conveying fitness and grace.">
-                                Toned/Swimmer's Build</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Outfit</label>
-                        <select class="form-select outfit-select" onchange="updateDuoPrompt()">
-                            <option value="" disabled selected>Select an outfit...</option>
-                            <option value="thin lace blouse with a-line deep v-neck">Blouse</option>
-                            <option
-                                value="A sleek, high-tech jacket with integrated glowing lines, cargo pants, and reinforced combat boots.">
-                                Cyberpunk</option>
-                            <option
-                                value="wearing dark blue scrubs with slight v neck and a white lab coat over it. she has a stethoscope around her neck. it is obvious that her coat pockets have something in it">
-                                Medical Scrubs</option>
-                            <option
-                                value="Full plate armor (perhaps scarred or slightly damaged), a heavy, dyed wool cloak, and a simple, broad leather belt.holding sword and shield">
-                                Medieval Knight</option>
-                            <option
-                                value="A sharp, three-piece suit (pinstripe or solid dark color), a silk tie, a polished gold ring, and shiny dress shoes.">
-                                Modern Gangster</option>
-                            <option
-                                value="A well-tailored, dark trench coat, a fedora, a crisp white shirt, and dark leather gloves.">
-                                Noir Detective</option>
-                            <option
-                                value="Heavily layered, distressed clothing, a gas mask slung around the neck, bandoliers of scavenged items, and protective leather wrist guards.">
-                                Post-Apocalyptic Nomad</option>
-                            <option value="A sequined flapper dress with a feather boa and long pearl necklace.">Roaring
-                                Twenties</option>
-                            <option
-                                value="Black, reinforced body armor with glowing blue or red accents, tactical helmet with visor, and utility straps across the chest.">
-                                Sci-Fi Mercenary</option>
-                            <option value="a cream suit with a white shirt with open neck">Suit</option>
-                            <option
-                                value="Rugged, thick canvas jacket, layered thermal shirt, heavy-duty hiking boots, and a well-worn leather backpack.">
-                                Survivalist/Hunter</option>
-                            <option value="gray tanktop (crop top, spagetti strap shoulders)">Tanktop</option>
-                            <option
-                                value="Full traditional layered kimono and hakama, with a katana sheathed at the waist.">
-                                Traditional Samurai</option>
-                            <option
-                                value="padded leather femme fatale costume. she should have a leather cape. her leather pants should be holding wooden sticks and a small crossbow.">
-                                Van Helsing</option>
-                            <option
-                                value="primal warrior with tattered clothes that show a lot of skin, leather shoulder plates, long boots and exessive accessories and a primal axe in hand">
-                                Primal Warrior</option>
-                            <option
-                                value="A long, black velvet gown with lace accents, high collar, and antique silver jewelry.">
-                                Victorian Gothic</option>
-                            <option value="white long dress with long sleeves, long skirt, deep and wide v-neck">White
-                                Dress
-                            </option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Pose</label>
-                        <select class="form-select pose-select" onchange="updateDuoPrompt()">
-                            <option value="" disabled selected>Select a pose...</option>
-                            <option
-                                value="Action/Dynamic: Leaning forward with one hand resting on a raised knee, a determined gaze, suggesting readiness for action.">
-                                Action/Dynamic</option>
-                            <option
-                                value="Alluring: Reclining on a surface (like a couch or a table), body partially turned towards the camera, a soft, inviting expression.">
-                                Alluring</option>
-                            <option
-                                value="Candid/Natural: Caught mid-movement, perhaps a slight turn of the head or a hand reaching for something, looking over the shoulder.">
-                                Candid/Natural</option>
-                            <option
-                                value="Commanding/Authority: Standing upright with a broad posture, hands clasped behind the back or resting on a table/desk, direct and confident eye contact with the camera.">
-                                Commanding/Authority</option>
-                            <option
-                                value="Duel/Mid-Fight: Caught in the middle of a motion (e.g., drawing a sword, throwing a punch, or bracing for impact), showing dynamic movement and tension.">
-                                Duel/Mid-Fight</option>
-                            <option
-                                value="Heroic/Triumphant: Standing on elevated ground (like a cliff or ruined wall), facing away or in profile, with arms raised or hands on hips, gazing at the horizon.">
-                                Heroic/Triumphant</option>
-                            <option
-                                value="Pensive/Contemplative: Standing with arms crossed or one hand near the chin, looking slightly off-camera or down, conveying deep thought.">
-                                Pensive/Contemplative</option>
-                            <option
-                                value="Powerful/Imposing: Standing with feet slightly apart (power stance), shoulders back, holding a weapon or staff firmly, gazing intensely at the camera.">
-                                Powerful/Imposing</option>
-                            <option
-                                value="Relaxed/Confident: Standing tall with a slight hip tilt, one hand casually resting in a pocket or on a prop (like a sword hilt or a chair back), direct eye contact.">
-                                Relaxed/Confident</option>
-                            <option
-                                value="Riding/Motorcycle: Sitting on a classic American-style chopper motorcycle, leaning forward slightly, with a confident, road-ready posture.">
-                                Riding/Motorcycle</option>
-                            <option value="sitting on a chair, a high table in front of her">Sitting on Chair</option>
-                            <option
-                                value="gracefully sitting on the edge of a table, one leg drawn up, looking to the camera">
-                                Sitting on Table Edge</option>
-                            <option
-                                value="Supernatural/Ghost: Floating mid-air, with a semi-transparent, ethereal appearance, perhaps with a soft glow or wisps of vapor around the figure. slight smile.">
-                                Supernatural/Ghost</option>
-                            <option
-                                value="Thoughtful/Brooding: Sitting slouched on a chair or the floor, head slightly down, with one arm resting across the knee or forehead, conveying deep introspection or sorrow.">
-                                Thoughtful/Brooding</option>
-                            <option
-                                value="Vigilant/Scout: Crouched low behind cover or a rock, one hand on a weapon or the ground, eyes scanning the distance (looking slightly off-camera), conveying alertness.">
-                                Vigilant/Scout</option>
-                            <option
-                                value="Wounded/Resilient: Leaning against a wall or resting on one knee, showing signs of wear and tear, but with a determined, unbroken expression.">
-                                Wounded/Resilient</option>
-                        </select>
-                    </div>
-                </div>
+                </select>
+            </div>
 
-                <h2 style="color: hsl(var(--primary)); margin-top: 2rem; font-size: 1.2rem;">Person 2</h2>
-                <div id="p2-container">
-                    <div class="form-group">
-                        <label class="form-label">Body</label>
-                        <select class="form-select body-select" onchange="updateDuoPrompt()">
-                            <option value="" disabled selected>Select a body type...</option>
-                            <option
-                                value="Average/Dad Bod: Realistic build with a moderate amount of muscle and body fat, conveying relatability or casualness.">
-                                Average/Dad Bod</option>
-                            <option
-                                value="Average/Realistic: Normal, everyday build, comfortable and familiar proportions.">
-                                Average/Realistic</option>
-                            <option
-                                value="Burly/Hulking: Large and powerfully built, broad shoulders, thick neck, conveying strength and intimidation.">
-                                Burly/Hulking</option>
-                            <option
-                                value="Elderly/Weathered: Thin or frail, with aged, wrinkled skin, pronounced bone structure, conveying wisdom or hardship.">
-                                Elderly/Weathered</option>
-                            <option
-                                value="Full figure, hourglass shape, soft curves, and a naturally healthy appearance.">
-                                Full Figure/Hourglass</option>
-                            <option
-                                value="Heavily Tattooed: Covered in detailed, visible tattoos on arms, chest, and legs.">
-                                Heavily Tattooed</option>
-                            <option
-                                value="Lean/Wiry: Slender and athletic, with visible tone but not bulky, conveying speed and agility.">
-                                Lean/Wiry</option>
-                            <option
-                                value="Muscular/Athletic: Lean, defined muscles, toned arms, strong core, athletic build.">
-                                Muscular/Athletic</option>
-                            <option
-                                value="Muscular/Shredded: Extremely low body fat, highly defined muscles, prominent veins, typical of a bodybuilder or action hero.">
-                                Muscular/Shredded</option>
-                            <option value="Slim waist, large bust and hips">Slim Waist/Curvy</option>
-                            <option
-                                value="Slim/Ethereal: Slender and graceful, delicate frame, long limbs, and an almost ethereal appearance.">
-                                Slim/Ethereal</option>
-                            <option value="thin body, thin arms, prominent collarbones, thin face">Thin Body</option>
-                            <option
-                                value="Toned/Swimmer's Build: Smooth, defined musculature without extreme bulk, conveying fitness and grace.">
-                                Toned/Swimmer's Build</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Outfit</label>
-                        <select class="form-select outfit-select" onchange="updateDuoPrompt()">
-                            <option value="" disabled selected>Select an outfit...</option>
-                            <option value="thin lace blouse with a-line deep v-neck">Blouse</option>
-                            <option
-                                value="A sleek, high-tech jacket with integrated glowing lines, cargo pants, and reinforced combat boots.">
-                                Cyberpunk</option>
-                            <option
-                                value="wearing dark blue scrubs with slight v neck and a white lab coat over it. she has a stethoscope around her neck. it is obvious that her coat pockets have something in it">
-                                Medical Scrubs</option>
-                            <option
-                                value="Full plate armor (perhaps scarred or slightly damaged), a heavy, dyed wool cloak, and a simple, broad leather belt.holding sword and shield">
-                                Medieval Knight</option>
-                            <option
-                                value="A sharp, three-piece suit (pinstripe or solid dark color), a silk tie, a polished gold ring, and shiny dress shoes.">
-                                Modern Gangster</option>
-                            <option
-                                value="A well-tailored, dark trench coat, a fedora, a crisp white shirt, and dark leather gloves.">
-                                Noir Detective</option>
-                            <option
-                                value="Heavily layered, distressed clothing, a gas mask slung around the neck, bandoliers of scavenged items, and protective leather wrist guards.">
-                                Post-Apocalyptic Nomad</option>
-                            <option value="A sequined flapper dress with a feather boa and long pearl necklace.">Roaring
-                                Twenties</option>
-                            <option
-                                value="Black, reinforced body armor with glowing blue or red accents, tactical helmet with visor, and utility straps across the chest.">
-                                Sci-Fi Mercenary</option>
-                            <option value="a cream suit with a white shirt with open neck">Suit</option>
-                            <option
-                                value="Rugged, thick canvas jacket, layered thermal shirt, heavy-duty hiking boots, and a well-worn leather backpack.">
-                                Survivalist/Hunter</option>
-                            <option value="gray tanktop (crop top, spagetti strap shoulders)">Tanktop</option>
-                            <option
-                                value="Full traditional layered kimono and hakama, with a katana sheathed at the waist.">
-                                Traditional Samurai</option>
-                            <option
-                                value="padded leather femme fatale costume. she should have a leather cape. her leather pants should be holding wooden sticks and a small crossbow.">
-                                Van Helsing</option>
-                            <option
-                                value="primal warrior with tattered clothes that show a lot of skin, leather shoulder plates, long boots and exessive accessories and a primal axe in hand">
-                                Primal Warrior</option>
-                            <option
-                                value="A long, black velvet gown with lace accents, high collar, and antique silver jewelry.">
-                                Victorian Gothic</option>
-                            <option value="white long dress with long sleeves, long skirt, deep and wide v-neck">White
-                                Dress
-                            </option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Pose</label>
-                        <select class="form-select pose-select" onchange="updateDuoPrompt()">
-                            <option value="" disabled selected>Select a pose...</option>
-                            <option
-                                value="Action/Dynamic: Leaning forward with one hand resting on a raised knee, a determined gaze, suggesting readiness for action.">
-                                Action/Dynamic</option>
-                            <option
-                                value="Alluring: Reclining on a surface (like a couch or a table), body partially turned towards the camera, a soft, inviting expression.">
-                                Alluring</option>
-                            <option
-                                value="Candid/Natural: Caught mid-movement, perhaps a slight turn of the head or a hand reaching for something, looking over the shoulder.">
-                                Candid/Natural</option>
-                            <option
-                                value="Commanding/Authority: Standing upright with a broad posture, hands clasped behind the back or resting on a table/desk, direct and confident eye contact with the camera.">
-                                Commanding/Authority</option>
-                            <option
-                                value="Duel/Mid-Fight: Caught in the middle of a motion (e.g., drawing a sword, throwing a punch, or bracing for impact), showing dynamic movement and tension.">
-                                Duel/Mid-Fight</option>
-                            <option
-                                value="Heroic/Triumphant: Standing on elevated ground (like a cliff or ruined wall), facing away or in profile, with arms raised or hands on hips, gazing at the horizon.">
-                                Heroic/Triumphant</option>
-                            <option
-                                value="Pensive/Contemplative: Standing with arms crossed or one hand near the chin, looking slightly off-camera or down, conveying deep thought.">
-                                Pensive/Contemplative</option>
-                            <option
-                                value="Powerful/Imposing: Standing with feet slightly apart (power stance), shoulders back, holding a weapon or staff firmly, gazing intensely at the camera.">
-                                Powerful/Imposing</option>
-                            <option
-                                value="Relaxed/Confident: Standing tall with a slight hip tilt, one hand casually resting in a pocket or on a prop (like a sword hilt or a chair back), direct eye contact.">
-                                Relaxed/Confident</option>
-                            <option
-                                value="Riding/Motorcycle: Sitting on a classic American-style chopper motorcycle, leaning forward slightly, with a confident, road-ready posture.">
-                                Riding/Motorcycle</option>
-                            <option value="sitting on a chair, a high table in front of her">Sitting on Chair</option>
-                            <option
-                                value="gracefully sitting on the edge of a table, one leg drawn up, looking to the camera">
-                                Sitting on Table Edge</option>
-                            <option
-                                value="Supernatural/Ghost: Floating mid-air, with a semi-transparent, ethereal appearance, perhaps with a soft glow or wisps of vapor around the figure. slight smile.">
-                                Supernatural/Ghost</option>
-                            <option
-                                value="Thoughtful/Brooding: Sitting slouched on a chair or the floor, head slightly down, with one arm resting across the knee or forehead, conveying deep introspection or sorrow.">
-                                Thoughtful/Brooding</option>
-                            <option
-                                value="Vigilant/Scout: Crouched low behind cover or a rock, one hand on a weapon or the ground, eyes scanning the distance (looking slightly off-camera), conveying alertness.">
-                                Vigilant/Scout</option>
-                            <option
-                                value="Wounded/Resilient: Leaning against a wall or resting on one knee, showing signs of wear and tear, but with a determined, unbroken expression.">
-                                Wounded/Resilient</option>
-                        </select>
-                    </div>
-                </div>
+            <div class="form-group">
+                <label class="form-label">Camera</label>
+                <select class="form-select" onchange="updateSoloPrompt()">
+                    <option value="" disabled selected>Select a camera angle...</option>
+                    <option
+                        value="Cinematic/Wide Shot: A wide shot with a deep focus, emphasizing the scale of the environment, making the subject appear powerful yet part of a grand setting.">
+                        Cinematic/Wide Shot</option>
+                    <option
+                        value="Dramatic Lighting/Shadow: Focus is placed on how the lighting creates deep, hard shadows across the subject's face and body (typical of film noir), emphasizing mystery and intensity.">
+                        Dramatic Lighting/Shadow</option>
+                    <option
+                        value="Dutch Angle/Tension: The camera is tilted on its axis, giving the horizon a slant, to create a sense of unease, tension, or a psychological effect.">
+                        Dutch Angle/Tension</option>
+                    <option
+                        value="High-Angle/Dominance: Shot from above the subject, making them appear smaller or more vulnerable.">
+                        High-Angle/Dominance</option>
+                    <option
+                        value="Low-Angle/Power: Shot from below the subject, making them appear larger, more dominant, or heroic.">
+                        Low-Angle/Power</option>
+                    <option
+                        value="Low-Angle/Silhouetted: A shot from very low, looking up at the subject against a dramatic sky or light source, creating a powerful, imposing silhouette.">
+                        Low-Angle/Silhouetted</option>
+                    <option
+                        value="Medium Close-Up/Intense Focus: A shot from the chest up, focusing sharply on the face and upper body to highlight expression and detail (like scars or armor damage), using shallow depth of field.">
+                        Medium Close-Up/Intense Focus</option>
+                    <option
+                        value="Telephoto/Compressed: A telephoto lens from a distance, flattening the perspective, compressing the background, and creating shallow depth of field (strong bokeh).">
+                        Telephoto/Compressed</option>
+                    <option
+                        value="Telephoto/Intimate Close-Up: Used from a moderate distance to isolate the subject's face or upper body.">
+                        Telephoto/Intimate Close-Up</option>
+                    <option
+                        value="Tracking Shot/Action: The camera appears to be moving alongside or slightly ahead of the subject, capturing them mid-run or mid-motion, creating a dynamic, action-movie feel.">
+                        Tracking Shot/Action</option>
+                    <option
+                        value="Wide-Angle/Close-Up: A wide-angle lens used close to the subject, creating dramatic perspective distortion and emphasizing the foreground.">
+                        Wide-Angle/Close-Up</option>
+                    <option
+                        value="Shot with a wide-angle lens from a medium distance, capturing the full subject and a large, dramatic portion of the scene/environment.">
+                        Wide-Angle/Medium</option>
+                </select>
+            </div>
 
-                <div class="generated-prompt-box" id="prompt-duo">
-                    <!-- Prompt will appear here -->
-                </div>
-                <div style="display: flex; gap: 1rem;">
-                    <button class="copy-btn" onclick="randomizeDuo()"
-                        style="background: yellow; color: black;">RANDOMIZE</button>
-                    <button class="copy-btn" onclick="copyToClipboard('prompt-duo')">COPY PROMPT</button>
-                </div>
+            <div class="generated-prompt-box" id="prompt-solo">
+                <!-- Prompt will appear here -->
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <button class="copy-btn" onclick="randomizeSolo()"
+                    style="background: yellow; color: black;">RANDOMIZE</button>
+                <button class="copy-btn" onclick="copyToClipboard('prompt-solo')">COPY PROMPT</button>
             </div>
         </div>
 
-        <!-- MOCK MAKER VIEW -->
-        <div id="mock-maker-view" class="main-view">
-            <div class="tabs">
-                <button class="tab-button active" onclick="openMockTab('mock-first')">First Picture</button>
-                <button class="tab-button" onclick="openMockTab('mock-picture')">Picture</button>
-            </div>
 
-            <!-- Mock First Tab -->
-            <div id="mock-first" class="tab-content active">
-                <div class="prompt-box" id="prompt-mock-first">photo of a person, front view, passport photo style,
-                    mugshot,
-                    neutral expression with serene smile, looking directly at camera, head and shoulders, bare
-                    shoulders,
-                    clear facial features, raw photo, hyperrealistic, pure white background, simple background, flat
-                    lighting, soft uniform lighting, 8k uhd, sharp focus</div>
-                <button class="copy-btn" onclick="copyToClipboard('prompt-mock-first')">COPY PROMPT</button>
-            </div>
+        <!-- Mock Maker Section -->
+        <div id="mock-maker" class="main-tab-content">
+
 
             <!-- Mock Picture Tab -->
-            <div id="mock-picture" class="tab-content">
+            <div id="mock-picture" class="tab-content active">
                 <div class="form-group">
                     <label class="form-label">Outfit</label>
                     <select class="form-select mock-outfit" onchange="updateMockPrompt()">
                         <option value="" disabled selected>Select an outfit...</option>
                         <option value="wearing a crisp white button-down shirt, perfectly ironed">Shirt</option>
-                        <option value="wearing colorful swimming trunks suitable for a beach day">Swimming Clothes
+                        <option value="wearing colorful swimsuit suitable for a beach day">Swimming Clothes
                         </option>
                         <option value="wearing a tailored navy blue suit with a silk tie">Suit</option>
                         <option value="wearing a comfortable grey hoodie and denim jeans">Casual Hoodie</option>
-                        <option value="wearing a flowing floral summer dress with spaghetti straps">Summer Dress
+                        <option
+                            value="if there is a woman: a flowing floral summer dress with spaghetti straps. If there is a man a hawaiian shirt">
+                            Summerwear
                         </option>
                         <option value="wearing a heavy wool trench coat with a cashmere scarf">Winter Coat</option>
                         <option value="wearing high-performance athletic gear, neon accents">Sportswear</option>
@@ -1012,7 +606,6 @@
                         <option value="wearing a formal evening gown with sequins and silk">Evening Gown</option>
                         <option value="wearing a tactical military uniform with camouflage pattern">Military Uniform
                         </option>
-                        <option value="wearing a retro 1950s diner waitress uniform">Retro Waitress</option>
                         <option value="wearing a futuristic silver jumpsuit with glowing panels">Space Suit</option>
                         <option value="wearing traditional japanese kimono with cherry blossom pattern">Kimono</option>
                     </select>
@@ -1022,22 +615,15 @@
                     <label class="form-label">Expression</label>
                     <select class="form-select mock-expression" onchange="updateMockPrompt()">
                         <option value="" disabled selected>Select an expression...</option>
-                        <option value="happy expression, a radiant smile, eyes crinkled with joy">Happy</option>
+                        <option value="happy expression, a radiant smile">Happy</option>
                         <option value="shocked expression, wide eyes, mouth slightly open in disbelief">Shocked</option>
-                        <option value="sad expression, downcast eyes, a frown, looking melancholic">Sad</option>
-                        <option value="angry expression, furrowed brows, intense glare, teeth clenched">Angry</option>
-                        <option value="laughing hysterically, head thrown back, tears of laughter">Laughing</option>
-                        <option value="terrified expression, pale face, eyes wide with fear, screaming">Terrified
-                        </option>
-                        <option value="disgusted expression, nose wrinkled, upper lip curled in distaste">Disgusted
-                        </option>
+                        <option value="angry expression, furrowed brows, intense glare">Angry</option>
+                        <option value="laughing, head thrown back, tears of laughter">Laughing</option>
                         <option value="thoughtful expression, gazing into distance, hand on chin, pensive">Thoughtful
                         </option>
                         <option value="confident expression, chin up, slight smirk, direct eye contact">Confident
                         </option>
                         <option value="romantic expression, soft gaze, blushing cheeks, gentle smile">Romantic</option>
-                        <option value="tired expression, heavy eyelids, yawning, dark circles">Tired</option>
-                        <option value="bored expression, resting face, dull eyes, looking away">Bored</option>
                         <option value="mischievous expression, raised eyebrow, sly grin, plotting">Mischievous</option>
                     </select>
                 </div>
@@ -1049,30 +635,15 @@
                         <option value="designed like a glossy enamel pin with thick gold outlines, simple shading">
                             Enamel Pin</option>
                         <option
-                            value="illustrated in the style of a vintage decadent chocolate box, romantic and soft, painterly">
+                            value="illustrated on the package of a vintage decadent chocolate box, romantic and soft, painterly">
                             Chocolate Box</option>
                         <option
                             value="resembling a plastic action figure or doll, smooth textures, vibrant colors, toy photography">
                             Toy</option>
-                        <option
-                            value="oil painting style, thick brushstrokes, dramatic chiaroscuro lighting, classical art">
-                            Oil Painting</option>
-                        <option
-                            value="watercolour painting, soft bleeding colors, artistic splashes, white paper texture">
-                            Watercolor</option>
-                        <option
-                            value="cyberpunk aesthetic, neon blue and pink lighting, rain-slicked surfaces, high contrast">
-                            Cyberpunk</option>
-                        <option
-                            value="pencil sketch, rough graphite lines, hatching shading, sketchbook paper background">
-                            Pencil Sketch</option>
                         <option value="pixel art style, 16-bit retro game graphics, dithering, limited color palette">
                             Pixel Art</option>
                         <option
-                            value="film noir style, high contrast black and white photography, dramatic shadows, mysterious atmosphere">
-                            Film Noir</option>
-                        <option
-                            value="vaporwave aesthetic, pastel gradients, greek statues, glitch effects, 80s nostalgia">
+                            value="vaporwave aesthetic, pastel gradients, greek statues, glitch effects, 80s nostalgia, screen artifacts, cute motivational message in neon">
                             Vaporwave</option>
                         <option value="low poly 3d render, geometric shapes, sharp edges, flat shading, minimalist">Low
                             Poly</option>
@@ -1080,13 +651,14 @@
                             value="stained glass window style, vibrant translucent colors, heavy black lead outlines, light shining through">
                             Stained Glass</option>
                         <option
-                            value="layered paper cutout art, 3d depth with shadows, simple shapes, craft paper texture">
+                            value="layered paper cutout art, 3d depth with shadows and contrasting colors, simple shapes, craft paper texture">
                             Paper Cutout</option>
                         <option
                             value="studio ghibli anime style, vibrant lush colors, detailed background, hand drawn cel animation">
                             Anime / Ghibli</option>
-                        <option value="horror theme, dark and gritty, grainy texture, vignette, unsettling atmosphere">
-                            Horror</option>
+                        <option
+                            value="Digital render, huge trees in the background with rivers and mountains, wide angle. vibrant lush colors, detailed background. Subject is a digitally rendered videogame character kneedeep in a river holding a huge candy">
+                            Fantasy world</option>
                     </select>
                 </div>
 
@@ -1106,39 +678,35 @@
     <div id="toast" class="toast">Copied to clipboard!</div>
 
     <script>
-        function switchMainView(viewId) {
-            document.querySelectorAll('.main-view').forEach(view => view.classList.remove('active'));
-            document.querySelectorAll('.main-tab-btn').forEach(btn => btn.classList.remove('active'));
+        function openMainTab(tabName) {
+            // Hide all main tab contents
+            document.querySelectorAll('.main-tab-content').forEach(content => content.classList.remove('active'));
 
-            document.getElementById(viewId).classList.add('active');
+            // Deactivate all top-level tab buttons
+            // Top-level buttons are in the direct .tabs child of .container
+            const mainTabsContainer = document.querySelector('.container > .tabs');
+            if (mainTabsContainer) {
+                mainTabsContainer.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
+            }
 
-            const buttons = document.querySelectorAll('.main-tab-btn');
-            const targetBtn = Array.from(buttons).find(btn => btn.getAttribute('onclick').includes(viewId));
-            if (targetBtn) targetBtn.classList.add('active');
-        }
+            // Show the specific tab
+            const targetContent = document.getElementById(tabName);
+            if (targetContent) targetContent.classList.add('active');
 
-        function openTab(tabName) {
-            const container = document.getElementById('picture-maker-view');
-
-            // Hide all tab contents in container
-            container.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-
-            // Remove active class from buttons in container
-            container.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
-
-            // Show the specific tab and activate button
-            document.getElementById(tabName).classList.add('active');
-
-            const targetButton = Array.from(container.querySelectorAll('.tab-button')).find(btn => btn.getAttribute('onclick').includes(tabName));
-            if (targetButton) targetButton.classList.add('active');
+            // Activate button
+            if (mainTabsContainer) {
+                // Find button that calls openMainTab with the tabName
+                const targetButton = Array.from(mainTabsContainer.querySelectorAll('.tab-button'))
+                    .find(btn => btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(`'${tabName}'`));
+                if (targetButton) targetButton.classList.add('active');
+            }
 
             // Trigger update if opening tab to populate initial state
             if (tabName === 'solo') updateSoloPrompt();
-            if (tabName === 'duo') updateDuoPrompt();
+            if (tabName === 'mock-maker') updateMockPrompt();
         }
-
         function openMockTab(tabName) {
-            const container = document.getElementById('mock-maker-view');
+            const container = document.getElementById('mock-maker');
 
             container.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
             container.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
@@ -1194,40 +762,7 @@
             document.getElementById('prompt-solo').innerText = JSON.stringify(promptObj, null, 4);
         }
 
-        function updateDuoPrompt() {
-            const promptObj = {};
 
-            // Shared
-            const scene = document.querySelector('#duo .scene-select').value;
-            if (scene) promptObj["Scene"] = scene;
-
-            const camera = document.querySelector('#duo .camera-select').value;
-            if (camera) promptObj["Camera"] = camera;
-
-            // Person 1
-            const p1 = {};
-            const p1Body = document.querySelector('#p1-container .body-select').value;
-            if (p1Body) p1["Body"] = p1Body;
-            const p1Outfit = document.querySelector('#p1-container .outfit-select').value;
-            if (p1Outfit) p1["Outfit"] = p1Outfit;
-            const p1Pose = document.querySelector('#p1-container .pose-select').value;
-            if (p1Pose) p1["Pose"] = p1Pose;
-
-            if (Object.keys(p1).length > 0) promptObj["Person 1"] = p1;
-
-            // Person 2
-            const p2 = {};
-            const p2Body = document.querySelector('#p2-container .body-select').value;
-            if (p2Body) p2["Body"] = p2Body;
-            const p2Outfit = document.querySelector('#p2-container .outfit-select').value;
-            if (p2Outfit) p2["Outfit"] = p2Outfit;
-            const p2Pose = document.querySelector('#p2-container .pose-select').value;
-            if (p2Pose) p2["Pose"] = p2Pose;
-
-            if (Object.keys(p2).length > 0) promptObj["Person 2"] = p2;
-
-            document.getElementById('prompt-duo').innerText = JSON.stringify(promptObj, null, 4);
-        }
 
         function updateMockPrompt() {
             const outfit = document.querySelector('.mock-outfit').value;
@@ -1252,15 +787,7 @@
             updateSoloPrompt();
         }
 
-        function randomizeDuo() {
-            const selects = document.querySelectorAll('#duo .form-select');
-            selects.forEach(select => {
-                const options = Array.from(select.options).filter(opt => !opt.disabled && opt.value !== "");
-                const randomOption = options[Math.floor(Math.random() * options.length)];
-                select.value = randomOption.value;
-            });
-            updateDuoPrompt();
-        }
+
 
         function randomizeMock() {
             const selects = document.querySelectorAll('#mock-picture .form-select');
