@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }}</title>
+    <style>
+        :root {
+            --background: 240 10% 3.9%;
+            --foreground: 0 0% 98%;
+            --posX: 0;
+            --posY: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            padding: 2rem 0;
+            min-height: 100vh;
+            justify-content: center;
+            align-items: flex-start;
+            margin: 0;
+            color: hsl(var(--foreground));
+            background-color: hsl(var(--background));
+
+            /* Dynamic Background Gradient */
+            --x: calc(var(--posX, 0) * 1px);
+            --y: calc(var(--posY, 0) * 1px);
+            background-image:
+                linear-gradient(115deg, rgb(211 255 215), rgb(0 0 0)),
+                radial-gradient(90% 100% at calc(50% + var(--x)) calc(0% + var(--y)), rgb(200 200 200), rgb(022 000 045)),
+                radial-gradient(100% 100% at calc(80% - var(--x)) calc(0% - var(--y)), rgb(250 255 000), rgb(036 000 000)),
+                radial-gradient(150% 210% at calc(100% + var(--x)) calc(0% + var(--y)), rgb(020 175 125), rgb(000 010 255)),
+                radial-gradient(100% 100% at calc(100% - var(--x)) calc(30% - var(--y)), rgb(255 077 000), rgb(000 200 255)),
+                linear-gradient(60deg, rgb(255 000 000), rgb(120 086 255));
+            background-blend-mode: overlay, overlay, difference, difference, difference, normal;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+
+        .container {
+            text-align: left;
+            padding: 3rem;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            max-width: 800px;
+            width: 90%;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            color: #fff;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p,
+        li {
+            color: #eee;
+            line-height: 1.6;
+        }
+
+        a {
+            color: #ffdacc;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: white;
+            background-color: #ff4500;
+            background-image: linear-gradient(45deg, #ff4500, #ff8c00);
+            text-decoration: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.4);
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 69, 0, 0.6);
+            background-image: linear-gradient(45deg, #ff8c00, #ff4500);
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="../index.html" class="button">Back to Home</a>
+        {{ content }}
+    </div>
+
+    <script>
+        // Animation Loop for Dynamic Background
+        let startTime = null;
+
+        function animate(timestamp) {
+            if (!startTime) startTime = timestamp;
+            const elapsedTime = timestamp - startTime;
+
+            // Use sine and cosine to create a smooth, looping motion
+            const speed = 0.0005;
+            const radiusX = 200;
+            const radiusY = 150;
+
+            const posX = Math.cos(elapsedTime * speed) * radiusX;
+            const posY = Math.sin(elapsedTime * speed) * radiusY;
+
+            document.body.style.setProperty('--posX', posX);
+            document.body.style.setProperty('--posY', posY);
+
+            requestAnimationFrame(animate);
+        }
+
+        requestAnimationFrame(animate);
+    </script>
+</body>
+
+</html>
