@@ -760,6 +760,132 @@
             color: var(--text-muted);
             margin-top: 0.4rem;
         }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 14, 26, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+        }
+
+        .modal-overlay.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(20px) scale(0.95);
+            transition: var(--transition);
+        }
+
+        .modal-overlay.visible .modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .close-btn:hover {
+            color: var(--accent-rose);
+            background: rgba(244, 63, 94, 0.1);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-subtle);
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        /* Analysis Button */
+        .btn-analysis {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: var(--radius-sm);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-analysis:hover {
+            background: rgba(6, 182, 212, 0.18);
+            border-color: var(--accent-cyan);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.2);
+        }
+
+        .chart-container {
+            width: 100%;
+            overflow-x: auto;
+            background: #ffffff;
+            border-radius: var(--radius-sm);
+            padding: 1rem;
+        }
+
+        .actions-row {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(99, 102, 241, 0.15);
+        }
     </style>
 </head>
 
@@ -859,6 +985,39 @@
                     </table>
                 </div>
             </div>
+            
+            <div class="actions-row">
+                <button class="btn-analysis" id="analysisBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    Question Analysis
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analysis Modal -->
+    <div class="modal-overlay" id="analysisModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    Question Analysis
+                </div>
+                <button class="close-btn" id="closeModalBtn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="chart-container">
+                    <canvas id="analysisCanvas"></canvas>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-download" id="downloadChartBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="7 10 12 15 17 10" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="12" y1="15" x2="12" y2="3" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Download PNG
+                </button>
+            </div>
         </div>
     </div>
 
@@ -882,6 +1041,11 @@
         const answerKeyDisplay = document.getElementById('answerKeyDisplay');
         const akAnswers = document.getElementById('akAnswers');
         const akInfo = document.getElementById('akInfo');
+        const analysisBtn = document.getElementById('analysisBtn');
+        const analysisModal = document.getElementById('analysisModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const analysisCanvas = document.getElementById('analysisCanvas');
+        const downloadChartBtn = document.getElementById('downloadChartBtn');
 
         let currentFile = null;
         let gradedData = [];
@@ -1263,6 +1427,103 @@
 
             showToast('CSV file downloaded successfully', 'success');
         });
+
+        // Analysis Modal and Chart
+        analysisBtn.addEventListener('click', () => {
+            if (gradedData.length === 0) return;
+            drawAnalysisChart();
+            analysisModal.classList.add('visible');
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            analysisModal.classList.remove('visible');
+        });
+
+        analysisModal.addEventListener('click', (e) => {
+            if (e.target === analysisModal) {
+                analysisModal.classList.remove('visible');
+            }
+        });
+
+        downloadChartBtn.addEventListener('click', () => {
+            const dataUrl = analysisCanvas.toDataURL('image/png');
+            const a = document.createElement('a');
+            a.href = dataUrl;
+            a.download = 'question_analysis.png';
+            a.click();
+            showToast('Chart downloaded successfully', 'success');
+        });
+
+        function drawAnalysisChart() {
+            const totalQ = gradedData[0].totalQuestions;
+            const studentCount = gradedData.length;
+            const rates = [];
+            
+            for (let i = 0; i < totalQ; i++) {
+                const correctCount = gradedData.filter(s => s.questionResults[i]).length;
+                rates.push({
+                    question: `Q${i + 1}`,
+                    rate: correctCount / studentCount
+                });
+            }
+
+            const ctx = analysisCanvas.getContext('2d');
+            const width = 500;
+            const rowHeight = 35;
+            const padding = 20;
+            const height = (totalQ * rowHeight) + (padding * 2) + 50;
+
+            const dpr = window.devicePixelRatio || 1;
+            analysisCanvas.width = width * dpr;
+            analysisCanvas.height = height * dpr;
+            analysisCanvas.style.width = `${width}px`;
+            analysisCanvas.style.height = `${height}px`;
+            ctx.scale(dpr, dpr);
+
+            // Background
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, width, height);
+
+            // Title
+            ctx.fillStyle = '#111827';
+            ctx.font = 'bold 20px Inter, sans-serif';
+            ctx.fillText('Question Analysis - Correct Rates', padding, padding + 20);
+
+            // Draw bars
+            const startY = padding + 50;
+            const labelWidth = 45;
+            const maxBarWidth = width - padding * 2 - labelWidth - 50;
+            
+            rates.forEach((item, index) => {
+                const y = startY + (index * rowHeight);
+                const percent = Math.round(item.rate * 100);
+                
+                // Label
+                ctx.fillStyle = '#4b5563';
+                ctx.font = 'bold 14px Inter, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(item.question, padding, y + rowHeight / 2);
+
+                // Bar track
+                ctx.fillStyle = '#f3f4f6';
+                ctx.fillRect(padding + labelWidth, y + 6, maxBarWidth, rowHeight - 12);
+
+                // Bar fill
+                let barColor = '#34d399';
+                if (percent < 40) barColor = '#fb7185';
+                else if (percent < 70) barColor = '#fbbf24';
+
+                ctx.fillStyle = barColor;
+                const barWidth = maxBarWidth * item.rate;
+                ctx.fillRect(padding + labelWidth, y + 6, barWidth, rowHeight - 12);
+
+                // Percentage text
+                ctx.fillStyle = '#111827';
+                ctx.font = '600 13px Inter, sans-serif';
+                ctx.fillText(`${percent}%`, padding + labelWidth + maxBarWidth + 10, y + rowHeight / 2);
+            });
+        }
 
         // Utilities
         function escapeHtml(str) {
