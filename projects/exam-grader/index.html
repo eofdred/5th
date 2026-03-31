@@ -997,7 +997,7 @@
                         firstName: firstName,
                         lastName: lastName,
                         number: studentNumber,
-                        answers: answers.replace(/ /g, '')
+                        answers: answers.trimEnd()
                     });
                 }
             }
