@@ -428,7 +428,7 @@
         /* Stats Row */
         .stats-row {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 1rem;
             margin-bottom: 1.5rem;
         }
@@ -891,17 +891,13 @@
 
 <body>
     <div class="app-wrapper">
-        <a href="../../index.html" class="back-link">
-            <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-            Back to Projects
-        </a>
-
         <header class="app-header">
             <div class="logo-icon">
                 <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9 2 2 4-4" stroke="white" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <h1>Exam Grader</h1>
             <p>Upload your answer sheet file and get instant, accurate grading with CSV export.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">Made by Dr. Mehmet Murat Doğusan, <a href="https://muratdogusan.com" target="_blank" style="color: var(--accent-indigo); text-decoration: none; font-weight: 500; transition: color 0.3s;" onmouseover="this.style.color='#8b5cf6'" onmouseout="this.style.color='var(--accent-indigo)'">muratdogusan.com</a></p>
         </header>
 
         <!-- Upload Card -->
@@ -960,8 +956,16 @@
                     <div class="stat-label">Average</div>
                 </div>
                 <div class="stat-item">
+                    <div class="stat-value" id="statLowest">0</div>
+                    <div class="stat-label">Minimum</div>
+                </div>
+                <div class="stat-item">
                     <div class="stat-value" id="statHighest">0</div>
-                    <div class="stat-label">Highest</div>
+                    <div class="stat-label">Maximum</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="statStdDev">0</div>
+                    <div class="stat-label">Std Deviation</div>
                 </div>
             </div>
 
@@ -1255,10 +1259,15 @@
             // Stats
             const scores = gradedData.map(d => d.score);
             const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
+            const variance = scores.reduce((a, b) => a + Math.pow(b - avg, 2), 0) / scores.length;
+            const stdDev = Math.sqrt(variance);
+
             document.getElementById('statStudents').textContent = gradedData.length;
             document.getElementById('statQuestions').textContent = totalQ;
             document.getElementById('statAverage').textContent = avg.toFixed(1);
+            document.getElementById('statLowest').textContent = Math.min(...scores).toFixed(1);
             document.getElementById('statHighest').textContent = Math.max(...scores).toFixed(1);
+            document.getElementById('statStdDev').textContent = stdDev.toFixed(1);
 
             // Build dynamic table header
             const resultsHead = document.getElementById('resultsHead');
