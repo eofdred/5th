@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Grader - Automated Answer Sheet Scorer</title>
+    <meta name="description" content="Upload student answer sheets in TXT format and automatically grade them. Generate CSV reports with student scores.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #111827;
+            --bg-card: rgba(17, 24, 39, 0.7);
+            --bg-card-hover: rgba(30, 41, 59, 0.8);
+            --border-subtle: rgba(99, 102, 241, 0.15);
+            --border-accent: rgba(99, 102, 241, 0.4);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-indigo: #6366f1;
+            --accent-violet: #8b5cf6;
+            --accent-cyan: #06b6d4;
+            --accent-emerald: #10b981;
+            --accent-rose: #f43f5e;
+            --accent-amber: #f59e0b;
+            --gradient-primary: linear-gradient(135deg, #6366f1, #8b5cf6, #06b6d4);
+            --gradient-glow: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.05));
+            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.15);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(99, 102, 241, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 80% 20%, rgba(139, 92, 246, 0.06) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 60% at 60% 80%, rgba(6, 182, 212, 0.05) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+            animation: bgShift 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes bgShift {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
+        }
+
+        /* Floating grid pattern */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .app-wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        /* Header */
+        .app-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .app-header .logo-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--gradient-primary);
+            border-radius: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 30px rgba(99, 102, 241, 0.3); }
+            50% { box-shadow: 0 0 50px rgba(99, 102, 241, 0.5); }
+        }
+
+        .logo-icon svg {
+            width: 32px;
+            height: 32px;
+            fill: white;
+        }
+
+        .app-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.5rem;
+        }
+
+        .app-header p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            font-weight: 400;
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Card */
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+            animation: fadeInUp 0.6s ease-out both;
+        }
+
+        .card:nth-child(2) { animation-delay: 0.1s; }
+        .card:nth-child(3) { animation-delay: 0.2s; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card:hover {
+            border-color: var(--border-accent);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .card-title .icon {
+            width: 28px;
+            height: 28px;
+            background: var(--gradient-glow);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        /* Upload Zone */
+        .upload-zone {
+            border: 2px dashed var(--border-accent);
+            border-radius: var(--radius-sm);
+            padding: 3rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            background: rgba(99, 102, 241, 0.03);
+        }
+
+        .upload-zone::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .upload-zone:hover,
+        .upload-zone.dragover {
+            border-color: var(--accent-indigo);
+            background: rgba(99, 102, 241, 0.08);
+        }
+
+        .upload-zone:hover::before,
+        .upload-zone.dragover::before {
+            opacity: 0.05;
+        }
+
+        .upload-zone.has-file {
+            border-color: var(--accent-emerald);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .upload-icon {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 1rem;
+            background: var(--gradient-glow);
+            border: 1px solid var(--border-subtle);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .upload-zone:hover .upload-icon {
+            transform: scale(1.1);
+            border-color: var(--accent-indigo);
+        }
+
+        .upload-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--accent-indigo);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .upload-text {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .upload-subtext {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .file-info {
+            display: none;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            border-radius: var(--radius-sm);
+            margin-top: 1rem;
+        }
+
+        .file-info.visible {
+            display: flex;
+        }
+
+        .file-info .file-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(16, 185, 129, 0.15);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .file-info .file-details {
+            flex: 1;
+            text-align: left;
+        }
+
+        .file-info .file-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--accent-emerald);
+        }
+
+        .file-info .file-size {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .file-info .remove-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 6px;
+            transition: var(--transition);
+            font-size: 1.1rem;
+            line-height: 1;
+        }
+
+        .file-info .remove-btn:hover {
+            color: var(--accent-rose);
+            background: rgba(244, 63, 94, 0.1);
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        /* Run Button */
+        .btn-run {
+            width: 100%;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-family: 'Inter', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            background: var(--gradient-primary);
+            color: white;
+            letter-spacing: 0.01em;
+        }
+
+        .btn-run::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn-run:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-run:hover:not(:disabled)::before {
+            opacity: 1;
+        }
+
+        .btn-run:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .btn-run:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .btn-run .btn-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-run .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2.5px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        .btn-run.loading .spinner {
+            display: block;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Results Area */
+        .results-section {
+            display: none;
+        }
+
+        .results-section.visible {
+            display: block;
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 640px) {
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .stat-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            padding: 1.25rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .stat-item:hover {
+            border-color: var(--border-accent);
+            transform: translateY(-2px);
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 500;
+            margin-top: 0.25rem;
+        }
+
+        /* Table */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-subtle);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+        }
+
+        thead th {
+            background: rgba(99, 102, 241, 0.08);
+            padding: 0.85rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-subtle);
+            white-space: nowrap;
+            cursor: pointer;
+            user-select: none;
+            transition: var(--transition);
+        }
+
+        thead th:hover {
+            color: var(--accent-indigo);
+            background: rgba(99, 102, 241, 0.12);
+        }
+
+        thead th .sort-arrow {
+            display: inline-block;
+            margin-left: 4px;
+            opacity: 0.4;
+            font-size: 0.7rem;
+        }
+
+        thead th.sorted .sort-arrow {
+            opacity: 1;
+            color: var(--accent-indigo);
+        }
+
+        tbody tr {
+            border-bottom: 1px solid rgba(99, 102, 241, 0.06);
+            transition: var(--transition);
+        }
+
+        tbody tr:hover {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        tbody td {
+            padding: 0.75rem 1rem;
+            white-space: nowrap;
+        }
+
+        /* Per-question answer cells */
+        .q-header {
+            font-size: 0.7rem !important;
+            padding: 0.6rem 0.3rem !important;
+            text-align: center !important;
+            min-width: 32px;
+            letter-spacing: 0;
+        }
+
+        .q-cell {
+            text-align: center;
+            padding: 0.5rem 0.3rem !important;
+            font-size: 0.85rem;
+            min-width: 32px;
+        }
+
+        .q-correct {
+            color: #34d399;
+        }
+
+        .q-wrong {
+            color: #fb7185;
+        }
+
+        /* Summary / correct-rate row */
+        .summary-row {
+            background: rgba(99, 102, 241, 0.06) !important;
+            border-top: 2px solid var(--border-accent) !important;
+        }
+
+        .summary-row td {
+            font-weight: 700;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            padding: 0.6rem 0.3rem !important;
+            text-align: center;
+        }
+
+        .summary-row .rate-high { color: #34d399; }
+        .summary-row .rate-mid  { color: #fbbf24; }
+        .summary-row .rate-low  { color: #fb7185; }
+
+        .rank-cell {
+            font-weight: 600;
+            color: var(--text-muted);
+            font-size: 0.82rem;
+        }
+
+        .score-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.82rem;
+            min-width: 52px;
+            text-align: center;
+        }
+
+        .score-high {
+            background: rgba(16, 185, 129, 0.12);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.25);
+        }
+
+        .score-mid {
+            background: rgba(245, 158, 11, 0.12);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.25);
+        }
+
+        .score-low {
+            background: rgba(244, 63, 94, 0.12);
+            color: #fb7185;
+            border: 1px solid rgba(244, 63, 94, 0.25);
+        }
+
+        /* Download Button */
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: var(--radius-sm);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent-emerald);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-download:hover {
+            background: rgba(16, 185, 129, 0.18);
+            border-color: var(--accent-emerald);
+            transform: translateY(-1px);
+        }
+
+        .btn-download svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .results-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-accent);
+            color: var(--text-primary);
+            padding: 0.85rem 1.5rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-weight: 500;
+            z-index: 100;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.error {
+            border-color: rgba(244, 63, 94, 0.4);
+        }
+
+        .toast.success {
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+
+        /* Back link */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .back-link:hover {
+            color: var(--accent-indigo);
+        }
+
+        .back-link svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .app-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .upload-zone {
+                padding: 2rem 1rem;
+            }
+        }
+
+        /* Answer key display */
+        .answer-key-display {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem 1.25rem;
+            background: rgba(99, 102, 241, 0.06);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+        }
+
+        .answer-key-display.visible {
+            display: block;
+        }
+
+        .answer-key-display .ak-label {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .answer-key-display .ak-answers {
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.25em;
+            color: var(--accent-indigo);
+            word-break: break-all;
+        }
+
+        .answer-key-display .ak-info {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.4rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-wrapper">
+        <a href="../../index.html" class="back-link">
+            <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Back to Projects
+        </a>
+
+        <header class="app-header">
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9 2 2 4-4" stroke="white" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h1>Exam Grader</h1>
+            <p>Upload your answer sheet file and get instant, accurate grading with CSV export.</p>
+        </header>
+
+        <!-- Upload Card -->
+        <div class="card" id="uploadCard">
+            <div class="card-title">
+                <span class="icon">📄</span>
+                Upload Answer Sheet
+            </div>
+            <div class="upload-zone" id="uploadZone">
+                <div class="upload-icon">
+                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                </div>
+                <div class="upload-text">Click to upload or drag & drop</div>
+                <div class="upload-subtext">Supports .txt answer sheet files</div>
+                <input type="file" id="fileInput" accept=".txt">
+            </div>
+            <div class="file-info" id="fileInfo">
+                <div class="file-icon">📋</div>
+                <div class="file-details">
+                    <div class="file-name" id="fileName"></div>
+                    <div class="file-size" id="fileSize"></div>
+                </div>
+                <button class="remove-btn" id="removeFile" title="Remove file">✕</button>
+            </div>
+            <div class="answer-key-display" id="answerKeyDisplay">
+                <div class="ak-label">Answer Key Detected</div>
+                <div class="ak-answers" id="akAnswers"></div>
+                <div class="ak-info" id="akInfo"></div>
+            </div>
+        </div>
+
+        <!-- Run Button Card -->
+        <div class="card">
+            <button class="btn-run" id="runBtn" disabled>
+                <span class="btn-content">
+                    <span class="spinner"></span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    <span id="runBtnText">Run Grading</span>
+                </span>
+            </button>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" id="resultsSection">
+            <div class="stats-row" id="statsRow">
+                <div class="stat-item">
+                    <div class="stat-value" id="statStudents">0</div>
+                    <div class="stat-label">Students</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="statQuestions">0</div>
+                    <div class="stat-label">Questions</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="statAverage">0</div>
+                    <div class="stat-label">Average</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="statHighest">0</div>
+                    <div class="stat-label">Highest</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="results-header">
+                    <div class="card-title" style="margin-bottom:0;">
+                        <span class="icon">📊</span>
+                        Results
+                    </div>
+                    <button class="btn-download" id="downloadBtn">
+                        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Download CSV
+                    </button>
+                </div>
+                <div class="table-wrapper">
+                    <table id="resultsTable">
+                        <thead id="resultsHead">
+                        </thead>
+                        <tbody id="resultsBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // DOM Elements
+        const uploadZone = document.getElementById('uploadZone');
+        const fileInput = document.getElementById('fileInput');
+        const fileInfo = document.getElementById('fileInfo');
+        const fileName = document.getElementById('fileName');
+        const fileSize = document.getElementById('fileSize');
+        const removeFileBtn = document.getElementById('removeFile');
+        const runBtn = document.getElementById('runBtn');
+        const runBtnText = document.getElementById('runBtnText');
+        const resultsSection = document.getElementById('resultsSection');
+        const resultsBody = document.getElementById('resultsBody');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const toast = document.getElementById('toast');
+        const answerKeyDisplay = document.getElementById('answerKeyDisplay');
+        const akAnswers = document.getElementById('akAnswers');
+        const akInfo = document.getElementById('akInfo');
+
+        let currentFile = null;
+        let gradedData = [];
+        let sortState = { col: 'score', dir: 'desc' };
+
+        // Upload Zone Events
+        uploadZone.addEventListener('click', () => fileInput.click());
+
+        uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadZone.classList.add('dragover');
+        });
+
+        uploadZone.addEventListener('dragleave', () => {
+            uploadZone.classList.remove('dragover');
+        });
+
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.classList.remove('dragover');
+            if (e.dataTransfer.files.length) {
+                handleFile(e.dataTransfer.files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                handleFile(e.target.files[0]);
+            }
+        });
+
+        removeFileBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            clearFile();
+        });
+
+        function handleFile(file) {
+            if (!file.name.endsWith('.txt')) {
+                showToast('Please upload a .txt file', 'error');
+                return;
+            }
+            currentFile = file;
+            fileName.textContent = file.name;
+            fileSize.textContent = formatSize(file.size);
+            fileInfo.classList.add('visible');
+            uploadZone.classList.add('has-file');
+            runBtn.disabled = false;
+
+            // Preview: read the file to detect the answer key
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                const text = ev.target.result;
+                const parsed = parseFile(text);
+                if (parsed.answerKey) {
+                    akAnswers.textContent = parsed.answerKey;
+                    akInfo.textContent = `${parsed.answerKey.length} questions detected · ${parsed.students.length} students found`;
+                    answerKeyDisplay.classList.add('visible');
+                } else {
+                    answerKeyDisplay.classList.remove('visible');
+                }
+            };
+            reader.readAsText(file, 'iso-8859-9');
+        }
+
+        function clearFile() {
+            currentFile = null;
+            fileInput.value = '';
+            fileInfo.classList.remove('visible');
+            uploadZone.classList.remove('has-file');
+            answerKeyDisplay.classList.remove('visible');
+            runBtn.disabled = true;
+            resultsSection.classList.remove('visible');
+            gradedData = [];
+        }
+
+        function formatSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / 1048576).toFixed(1) + ' MB';
+        }
+
+        // Parse File - Fixed-width columns: 0-10 name (11 chars), 11-21 surname (11 chars), then student number
+        function parseFile(text) {
+            const lines = text.split('\n').filter(line => line.trim().length > 0);
+            let answerKey = null;
+            const students = [];
+
+            for (const line of lines) {
+                // Find the 10-digit number in the line
+                const numberMatch = line.match(/(\d{10})/);
+                if (!numberMatch) continue;
+
+                const studentNumber = numberMatch[1];
+                const numberIndex = numberMatch.index;
+                const afterNumber = line.substring(numberIndex + 10).trim();
+
+                // Extract answers: only uppercase letters and spaces
+                const answers = afterNumber.replace(/[^A-E ]/gi, '').trim();
+
+                if (!answers) continue;
+
+                if (studentNumber === '0000000000') {
+                    // This is the answer key
+                    answerKey = answers.replace(/ /g, '');
+                } else {
+                    // Fixed-width column parsing:
+                    // Column 1 (chars 0-10): First name (11 characters)
+                    // Column 2 (chars 11-21): Last name (11 characters)
+                    const firstName = line.substring(0, 11).trim();
+                    const lastName = line.substring(11, 22).trim();
+
+                    students.push({
+                        firstName: firstName,
+                        lastName: lastName,
+                        number: studentNumber,
+                        answers: answers.replace(/ /g, '')
+                    });
+                }
+            }
+
+            return { answerKey, students };
+        }
+
+        // Grade students
+        function gradeStudents(answerKey, students) {
+            const totalQuestions = answerKey.length;
+            const pointsPerQuestion = 100 / totalQuestions;
+
+            return students.map(student => {
+                let correct = 0;
+                const questionResults = [];
+
+                for (let i = 0; i < totalQuestions; i++) {
+                    const isCorrect = i < student.answers.length && student.answers[i] === answerKey[i];
+                    if (isCorrect) correct++;
+                    questionResults.push(isCorrect);
+                }
+
+                const score = parseFloat((correct * pointsPerQuestion).toFixed(2));
+
+                return {
+                    ...student,
+                    correct,
+                    totalQuestions,
+                    questionResults,
+                    score
+                };
+            });
+        }
+
+        // Run Button
+        runBtn.addEventListener('click', () => {
+            if (!currentFile) return;
+
+            runBtn.classList.add('loading');
+            runBtn.disabled = true;
+            runBtnText.textContent = 'Processing...';
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                // Simulate a small processing delay for UX
+                setTimeout(() => {
+                    try {
+                        const text = e.target.result;
+                        const { answerKey, students } = parseFile(text);
+
+                        if (!answerKey) {
+                            showToast('No answer key found (line with 0000000000)', 'error');
+                            resetRunBtn();
+                            return;
+                        }
+
+                        if (students.length === 0) {
+                            showToast('No student records found', 'error');
+                            resetRunBtn();
+                            return;
+                        }
+
+                        gradedData = gradeStudents(answerKey, students);
+
+                        // Sort by score descending by default
+                        sortState = { col: 'score', dir: 'desc' };
+                        sortData();
+                        renderResults();
+                        showToast(`Successfully graded ${gradedData.length} students`, 'success');
+                    } catch (err) {
+                        showToast('Error processing file: ' + err.message, 'error');
+                    }
+                    resetRunBtn();
+                }, 600);
+            };
+            reader.readAsText(currentFile, 'iso-8859-9');
+        });
+
+        function resetRunBtn() {
+            runBtn.classList.remove('loading');
+            runBtn.disabled = false;
+            runBtnText.textContent = 'Run Grading';
+        }
+
+        // Render Results
+        function renderResults() {
+            if (gradedData.length === 0) return;
+
+            const totalQ = gradedData[0].totalQuestions;
+
+            // Stats
+            const scores = gradedData.map(d => d.score);
+            const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
+            document.getElementById('statStudents').textContent = gradedData.length;
+            document.getElementById('statQuestions').textContent = totalQ;
+            document.getElementById('statAverage').textContent = avg.toFixed(1);
+            document.getElementById('statHighest').textContent = Math.max(...scores).toFixed(1);
+
+            // Build dynamic table header
+            const resultsHead = document.getElementById('resultsHead');
+            resultsHead.innerHTML = '';
+            const headerRow = document.createElement('tr');
+            headerRow.innerHTML = `
+                <th data-sort="rank"># <span class="sort-arrow">▲</span></th>
+                <th data-sort="name">Name <span class="sort-arrow">▲</span></th>
+                <th data-sort="surname">Surname <span class="sort-arrow">▲</span></th>
+                <th data-sort="number">Student No <span class="sort-arrow">▲</span></th>
+                <th data-sort="correct">Correct <span class="sort-arrow">▲</span></th>
+            `;
+            // Add per-question headers
+            for (let i = 0; i < totalQ; i++) {
+                const th = document.createElement('th');
+                th.className = 'q-header';
+                th.textContent = `Q${i + 1}`;
+                headerRow.appendChild(th);
+            }
+            // Score header
+            const scoreTh = document.createElement('th');
+            scoreTh.setAttribute('data-sort', 'score');
+            scoreTh.innerHTML = 'Score <span class="sort-arrow">▲</span>';
+            headerRow.appendChild(scoreTh);
+            resultsHead.appendChild(headerRow);
+
+            // Re-bind sort click listeners on the new headers
+            headerRow.querySelectorAll('th[data-sort]').forEach(th => {
+                th.addEventListener('click', () => {
+                    const col = th.getAttribute('data-sort');
+                    if (!col) return;
+                    if (sortState.col === col) {
+                        sortState.dir = sortState.dir === 'asc' ? 'desc' : 'asc';
+                    } else {
+                        sortState.col = col;
+                        sortState.dir = col === 'score' || col === 'correct' || col === 'rank' ? 'desc' : 'asc';
+                    }
+                    sortData();
+                    renderResults();
+                });
+            });
+
+            // Table body
+            resultsBody.innerHTML = '';
+            gradedData.forEach((student, index) => {
+                const tr = document.createElement('tr');
+                const scoreClass = student.score >= 70 ? 'score-high' : student.score >= 45 ? 'score-mid' : 'score-low';
+
+                let rowHtml = `
+                    <td class="rank-cell">${index + 1}</td>
+                    <td>${escapeHtml(student.firstName)}</td>
+                    <td>${escapeHtml(student.lastName)}</td>
+                    <td style="font-family: 'Courier New', monospace; font-weight: 500;">${student.number}</td>
+                    <td>${student.correct} / ${student.totalQuestions}</td>
+                `;
+
+                // Per-question cells
+                for (let i = 0; i < totalQ; i++) {
+                    const isCorrect = student.questionResults[i];
+                    rowHtml += `<td class="q-cell ${isCorrect ? 'q-correct' : 'q-wrong'}">${isCorrect ? '✓' : '✗'}</td>`;
+                }
+
+                rowHtml += `<td><span class="score-badge ${scoreClass}">${student.score.toFixed(1)}</span></td>`;
+
+                tr.innerHTML = rowHtml;
+                resultsBody.appendChild(tr);
+            });
+
+            // Summary row: correct answer rate per question
+            const summaryTr = document.createElement('tr');
+            summaryTr.className = 'summary-row';
+            const studentCount = gradedData.length;
+
+            let summaryHtml = `
+                <td></td>
+                <td style="text-align:left; text-transform:uppercase; letter-spacing:0.06em; font-size:0.72rem;">Correct Rate</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            `;
+
+            for (let i = 0; i < totalQ; i++) {
+                const correctCount = gradedData.filter(s => s.questionResults[i]).length;
+                const rate = Math.round((correctCount / studentCount) * 100);
+                const rateClass = rate >= 70 ? 'rate-high' : rate >= 40 ? 'rate-mid' : 'rate-low';
+                summaryHtml += `<td class="${rateClass}">${rate}%</td>`;
+            }
+
+            summaryHtml += `<td></td>`;
+            summaryTr.innerHTML = summaryHtml;
+            resultsBody.appendChild(summaryTr);
+
+            // Update sort header visuals
+            headerRow.querySelectorAll('th[data-sort]').forEach(th => {
+                const col = th.getAttribute('data-sort');
+                th.classList.toggle('sorted', col === sortState.col);
+                const arrow = th.querySelector('.sort-arrow');
+                if (arrow) arrow.textContent = (col === sortState.col && sortState.dir === 'desc') ? '▼' : '▲';
+            });
+
+            resultsSection.classList.add('visible');
+            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Sorting
+        document.querySelectorAll('#resultsTable thead th').forEach(th => {
+            th.addEventListener('click', () => {
+                const col = th.getAttribute('data-sort');
+                if (!col) return;
+                if (sortState.col === col) {
+                    sortState.dir = sortState.dir === 'asc' ? 'desc' : 'asc';
+                } else {
+                    sortState.col = col;
+                    sortState.dir = col === 'score' || col === 'correct' || col === 'rank' ? 'desc' : 'asc';
+                }
+                sortData();
+                renderResults();
+            });
+        });
+
+        function sortData() {
+            const { col, dir } = sortState;
+            gradedData.sort((a, b) => {
+                let valA, valB;
+                switch (col) {
+                    case 'rank':
+                    case 'score': valA = a.score; valB = b.score; break;
+                    case 'correct': valA = a.correct; valB = b.correct; break;
+                    case 'name': valA = a.firstName.toLowerCase(); valB = b.firstName.toLowerCase(); break;
+                    case 'surname': valA = a.lastName.toLowerCase(); valB = b.lastName.toLowerCase(); break;
+                    case 'number': valA = a.number; valB = b.number; break;
+                    default: valA = a.score; valB = b.score;
+                }
+
+                if (typeof valA === 'string') {
+                    const cmp = valA.localeCompare(valB, 'tr');
+                    return dir === 'asc' ? cmp : -cmp;
+                }
+                return dir === 'asc' ? valA - valB : valB - valA;
+            });
+        }
+
+        // CSV Download
+        downloadBtn.addEventListener('click', () => {
+            if (gradedData.length === 0) return;
+
+            // BOM for UTF-8 support in Excel
+            const BOM = '\uFEFF';
+            const headers = ['Name', 'Surname', 'Student Number', 'Score'];
+            const rows = gradedData.map(s => [
+                `"${s.firstName}"`,
+                `"${s.lastName}"`,
+                s.number,
+                s.score.toFixed(2)
+            ]);
+
+            const csv = BOM + headers.join(',') + '\n' + rows.map(r => r.join(',')).join('\n');
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'exam_results.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+
+            showToast('CSV file downloaded successfully', 'success');
+        });
+
+        // Utilities
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function showToast(message, type = '') {
+            toast.textContent = message;
+            toast.className = 'toast show ' + type;
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
+        }
+    </script>
+</body>
+
+</html>
