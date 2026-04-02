@@ -887,6 +887,8 @@
             border-top: 1px solid rgba(99, 102, 241, 0.15);
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 
 <body>
@@ -922,6 +924,32 @@
                 </div>
                 <button class="remove-btn" id="removeFile" title="Remove file">✕</button>
             </div>
+            
+            <div class="meta-inputs-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; padding: 1.2rem; background: rgba(99, 102, 241, 0.05); border-radius: 8px; border: 1px solid var(--border-subtle);">
+                <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                    <label for="examDate" style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 600;">Exam Date</label>
+                    <input type="date" id="examDate" style="padding: 0.6rem; border-radius: 6px; border: 1px solid var(--border-accent); background: rgba(10, 14, 26, 0.8); color: white; color-scheme: dark; font-family: 'Inter', sans-serif; font-size: 0.9rem;">
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                    <label for="examTerm" style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 600;">Exam Term</label>
+                    <select id="examTerm" style="padding: 0.6rem; border-radius: 6px; border: 1px solid var(--border-accent); background: rgba(10, 14, 26, 0.8); color: white; font-family: 'Inter', sans-serif; font-size: 0.9rem; cursor: pointer;">
+                        <option value="-" disabled selected>Select term</option>
+                        <option value="Midterm">Midterm</option>
+                        <option value="Final">Final</option>
+                        <option value="Make-up">Make-up</option>
+                    </select>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 0.4rem; grid-column: 1 / -1;">
+                    <label for="className" style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 600;">Class Name</label>
+                    <input type="text" id="className" placeholder="Enter name of the class..." style="padding: 0.6rem; border-radius: 6px; border: 1px solid var(--border-accent); background: rgba(10, 14, 26, 0.8); color: white; font-family: 'Inter', sans-serif; font-size: 0.9rem;">
+                </div>
+            </div>
+            
+            <div class="checkbox-container" style="margin-top: 1rem; display: flex; align-items: center; gap: 0.5rem; background: rgba(99, 102, 241, 0.05); padding: 0.8rem 1rem; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                <input type="checkbox" id="usePaperTypeCheckbox" style="width: 18px; height: 18px; cursor: pointer; accent-color: var(--accent-indigo);">
+                <label for="usePaperTypeCheckbox" style="font-size: 0.95rem; cursor: pointer; color: var(--text-primary); font-weight: 500;">Use paper type</label>
+            </div>
+
             <div class="answer-key-display" id="answerKeyDisplay">
                 <div class="ak-label">Answer Key Detected</div>
                 <div class="ak-answers" id="akAnswers"></div>
@@ -942,6 +970,21 @@
 
         <!-- Results Section -->
         <div class="results-section" id="resultsSection">
+            <div id="metaInfoDisplay" style="display: none; justify-content: center; gap: 4rem; margin-bottom: 2rem; padding: 1rem; border-bottom: 1px solid rgba(99, 102, 241, 0.15);">
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600;">Exam Date</span>
+                    <span id="metaDateVal" style="font-size: 1.25rem; color: var(--text-primary); font-weight: 700; margin-top: 0.3rem;">-</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600;">Class Name</span>
+                    <span id="metaClassVal" style="font-size: 1.25rem; color: var(--accent-cyan); font-weight: 700; margin-top: 0.3rem;">-</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600;">Exam Term</span>
+                    <span id="metaTermVal" style="font-size: 1.25rem; color: var(--text-primary); font-weight: 700; margin-top: 0.3rem;">-</span>
+                </div>
+            </div>
+
             <div class="stats-row" id="statsRow">
                 <div class="stat-item">
                     <div class="stat-value" id="statStudents">0</div>
@@ -975,10 +1018,20 @@
                         <span class="icon">📊</span>
                         Results
                     </div>
-                    <button class="btn-download" id="downloadBtn">
-                        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                        Download CSV
-                    </button>
+                    <div class="no-print" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button class="btn-analysis" id="downloadAnalysisBtn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                            Download Analysis
+                        </button>
+                        <button class="btn-download" id="downloadPngBtn" style="color: #f59e0b; border-color: rgba(245, 158, 11, 0.3); background: rgba(245, 158, 11, 0.1);">
+                            <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                            Download PNG
+                        </button>
+                        <button class="btn-download" id="downloadBtn">
+                            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="14 2 14 8 20 8" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="10 9 9 9 8 9" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            Download Excel
+                        </button>
+                    </div>
                 </div>
                 <div class="table-wrapper">
                     <table id="resultsTable">
@@ -989,38 +1042,19 @@
                     </table>
                 </div>
             </div>
-            
-            <div class="actions-row">
-                <button class="btn-analysis" id="analysisBtn">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-                    Question Analysis
-                </button>
-            </div>
         </div>
     </div>
 
-    <!-- Analysis Modal -->
-    <div class="modal-overlay" id="analysisModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-                    Question Analysis
-                </div>
-                <button class="close-btn" id="closeModalBtn">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                </button>
+    <!-- Hidden Analysis Container for Export -->
+    <div style="position: absolute; left: -9999px; top: -9999px;">
+        <div id="analysisContentWrapper" style="display: flex; flex-direction: column; gap: 1.5rem; padding: 1.5rem; background: var(--bg-card); width: 600px;">
+            <div style="display: flex; justify-content: center; height: 250px;">
+                <canvas id="pieCanvas" width="250" height="250"></canvas>
             </div>
-            <div class="modal-body">
-                <div class="chart-container">
-                    <canvas id="analysisCanvas"></canvas>
-                </div>
+            <div id="analysisWarnings" style="display: flex; flex-direction: column; gap: 0.8rem;">
             </div>
-            <div class="modal-footer">
-                <button class="btn-download" id="downloadChartBtn">
-                    <svg width="18" height="18" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="7 10 12 15 17 10" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="12" y1="15" x2="12" y2="3" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    Download PNG
-                </button>
+            <div class="chart-container" style="padding: 0; background: var(--bg-card); border: none;">
+                <canvas id="analysisCanvas"></canvas>
             </div>
         </div>
     </div>
@@ -1041,19 +1075,52 @@
         const resultsSection = document.getElementById('resultsSection');
         const resultsBody = document.getElementById('resultsBody');
         const downloadBtn = document.getElementById('downloadBtn');
+        const downloadPngBtn = document.getElementById('downloadPngBtn');
         const toast = document.getElementById('toast');
         const answerKeyDisplay = document.getElementById('answerKeyDisplay');
         const akAnswers = document.getElementById('akAnswers');
         const akInfo = document.getElementById('akInfo');
-        const analysisBtn = document.getElementById('analysisBtn');
-        const analysisModal = document.getElementById('analysisModal');
-        const closeModalBtn = document.getElementById('closeModalBtn');
+        const downloadAnalysisBtn = document.getElementById('downloadAnalysisBtn');
         const analysisCanvas = document.getElementById('analysisCanvas');
-        const downloadChartBtn = document.getElementById('downloadChartBtn');
+        const pieCanvas = document.getElementById('pieCanvas');
+        const analysisWarnings = document.getElementById('analysisWarnings');
+        const analysisContentWrapper = document.getElementById('analysisContentWrapper');
+        const usePaperTypeCheckbox = document.getElementById('usePaperTypeCheckbox');
 
         let currentFile = null;
         let gradedData = [];
         let sortState = { col: 'score', dir: 'desc' };
+
+        usePaperTypeCheckbox.addEventListener('change', () => {
+            if (currentFile) {
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    const text = ev.target.result;
+                    const parsed = parseFile(text);
+                    previewParsedKeys(parsed);
+                };
+                reader.readAsText(currentFile, 'iso-8859-9');
+            }
+        });
+
+        function previewParsedKeys(parsed) {
+            const keysCount = Object.keys(parsed.answerKeys).length;
+            if (keysCount > 0) {
+                akAnswers.innerHTML = '';
+                for (const [type, key] of Object.entries(parsed.answerKeys)) {
+                    if (usePaperTypeCheckbox.checked) {
+                        akAnswers.innerHTML += `<div style="margin-bottom: 0.3rem;"><span style="color:var(--text-muted); font-size:0.8rem;">${type}:</span> ${key}</div>`;
+                    } else {
+                        akAnswers.innerHTML = `<div>${key}</div>`;
+                    }
+                }
+                const firstKeyLen = Object.values(parsed.answerKeys)[0].length;
+                akInfo.textContent = `${firstKeyLen} questions · ${parsed.students.length} students found`;
+                answerKeyDisplay.classList.add('visible');
+            } else {
+                answerKeyDisplay.classList.remove('visible');
+            }
+        }
 
         // Upload Zone Events
         uploadZone.addEventListener('click', () => fileInput.click());
@@ -1103,13 +1170,7 @@
             reader.onload = (ev) => {
                 const text = ev.target.result;
                 const parsed = parseFile(text);
-                if (parsed.answerKey) {
-                    akAnswers.textContent = parsed.answerKey;
-                    akInfo.textContent = `${parsed.answerKey.length} questions detected · ${parsed.students.length} students found`;
-                    answerKeyDisplay.classList.add('visible');
-                } else {
-                    answerKeyDisplay.classList.remove('visible');
-                }
+                previewParsedKeys(parsed);
             };
             reader.readAsText(file, 'iso-8859-9');
         }
@@ -1134,7 +1195,8 @@
         // Parse File - Fixed-width columns: 0-10 name (11 chars), 11-21 surname (11 chars), then student number
         function parseFile(text) {
             const lines = text.split('\n').filter(line => line.trim().length > 0);
-            let answerKey = null;
+            const usePaperTypes = document.getElementById('usePaperTypeCheckbox').checked;
+            let answerKeys = {};
             const students = [];
 
             for (const line of lines) {
@@ -1144,20 +1206,34 @@
 
                 const studentNumber = numberMatch[1];
                 const numberIndex = numberMatch.index;
-                const afterNumber = line.substring(numberIndex + 10).trim();
+                
+                let rawAnswers = '';
+                let paperType = '';
+
+                if (usePaperTypes && line.length > numberIndex + 10) {
+                    paperType = line.substring(numberIndex + 10, numberIndex + 11).toUpperCase();
+                    rawAnswers = line.substring(numberIndex + 11);
+                } else {
+                    rawAnswers = line.substring(numberIndex + 10);
+                }
 
                 // Extract answers: only uppercase letters and spaces
-                const answers = afterNumber.replace(/[^A-E ]/gi, '').trim();
+                const answers = rawAnswers.replace(/[^A-E ]/gi, '').trimEnd();
 
-                if (!answers) continue;
+                if (!answers && !usePaperTypes) continue;
 
                 if (studentNumber === '0000000000') {
-                    // This is the answer key
-                    answerKey = answers.replace(/ /g, '');
+                    const cleanAnswers = answers.replace(/ /g, '');
+                    if (usePaperTypes) {
+                        if (paperType && paperType.match(/[A-Z]/)) {
+                            answerKeys[paperType] = cleanAnswers;
+                        } else {
+                            answerKeys['A'] = cleanAnswers; // Fallback
+                        }
+                    } else {
+                        answerKeys['default'] = cleanAnswers;
+                    }
                 } else {
-                    // Fixed-width column parsing:
-                    // Column 1 (chars 0-10): First name (11 characters)
-                    // Column 2 (chars 11-21): Last name (11 characters)
                     const firstName = line.substring(0, 11).trim();
                     const lastName = line.substring(11, 22).trim();
 
@@ -1165,25 +1241,41 @@
                         firstName: firstName,
                         lastName: lastName,
                         number: studentNumber,
-                        answers: answers.trimEnd()
+                        paperType: usePaperTypes ? paperType : '',
+                        answers: answers
                     });
                 }
             }
 
-            return { answerKey, students };
+            return { answerKeys, students };
         }
 
         // Grade students
-        function gradeStudents(answerKey, students) {
-            const totalQuestions = answerKey.length;
-            const pointsPerQuestion = 100 / totalQuestions;
+        function gradeStudents(answerKeys, students, usePaperTypes) {
+            const defaultKey = answerKeys['default'] || Object.values(answerKeys)[0];
 
             return students.map(student => {
                 let correct = 0;
                 const questionResults = [];
+                
+                let gradingKey = defaultKey;
+                let pTypeWarning = false;
+
+                if (usePaperTypes) {
+                    let sType = student.paperType;
+                    if (!sType || !answerKeys[sType] || !sType.match(/[A-Z]/)) {
+                        pTypeWarning = true;
+                        sType = 'A';
+                        student.paperType = student.paperType && student.paperType.match(/[A-Z]/) ? student.paperType : '?';
+                    }
+                    gradingKey = answerKeys[sType] || defaultKey;
+                }
+
+                const totalQuestions = gradingKey ? gradingKey.length : 0;
+                const pointsPerQuestion = totalQuestions > 0 ? 100 / totalQuestions : 0;
 
                 for (let i = 0; i < totalQuestions; i++) {
-                    const isCorrect = i < student.answers.length && student.answers[i] === answerKey[i];
+                    const isCorrect = i < student.answers.length && student.answers[i] === gradingKey[i];
                     if (isCorrect) correct++;
                     questionResults.push(isCorrect);
                 }
@@ -1195,7 +1287,8 @@
                     correct,
                     totalQuestions,
                     questionResults,
-                    score
+                    score,
+                    pTypeWarning
                 };
             });
         }
@@ -1214,9 +1307,12 @@
                 setTimeout(() => {
                     try {
                         const text = e.target.result;
-                        const { answerKey, students } = parseFile(text);
+                        const usePaperTypes = document.getElementById('usePaperTypeCheckbox').checked;
+                        const parsed = parseFile(text);
+                        const answerKeys = parsed.answerKeys;
+                        const students = parsed.students;
 
-                        if (!answerKey) {
+                        if (Object.keys(answerKeys).length === 0) {
                             showToast('No answer key found (line with 0000000000)', 'error');
                             resetRunBtn();
                             return;
@@ -1228,7 +1324,7 @@
                             return;
                         }
 
-                        gradedData = gradeStudents(answerKey, students);
+                        gradedData = gradeStudents(answerKeys, students, usePaperTypes);
 
                         // Sort by score descending by default
                         sortState = { col: 'score', dir: 'desc' };
@@ -1270,16 +1366,22 @@
             document.getElementById('statStdDev').textContent = stdDev.toFixed(1);
 
             // Build dynamic table header
+            const usePaperTypes = document.getElementById('usePaperTypeCheckbox').checked;
             const resultsHead = document.getElementById('resultsHead');
             resultsHead.innerHTML = '';
             const headerRow = document.createElement('tr');
-            headerRow.innerHTML = `
+            
+            let headerHtml = `
                 <th data-sort="rank"># <span class="sort-arrow">▲</span></th>
                 <th data-sort="name">Name <span class="sort-arrow">▲</span></th>
                 <th data-sort="surname">Surname <span class="sort-arrow">▲</span></th>
                 <th data-sort="number">Student No <span class="sort-arrow">▲</span></th>
-                <th data-sort="correct">Correct <span class="sort-arrow">▲</span></th>
             `;
+            if (usePaperTypes) {
+                headerHtml += `<th data-sort="type">Type <span class="sort-arrow">▲</span></th>`;
+            }
+            headerHtml += `<th data-sort="correct">Correct <span class="sort-arrow">▲</span></th>`;
+            headerRow.innerHTML = headerHtml;
             // Add per-question headers
             for (let i = 0; i < totalQ; i++) {
                 const th = document.createElement('th');
@@ -1321,8 +1423,14 @@
                     <td>${escapeHtml(student.firstName)}</td>
                     <td>${escapeHtml(student.lastName)}</td>
                     <td style="font-family: 'Courier New', monospace; font-weight: 500;">${student.number}</td>
-                    <td>${student.correct} / ${student.totalQuestions}</td>
                 `;
+
+                if (usePaperTypes) {
+                    let warningIcon = student.pTypeWarning ? ' <span title="Paper type mismatch or missing. Graded as A." style="color: #fbbf24; cursor: help; font-size: 1rem;">⚠️</span>' : '';
+                    rowHtml += `<td style="text-align: center; font-weight: 600;">${escapeHtml(student.paperType)}${warningIcon}</td>`;
+                }
+
+                rowHtml += `<td>${student.correct} / ${student.totalQuestions}</td>`;
 
                 // Per-question cells
                 for (let i = 0; i < totalQ; i++) {
@@ -1348,6 +1456,7 @@
                 <td></td>
                 <td></td>
             `;
+            if (usePaperTypes) summaryHtml += `<td></td>`;
 
             for (let i = 0; i < totalQ; i++) {
                 const correctCount = gradedData.filter(s => s.questionResults[i]).length;
@@ -1399,6 +1508,7 @@
                     case 'name': valA = a.firstName.toLowerCase(); valB = b.firstName.toLowerCase(); break;
                     case 'surname': valA = a.lastName.toLowerCase(); valB = b.lastName.toLowerCase(); break;
                     case 'number': valA = a.number; valB = b.number; break;
+                    case 'type': valA = a.paperType || ''; valB = b.paperType || ''; break;
                     default: valA = a.score; valB = b.score;
                 }
 
@@ -1410,57 +1520,177 @@
             });
         }
 
-        // CSV Download
+        // Excel Download
         downloadBtn.addEventListener('click', () => {
             if (gradedData.length === 0) return;
 
-            // BOM for UTF-8 support in Excel
-            const BOM = '\uFEFF';
-            const headers = ['Name', 'Surname', 'Student Number', 'Score'];
-            const rows = gradedData.map(s => [
-                `"${s.firstName}"`,
-                `"${s.lastName}"`,
-                s.number,
-                s.score.toFixed(2)
-            ]);
-
-            const csv = BOM + headers.join(',') + '\n' + rows.map(r => r.join(',')).join('\n');
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'exam_results.csv';
-            a.click();
-            URL.revokeObjectURL(url);
-
-            showToast('CSV file downloaded successfully', 'success');
-        });
-
-        // Analysis Modal and Chart
-        analysisBtn.addEventListener('click', () => {
-            if (gradedData.length === 0) return;
-            drawAnalysisChart();
-            analysisModal.classList.add('visible');
-        });
-
-        closeModalBtn.addEventListener('click', () => {
-            analysisModal.classList.remove('visible');
-        });
-
-        analysisModal.addEventListener('click', (e) => {
-            if (e.target === analysisModal) {
-                analysisModal.classList.remove('visible');
+            const usePaperTypes = document.getElementById('usePaperTypeCheckbox').checked;
+            const worksheetData = [];
+            
+            const dateVal = document.getElementById('examDate').value || '-';
+            const classVal = document.getElementById('className').value || '-';
+            const termVal = document.getElementById('examTerm').value;
+            const finalTermVal = termVal && termVal !== '-' ? termVal : '-';
+            
+            let formattedDate = dateVal;
+            if (dateVal.includes('-')) {
+                const parts = dateVal.split('-');
+                if(parts.length === 3) formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
             }
+
+            worksheetData.push(['Date', formattedDate]);
+            worksheetData.push(['Name of the Class', classVal]);
+            worksheetData.push(['Exam Type', finalTermVal]);
+
+            const headers = ['Name', 'Surname', 'Student Number'];
+            if (usePaperTypes) headers.push('Paper Type');
+            headers.push('Score');
+            worksheetData.push(headers);
+            
+            gradedData.forEach(s => {
+                const row = [
+                    s.firstName,
+                    s.lastName,
+                    s.number
+                ];
+                if (usePaperTypes) row.push(s.paperType);
+                row.push(s.score);
+                worksheetData.push(row);
+            });
+
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.aoa_to_sheet(worksheetData);
+            
+            const colWidths = [
+                { wch: 15 }, // Name
+                { wch: 15 }, // Surname
+                { wch: 15 }  // Number
+            ];
+            if (usePaperTypes) colWidths.push({ wch: 10 }); // Paper Type
+            colWidths.push({ wch: 8 }); // Score
+            ws['!cols'] = colWidths;
+
+            XLSX.utils.book_append_sheet(wb, ws, "Exam Results");
+            XLSX.writeFile(wb, "exam_results.xlsx");
+
+            showToast('Excel file downloaded successfully', 'success');
         });
 
-        downloadChartBtn.addEventListener('click', () => {
-            const dataUrl = analysisCanvas.toDataURL('image/png');
-            const a = document.createElement('a');
-            a.href = dataUrl;
-            a.download = 'question_analysis.png';
-            a.click();
-            showToast('Chart downloaded successfully', 'success');
+        // PNG Download
+        downloadPngBtn.addEventListener('click', () => {
+            if (gradedData.length === 0) return;
+
+            showToast('Generating PNG image... Please wait.', 'success');
+            
+            const element = document.getElementById('resultsSection');
+            const tableElement = document.getElementById('resultsTable');
+
+            const targetWidth = Math.max(1400, tableElement.offsetWidth + 100);
+            
+            // Populate hidden metadata display before snapshot
+            const dateVal = document.getElementById('examDate').value || '-';
+            const classVal = document.getElementById('className').value || '-';
+            const termVal = document.getElementById('examTerm').value;
+            const finalTermVal = termVal && termVal !== '-' ? termVal : '-';
+            
+            let formattedDate = dateVal;
+            if (dateVal.includes('-')) {
+                const parts = dateVal.split('-');
+                if(parts.length === 3) formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+            }
+
+            document.getElementById('metaDateVal').textContent = formattedDate;
+            document.getElementById('metaClassVal').textContent = classVal;
+            document.getElementById('metaTermVal').textContent = finalTermVal;
+
+            const tableWrapper = document.querySelector('.table-wrapper');
+            const originalOverflow = tableWrapper.style.overflowX;
+            tableWrapper.style.overflowX = 'visible';
+
+            html2canvas(element, {
+                scale: 2, 
+                windowWidth: targetWidth,
+                width: targetWidth,
+                backgroundColor: '#0a0e1a',
+                onclone: (clonedDoc) => {
+                    const metaDisplay = clonedDoc.getElementById('metaInfoDisplay');
+                    if (metaDisplay) metaDisplay.style.display = 'flex';
+
+                    const wrapper = clonedDoc.querySelector('.app-wrapper');
+                    if (wrapper) wrapper.style.maxWidth = 'none';
+
+                    const statsRow = clonedDoc.getElementById('statsRow');
+                    if (statsRow) {
+                        statsRow.style.display = 'flex';
+                        statsRow.style.justifyContent = 'center';
+                        statsRow.style.gap = '1.5rem';
+                        statsRow.style.marginBottom = '2.5rem';
+                    }
+
+                    const statItems = clonedDoc.querySelectorAll('.stat-item');
+                    statItems.forEach(i => {
+                        i.style.flex = '0 1 auto';
+                        i.style.minWidth = '140px';
+                    });
+
+                    const cards = clonedDoc.querySelectorAll('.card');
+                    cards.forEach(c => {
+                        c.style.animation = 'none';
+                        c.style.opacity = '1';
+                        c.style.transform = 'none';
+                        c.style.backdropFilter = 'none';
+                        c.style.webkitBackdropFilter = 'none';
+                        c.style.background = 'transparent';
+                        c.style.border = 'none';
+                        c.style.boxShadow = 'none';
+                    });
+                    
+                    const wrappers = clonedDoc.querySelectorAll('.table-wrapper');
+                    wrappers.forEach(w => {
+                        w.style.overflowX = 'visible';
+                        w.style.height = 'auto';
+                        w.style.border = 'none';
+                    });
+                },
+                ignoreElements: function(el) {
+                    return el.classList && el.classList.contains('no-print');
+                }
+            }).then(canvas => {
+                tableWrapper.style.overflowX = originalOverflow;
+                
+                const link = document.createElement('a');
+                link.download = 'exam_results.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }).catch(err => {
+                console.error("Error generating PNG:", err);
+                tableWrapper.style.overflowX = originalOverflow;
+                showToast('Error generating image', 'error');
+            });
+        });
+
+        // Download Analysis PNG
+        downloadAnalysisBtn.addEventListener('click', () => {
+            if (gradedData.length === 0) return;
+            
+            showToast('Generating Analysis Snapshot... Please wait.', 'success');
+            
+            // Draw charts synchronously to hidden canvases
+            drawAnalysisChart();
+
+            // Export to PNG immediately
+            html2canvas(analysisContentWrapper, {
+                scale: 2,
+                backgroundColor: '#111827'
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'question_analysis.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                showToast('Analysis downloaded successfully', 'success');
+            }).catch(err => {
+                showToast('Error generating image', 'error');
+            });
         });
 
         function drawAnalysisChart() {
@@ -1468,14 +1698,97 @@
             const studentCount = gradedData.length;
             const rates = [];
             
+            const redQuestions = [];
+            const yellowQuestions = [];
+            const greenQuestions = [];
+            
             for (let i = 0; i < totalQ; i++) {
                 const correctCount = gradedData.filter(s => s.questionResults[i]).length;
-                rates.push({
-                    question: `Q${i + 1}`,
-                    rate: correctCount / studentCount
-                });
+                const rate = correctCount / studentCount;
+                const percent = Math.round(rate * 100);
+                const qName = `Q${i + 1}`;
+                
+                rates.push({ question: qName, rate: rate });
+                
+                if (percent < 30) {
+                    redQuestions.push(qName);
+                } else if (percent < 60) {
+                    yellowQuestions.push(qName);
+                } else {
+                    greenQuestions.push(qName);
+                }
             }
 
+            // Draw Pie Chart
+            const pCtx = pieCanvas.getContext('2d');
+            const pWidth = 250;
+            const pHeight = 250;
+            const radius = 120;
+            const cx = pWidth / 2;
+            const cy = pHeight / 2;
+            
+            pieCanvas.width = pWidth * (window.devicePixelRatio || 1);
+            pieCanvas.height = pHeight * (window.devicePixelRatio || 1);
+            pieCanvas.style.width = pWidth + 'px';
+            pieCanvas.style.height = pHeight + 'px';
+            pCtx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+            pCtx.clearRect(0, 0, pWidth, pHeight);
+            
+            let startAngle = -Math.PI / 2;
+            const totalColors = totalQ;
+            const redAngle = (redQuestions.length / totalColors) * 2 * Math.PI;
+            const yellowAngle = (yellowQuestions.length / totalColors) * 2 * Math.PI;
+            const greenAngle = (greenQuestions.length / totalColors) * 2 * Math.PI;
+
+            // Red Slice (< 30%)
+            if(redAngle > 0) {
+                pCtx.beginPath();
+                pCtx.moveTo(cx, cy);
+                pCtx.arc(cx, cy, radius, startAngle, startAngle + redAngle);
+                pCtx.closePath();
+                pCtx.fillStyle = '#fb7185';
+                pCtx.fill();
+                startAngle += redAngle;
+            }
+            
+            // Yellow Slice (30-59%)
+            if(yellowAngle > 0) {
+                pCtx.beginPath();
+                pCtx.moveTo(cx, cy);
+                pCtx.arc(cx, cy, radius, startAngle, startAngle + yellowAngle);
+                pCtx.closePath();
+                pCtx.fillStyle = '#fbbf24';
+                pCtx.fill();
+                startAngle += yellowAngle;
+            }
+            
+            // Green Slice (>= 60%)
+            if(greenAngle > 0) {
+                pCtx.beginPath();
+                pCtx.moveTo(cx, cy);
+                pCtx.arc(cx, cy, radius, startAngle, startAngle + greenAngle);
+                pCtx.closePath();
+                pCtx.fillStyle = '#34d399';
+                pCtx.fill();
+            }
+
+            // Build Warnings
+            analysisWarnings.innerHTML = '';
+            
+            if (redQuestions.length > 0) {
+                analysisWarnings.innerHTML += `<div style="background: rgba(244, 63, 94, 0.1); border-left: 4px solid #fb7185; padding: 1rem; border-radius: 4px;">
+                    <strong style="color: #fb7185; display: block; margin-bottom: 0.3rem;">Critical Alert (< 30% Correct)</strong>
+                    <span style="color: var(--text-primary); font-size: 0.9rem;">${redQuestions.join(', ')} questions are correctly answered by less than 30% of the students.</span>
+                </div>`;
+            }
+            if (yellowQuestions.length > 0) {
+                analysisWarnings.innerHTML += `<div style="background: rgba(245, 158, 11, 0.1); border-left: 4px solid #fbbf24; padding: 1rem; border-radius: 4px;">
+                    <strong style="color: #fbbf24; display: block; margin-bottom: 0.3rem;">Warning (30 - 59% Correct)</strong>
+                    <span style="color: var(--text-primary); font-size: 0.9rem;">${yellowQuestions.join(', ')} questions are correctly answered by 30-59% of students.</span>
+                </div>`;
+            }
+
+            // Draw Bar Chart
             const ctx = analysisCanvas.getContext('2d');
             const width = 500;
             const rowHeight = 35;
@@ -1496,7 +1809,7 @@
             // Title
             ctx.fillStyle = '#111827';
             ctx.font = 'bold 20px Inter, sans-serif';
-            ctx.fillText('Question Analysis - Correct Rates', padding, padding + 20);
+            ctx.fillText('Question Breakdown', padding, padding + 20);
 
             // Draw bars
             const startY = padding + 50;
@@ -1520,8 +1833,8 @@
 
                 // Bar fill
                 let barColor = '#34d399';
-                if (percent < 40) barColor = '#fb7185';
-                else if (percent < 70) barColor = '#fbbf24';
+                if (percent < 30) barColor = '#fb7185';
+                else if (percent < 60) barColor = '#fbbf24';
 
                 ctx.fillStyle = barColor;
                 const barWidth = maxBarWidth * item.rate;
