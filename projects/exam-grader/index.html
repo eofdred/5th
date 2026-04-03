@@ -939,9 +939,13 @@
                         <option value="Make-up">Make-up</option>
                     </select>
                 </div>
-                <div style="display: flex; flex-direction: column; gap: 0.4rem; grid-column: 1 / -1;">
+                <div style="display: flex; flex-direction: column; gap: 0.4rem;">
                     <label for="className" style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 600;">Class Name</label>
                     <input type="text" id="className" placeholder="Enter name of the class..." style="padding: 0.6rem; border-radius: 6px; border: 1px solid var(--border-accent); background: rgba(10, 14, 26, 0.8); color: white; font-family: 'Inter', sans-serif; font-size: 0.9rem;">
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                    <label for="pointsPerQuestion" style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 600;">Points per Question</label>
+                    <input type="text" id="pointsPerQuestion" placeholder="e.g. 2.5 or 2,5" style="padding: 0.6rem; border-radius: 6px; border: 1px solid var(--border-accent); background: rgba(10, 14, 26, 0.8); color: white; font-family: 'Inter', sans-serif; font-size: 0.9rem;">
                 </div>
             </div>
             
@@ -1253,6 +1257,8 @@
         // Grade students
         function gradeStudents(answerKeys, students, usePaperTypes) {
             const defaultKey = answerKeys['default'] || Object.values(answerKeys)[0];
+            const pointsInput = document.getElementById('pointsPerQuestion').value.trim();
+            const userPoints = pointsInput ? parseFloat(pointsInput.replace(',', '.')) : null;
 
             return students.map(student => {
                 let correct = 0;
@@ -1272,7 +1278,7 @@
                 }
 
                 const totalQuestions = gradingKey ? gradingKey.length : 0;
-                const pointsPerQuestion = totalQuestions > 0 ? 100 / totalQuestions : 0;
+                const pointsPerQuestion = (userPoints !== null && !isNaN(userPoints)) ? userPoints : (totalQuestions > 0 ? 100 / totalQuestions : 0);
 
                 for (let i = 0; i < totalQuestions; i++) {
                     const isCorrect = i < student.answers.length && student.answers[i] === gradingKey[i];
