@@ -91,6 +91,10 @@
             background-image: linear-gradient(45deg, #ff8c00, #ff4500);
         }
     </style>
+    <link rel="manifest" href="./manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="./app_icon.png">
 </head>
 
 <body>
@@ -110,6 +114,7 @@
             <a href="projects/epix/index.html" class="button">Epix - Disease Spread Simulator</a>
             <a href="projects/picture_maker/index.html" class="button">Picture Maker - Pre-made promt generator</a>
             <a href="projects/exam-grader/index.html" class="button">Exam Grader - Answer Sheet Scorer</a>
+            <a href="projects/tesvik/index.html" class="button">Akademik Teşvik - Score Calculator</a>
         </div>
     </div>
 
@@ -136,6 +141,12 @@
         }
 
         requestAnimationFrame(animate);
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js');
+            });
+        }
     </script>
 </body>
 

@@ -52,6 +52,11 @@
             box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
         }
     </style>
+
+    <link rel="manifest" href="./manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="./app_icon.png">
 </head>
 
 <body class="flex flex-col items-center min-h-screen p-8 gap-8">
@@ -627,6 +632,14 @@
 
         renderCH4Sliders();
     </script>
+
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./sw.js");
+    });
+  }
+</script>
 </body>
 
 </html>

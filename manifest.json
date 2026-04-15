@@ -1,0 +1,16 @@
+{
+  "name": "Murat's Projects Hub",
+  "short_name": "Murat's Hub",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#121212",
+  "theme_color": "#d3ffd7",
+  "icons": [
+    {
+      "src": "app_icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
