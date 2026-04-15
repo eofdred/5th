@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Systematic Review Paper Fetcher</title>
+    <style>
+        :root {
+            --background: #09090b;
+            --foreground: #f8fafc;
+            --primary: #8b5cf6;
+            --primary-hover: #7c3aed;
+            --panel: rgba(15, 23, 42, 0.6);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 2rem;
+            min-height: 100vh;
+            background-color: var(--background);
+            color: var(--foreground);
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.15), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(56, 189, 248, 0.15), transparent 25%);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+            background: var(--panel);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            margin-top: 0;
+            font-size: 2rem;
+            text-align: center;
+            background: linear-gradient(to right, #8b5cf6, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .description {
+            text-align: center;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #cbd5e1;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: #fff;
+            font-family: monospace;
+            font-size: 1rem;
+            min-height: 100px;
+            resize: vertical;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+        }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        button {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 14px 0 rgba(139, 92, 246, 0.39);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background-color: #10b981;
+            color: white;
+            box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+        }
+
+        .btn-success:hover:not(:disabled) {
+            background-color: #059669;
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .stats-panel {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-row:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label {
+            color: #94a3b8;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: #38bdf8;
+            font-size: 1.1rem;
+        }
+
+        /* Loading Spinner */
+        .loader {
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top: 3px solid white;
+            width: 16px;
+            height: 16px;
+            -webkit-animation: spin 1s linear infinite;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        #errorAlert {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid #ef4444;
+            color: #fca5a5;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .app-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .app-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4);
+        }
+
+        .home-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+            transition: color 0.2s;
+        }
+
+        .home-link:hover {
+            color: #f8fafc;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="app-header">
+            <a href="../../index.html" class="home-link">← Back to Home</a>
+            <img src="app_icon.png" alt="Systematic Review Engine Logo" class="app-logo">
+            <h1>Systematic Review Engine</h1>
+        </div>
+        <p class="description">Fetch research papers instantly, automatically filter out non-primary research, fetch
+            abstracts, and export to CSV.</p>
+
+        <div class="form-group">
+            <label for="searchQuery">Database Search Query:</label>
+            <textarea id="searchQuery"
+                placeholder="e.g. pain AND (indicator OR assessment) AND (ruminant OR cattle OR sheep)"></textarea>
+
+            <div class="checkbox-group"
+                style="margin-top: 1rem; display: flex; gap: 1.5rem; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; border: 1px solid var(--border);">
+                <label
+                    style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; color: #f8fafc; font-weight: normal; margin: 0;">
+                    <input type="checkbox" id="searchTitle" checked
+                        style="width: 1.2rem; height: 1.2rem; accent-color: var(--primary);">
+                    Search in Title
+                </label>
+                <label
+                    style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; color: #f8fafc; font-weight: normal; margin: 0;">
+                    <input type="checkbox" id="searchAbstract" checked
+                        style="width: 1.2rem; height: 1.2rem; accent-color: var(--primary);">
+                    Search in Abstract
+                </label>
+            </div>
+        </div>
+
+        <div id="errorAlert"></div>
+
+        <div class="actions">
+            <button id="btnSearch" class="btn-primary" onclick="runSearch()">
+                <div class="loader" id="searchLoader"></div>
+                <span>1. Run First Search</span>
+            </button>
+            <button id="btnDedupe" class="btn-secondary" onclick="runDeduplication()" disabled>
+                <div class="loader" id="dedupeLoader"></div>
+                <span>2. Filter & Fetch Abstracts</span>
+            </button>
+            <button id="btnDownload" class="btn-success" onclick="downloadCSV()" disabled>
+                <span>3. Download CSV</span>
+            </button>
+        </div>
+
+        <div class="stats-panel">
+            <div class="stat-row">
+                <span class="stat-label">Raw Papers Found:</span>
+                <span class="stat-value" id="statRaw">0</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label" style="padding-left: 1rem;">↳ PubMed:</span>
+                <span class="stat-value" id="statPubMed" style="color: #94a3b8; font-size: 0.95rem;">0</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label" style="padding-left: 1rem;">↳ Scopus:</span>
+                <span class="stat-value" id="statScopus" style="color: #94a3b8; font-size: 0.95rem;">0</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Duplicates & Non-Research Removed:</span>
+                <span class="stat-value" id="statDupes" style="color: #ef4444;">0</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label" style="color: #f8fafc;">Final Valid Research Papers:</span>
+                <span class="stat-value" id="statUnique" style="color: #10b981;">0</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SCOPUS_API_KEY = "d5ab23e213d36b6d6ed306463072e475";
+
+        let globalPapers = []; // Array of {title, doi, year, source, type, uid, abstract}
+        let uniquePapers = [];
+
+        async function runSearch() {
+            const query = document.getElementById('searchQuery').value.trim();
+            const searchTitle = document.getElementById('searchTitle').checked;
+            const searchAbstract = document.getElementById('searchAbstract').checked;
+
+            const errorBox = document.getElementById('errorAlert');
+            const loader = document.getElementById('searchLoader');
+            const btn = document.getElementById('btnSearch');
+
+            if (!query) {
+                showError("Please enter a search query.");
+                return;
+            }
+            if (!searchTitle && !searchAbstract) {
+                showError("Please select at least one field (Title or Abstract) to search in.");
+                return;
+            }
+
+            // Reset UI
+            errorBox.style.display = 'none';
+            btn.disabled = true;
+            loader.style.display = 'block';
+            document.getElementById('btnDedupe').disabled = true;
+            document.getElementById('btnDownload').disabled = true;
+
+            globalPapers = [];
+            uniquePapers = [];
+            updateStats(0, 0, 0, 0, 0);
+
+            try {
+                // Run Concurrently
+                const [pubmedResults, scopusResults] = await Promise.all([
+                    fetchPubMed(query),
+                    fetchScopus(query)
+                ]);
+
+                // Post-filter: validate each paper actually contains the query terms
+                // This catches any thesaurus/MeSH expansion leakage from either API
+                const filteredPubmed = pubmedResults.filter(p => matchesQuery(query, searchTitle, searchAbstract, p));
+                const filteredScopus = scopusResults.filter(p => matchesQuery(query, searchTitle, searchAbstract, p));
+
+                globalPapers = [...filteredPubmed, ...filteredScopus];
+                uniquePapers = []; // Reset unique papers until deduplication runs
+
+                updateStats(globalPapers.length, filteredPubmed.length, filteredScopus.length, 0, 0);
+
+                if (globalPapers.length > 0) {
+                    document.getElementById('btnDedupe').disabled = false;
+                }
+
+            } catch (err) {
+                showError("Search failed: " + err.message);
+                console.error(err);
+            } finally {
+                btn.disabled = false;
+                loader.style.display = 'none';
+            }
+        }
+
+        /**
+         * Client-side Boolean query validator.
+         * Parses the user's AND/OR query and checks whether the paper's
+         * title and/or abstract actually contain the required terms.
+         * This is the definitive guard against API thesaurus/MeSH expansion leakage.
+         */
+        function matchesQuery(query, searchTitle, searchAbstract, paper) {
+            // Build the text to search against based on user's checkbox selection
+            let text = '';
+            if (searchTitle) text += ' ' + paper.title.toLowerCase();
+            if (searchAbstract) text += ' ' + (paper.abstract || '').toLowerCase();
+
+            // Split query by top-level AND (not inside parentheses)
+            const andGroups = splitByTopLevelAnd(query);
+
+            for (const group of andGroups) {
+                // Strip outer parentheses and split OR terms
+                const stripped = group.trim().replace(/^\(|\)$/g, '').trim();
+                const orTerms = stripped.split(/\bOR\b/i).map(t =>
+                    t.trim().replace(/^"|"$/g, '').toLowerCase() // strip surrounding quotes
+                ).filter(t => t.length > 0);
+
+                // At least one OR term must appear as a whole word in the text
+                const matched = orTerms.some(term => {
+                    // Escape special regex chars in the term
+                    const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                    const regex = new RegExp(`\\b${escaped}\\b`, 'i');
+                    return regex.test(text);
+                });
+
+                if (!matched) return false; // This AND group failed — paper is rejected
+            }
+            return true; // All AND groups passed
+        }
+
+        /**
+         * Splits a Boolean query string by top-level AND operators,
+         * respecting parentheses so nested ORs are kept intact.
+         */
+        function splitByTopLevelAnd(query) {
+            const groups = [];
+            let depth = 0;
+            let current = '';
+            const tokens = query.split(/(\bAND\b)/i);
+            for (const token of tokens) {
+                if (/^AND$/i.test(token.trim())) {
+                    if (depth === 0) {
+                        if (current.trim()) groups.push(current.trim());
+                        current = '';
+                    } else {
+                        current += token;
+                    }
+                } else {
+                    depth += (token.match(/\(/g) || []).length;
+                    depth -= (token.match(/\)/g) || []).length;
+                    current += token;
+                }
+            }
+            if (current.trim()) groups.push(current.trim());
+            return groups;
+        }
+
+        async function fetchPubMed(query) {
+            let records = [];
+
+            const searchTitle = document.getElementById('searchTitle').checked;
+            const searchAbstract = document.getElementById('searchAbstract').checked;
+
+            let modifier = '';
+            if (searchTitle && searchAbstract) modifier = '[tiab:noexp]';
+            else if (searchTitle) modifier = '[ti:noexp]';
+            else if (searchAbstract) modifier = '[ab:noexp]';
+
+            const pubmedQuery = modifier ? `(${query})${modifier}` : query;
+            const encodedQuery = encodeURIComponent(pubmedQuery);
+            // Request up to 100,000 IDs (effectively 'unlimited' for most topics)
+            const searchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=${encodedQuery}&retmode=json&retmax=100000&sort=date`;
+
+            const searchRes = await fetch(searchUrl);
+            const searchData = await searchRes.json();
+            const idList = searchData.esearchresult?.idlist || [];
+
+            if (idList.length === 0) return records;
+
+            // Fetch Summaries in 100-item chunks
+            const chunkSize = 100;
+            for (let i = 0; i < idList.length; i += chunkSize) {
+                const chunk = idList.slice(i, i + chunkSize);
+                const idsStr = chunk.join(',');
+                const summaryUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=${idsStr}&retmode=json`;
+
+                const summRes = await fetch(summaryUrl);
+                const summData = await summRes.json();
+
+                chunk.forEach(uid => {
+                    const r = summData.result[uid];
+                    if (r) {
+                        let title = r.title || '';
+                        title = title.replace(/<[^>]*>?/gm, ''); // strip HTML tags
+
+                        let year = '';
+                        if (r.pubdate) year = r.pubdate.split(' ')[0];
+
+                        let doi = '';
+                        if (r.articleids) {
+                            const doiObj = r.articleids.find(id => id.idtype === 'doi');
+                            if (doiObj) doi = doiObj.value;
+                        }
+                        if (!doi && r.elocationid && r.elocationid.startsWith('doi:')) {
+                            doi = r.elocationid.replace('doi:', '').trim();
+                        }
+
+                        // Parse Document Type
+                        let type = 'Other';
+                        const pubtypes = r.pubtype || [];
+                        const typeStr = pubtypes.join(' ').toLowerCase();
+                        if (typeStr.includes('review') || typeStr.includes('meta-analysis')) {
+                            type = 'Review';
+                        } else if (typeStr.includes('journal article')) {
+                            type = 'Research Paper';
+                        }
+
+                        if (title) records.push({ title, doi, year, source: 'PubMed', type, uid, abstract: '' });
+                    }
+                });
+
+                await new Promise(r => setTimeout(r, 300));
+            }
+            return records;
+        }
+
+        async function fetchScopus(query) {
+            let records = [];
+
+            const searchTitle = document.getElementById('searchTitle').checked;
+            const searchAbstract = document.getElementById('searchAbstract').checked;
+
+            let scopusQuery = query;
+            if (searchTitle && searchAbstract) scopusQuery = `TITLE-ABS(${query})`;
+            else if (searchTitle) scopusQuery = `TITLE(${query})`;
+            else if (searchAbstract) scopusQuery = `ABS(${query})`;
+
+            const encodedQuery = encodeURIComponent(scopusQuery);
+
+            let maxResults = 5000; // API safety limit for deep pagination
+            let start = 0;
+            let isFirstRequest = true;
+
+            while (start < maxResults) {
+                const url = `https://api.elsevier.com/content/search/scopus?query=${encodedQuery}&count=25&start=${start}&sort=-coverDate`;
+
+                const res = await fetch(url, {
+                    headers: {
+                        'X-ELS-APIKey': SCOPUS_API_KEY,
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (!res.ok) {
+                    console.error("Scopus API Error:", await res.text());
+                    break;
+                }
+
+                const data = await res.json();
+
+                if (isFirstRequest) {
+                    const totalAvailable = parseInt(data['search-results']?.['opensearch:totalResults'] || "0");
+                    if (totalAvailable < maxResults) maxResults = totalAvailable;
+                    isFirstRequest = false;
+                }
+
+                const entries = data['search-results']?.entry || [];
+
+                if (entries.length === 0) break;
+
+                entries.forEach(article => {
+                    const title = article['dc:title'] || '';
+                    const doi = article['prism:doi'] || '';
+                    const coverDate = article['prism:coverDate'] || '';
+                    const year = coverDate ? coverDate.split('-')[0] : '';
+                    const abstractText = article['dc:description'] || '';
+
+                    // Parse Document Type
+                    let type = 'Other';
+                    const subtype = (article['subtypeDescription'] || '').toLowerCase();
+                    if (subtype.includes('review')) {
+                        type = 'Review';
+                    } else if (subtype.includes('article')) {
+                        type = 'Research Paper';
+                    } else if (subtype.includes('chapter')) {
+                        type = 'Book Chapter';
+                    }
+
+                    if (title) records.push({ title, doi, year, source: 'Scopus', type, uid: null, abstract: abstractText });
+                });
+
+                start += 25;
+            }
+            return records;
+        }
+
+        async function runDeduplication() {
+            const btn = document.getElementById('btnDedupe');
+            const loader = document.getElementById('dedupeLoader');
+            btn.disabled = true;
+            loader.style.display = 'block';
+
+            try {
+                const seenTitles = new Set();
+                const seenDois = new Set();
+                uniquePapers = [];
+
+                for (const p of globalPapers) {
+                    const cleanTitle = p.title.trim().toLowerCase();
+                    const doi = p.doi.trim();
+
+                    // Only keep Original Research Papers
+                    if (p.type !== 'Research Paper') {
+                        continue;
+                    }
+
+                    // Deduplicate
+                    if ((doi && seenDois.has(doi)) || (cleanTitle && seenTitles.has(cleanTitle))) {
+                        continue;
+                    }
+
+                    uniquePapers.push(p);
+                    if (doi) seenDois.add(doi);
+                    if (cleanTitle) seenTitles.add(cleanTitle);
+                }
+
+                // Fetch missing Abstracts for PubMed papers
+                // Scopus papers already got their abstract from the search 'dc:description'
+                await fetchPubMedAbstracts(uniquePapers);
+
+                const itemsRemoved = globalPapers.length - uniquePapers.length;
+
+                // Retain raw counts
+                const currentRaw = parseInt(document.getElementById('statRaw').innerText);
+                const currentPub = parseInt(document.getElementById('statPubMed').innerText);
+                const currentScop = parseInt(document.getElementById('statScopus').innerText);
+
+                updateStats(currentRaw, currentPub, currentScop, itemsRemoved, uniquePapers.length);
+
+                // Enable Download
+                if (uniquePapers.length > 0) {
+                    document.getElementById('btnDownload').disabled = false;
+                }
+            } catch (err) {
+                showError("Filtering/Abstract fetch failed: " + err.message);
+            } finally {
+                btn.disabled = false;
+                loader.style.display = 'none';
+            }
+        }
+
+        async function fetchPubMedAbstracts(papers) {
+            // Filter out papers from PubMed that don't have an abstract yet
+            const pubmedPapers = papers.filter(p => p.source === 'PubMed' && !p.abstract && p.uid);
+
+            if (pubmedPapers.length === 0) return;
+
+            const chunkSize = 200;
+            for (let i = 0; i < pubmedPapers.length; i += chunkSize) {
+                const chunk = pubmedPapers.slice(i, i + chunkSize);
+                const ids = chunk.map(p => p.uid).join(',');
+
+                const fetchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=${ids}&retmode=xml`;
+
+                try {
+                    const response = await fetch(fetchUrl);
+                    const xmlText = await response.text();
+
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+
+                    const articles = xmlDoc.getElementsByTagName("PubmedArticle");
+                    for (let j = 0; j < articles.length; j++) {
+                        const article = articles[j];
+                        const pmidNode = article.querySelector("PMID");
+                        if (!pmidNode) continue;
+
+                        const pmid = pmidNode.textContent;
+
+                        // Extract abstract components and combine
+                        const abstractTexts = article.querySelectorAll("AbstractText");
+                        let abstractContent = [];
+                        abstractTexts.forEach(node => {
+                            const label = node.getAttribute("Label") || '';
+                            const text = node.textContent;
+                            if (label) {
+                                abstractContent.push(`${label}: ${text}`);
+                            } else {
+                                abstractContent.push(text);
+                            }
+                        });
+
+                        const fullAbstract = abstractContent.join(" ");
+
+                        // Map back to our paper object
+                        const matchingPaper = pubmedPapers.find(p => p.uid === pmid);
+                        if (matchingPaper && fullAbstract) {
+                            matchingPaper.abstract = fullAbstract;
+                        }
+                    }
+                } catch (e) {
+                    console.error("Error fetching pubmed abstracts for chunk", e);
+                }
+
+                await new Promise(r => setTimeout(r, 400)); // Respect rate limits
+            }
+        }
+
+        function downloadCSV() {
+            if (uniquePapers.length === 0) return;
+
+            // Prepare CSV Header with newly added columns
+            let csvContent = "\uFEFFtitle,doi,year,type,abstract\n";
+
+            uniquePapers.forEach(p => {
+                // Escape quotes inside fields securely
+                const safeTitle = p.title.replace(/"/g, '""');
+                const safeType = (p.type || '').replace(/"/g, '""');
+                const safeAbstract = (p.abstract || '').replace(/"/g, '""');
+
+                csvContent += `"${safeTitle}","${p.doi}","${p.year}","${safeType}","${safeAbstract}"\n`;
+            });
+
+            // Create Blob and trigger download
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+
+            const link = document.createElement("a");
+            link.setAttribute("href", url);
+            link.setAttribute("download", "systematic_review_results.csv");
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function updateStats(raw, pubmed, scopus, dupes, unique) {
+            document.getElementById('statRaw').innerText = raw;
+            document.getElementById('statPubMed').innerText = pubmed;
+            document.getElementById('statScopus').innerText = scopus;
+            document.getElementById('statDupes').innerText = dupes;
+            document.getElementById('statUnique').innerText = unique;
+        }
+
+        function showError(msg) {
+            const box = document.getElementById('errorAlert');
+            box.innerText = msg;
+            box.style.display = 'block';
+        }
+    </script>
+</body>
+
+</html>
