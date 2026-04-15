@@ -28,16 +28,14 @@
             --x: calc(var(--posX, 0) * 1px);
             --y: calc(var(--posY, 0) * 1px);
             background-image:
-                linear-gradient(115deg, rgb(211 255 215), rgb(0 0 0)),
-                radial-gradient(90% 100% at calc(50% + var(--x)) calc(0% + var(--y)), rgb(200 200 200), rgb(022 000 045)),
-                radial-gradient(100% 100% at calc(80% - var(--x)) calc(0% - var(--y)), rgb(250 255 000), rgb(036 000 000)),
-                radial-gradient(150% 210% at calc(100% + var(--x)) calc(0% + var(--y)), rgb(020 175 125), rgb(000 010 255)),
-                radial-gradient(100% 100% at calc(100% - var(--x)) calc(30% - var(--y)), rgb(255 077 000), rgb(000 200 255)),
-                linear-gradient(60deg, rgb(255 000 000), rgb(120 086 255));
-            background-blend-mode: overlay, overlay, difference, difference, difference, normal;
+                radial-gradient(circle at calc(50% + var(--x)) calc(20% + var(--y)), rgba(0, 229, 255, 0.571) 0%, transparent 60%),
+                radial-gradient(circle at calc(80% - var(--x)) calc(40% - var(--y)), rgba(212, 0, 249, 0.53) 0%, transparent 60%),
+                radial-gradient(circle at calc(20% + var(--x)) calc(80% + var(--y)), rgba(55, 255, 20, 0.416) 0%, transparent 60%),
+                radial-gradient(circle at calc(100% - var(--x)) calc(100% - var(--y)), rgba(255, 111, 0, 0.367) 0%, transparent 60%),
+                linear-gradient(to bottom right, #09090b, #17103a);
+            background-blend-mode: screen, screen, screen, screen, normal;
             background-attachment: fixed;
             background-size: cover;
-            /* overflow: hidden; Removed to allow scrolling */
         }
 
         .container {
@@ -70,25 +68,49 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
-        .button {
-            display: inline-block;
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            color: white;
-            background-color: #ff4500;
-            background-image: linear-gradient(45deg, #ff4500, #ff8c00);
-            text-decoration: none;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.4);
-            transition: all 0.3s ease;
-            width: 100%;
-            max-width: 350px;
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(75px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+            max-width: 100%;
         }
 
-        .button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 69, 0, 0.6);
-            background-image: linear-gradient(45deg, #ff8c00, #ff4500);
+        @media (min-width: 400px) {
+            .app-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .app-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            transition: transform 0.2s ease;
+        }
+
+        .app-item:hover {
+            transform: scale(1.05);
+        }
+
+        .app-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            object-fit: cover;
+            margin-bottom: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .app-label {
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-align: center;
+            line-height: 1.2;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
         }
     </style>
     <link rel="manifest" href="./manifest.json">
@@ -100,21 +122,48 @@
 <body>
     <div class="container">
         <img src="image.jpg" alt="Profile Picture" class="profile-pic">
-        <p style="text-align: justify; margin-bottom: 1rem;">My name is Mehmet Murat Dogusan, and you can call me Murat. I am a researcher in the Animal Sciences Department at Burdur Mehmet Akif Ersoy University. My research focuses on animal welfare, on-farm biosecurity, and the development of AI-assisted tools for the livestock sector. </p>
-        <p style="text-align: justify; margin-bottom: 2rem;">You can contact me through <a href="mailto:murat@dogusan.org"
+        <p style="text-align: justify; margin-bottom: 1rem;">My name is Mehmet Murat Dogusan, and you can call me Murat.
+            I am a researcher in the Animal Sciences Department at Burdur Mehmet Akif Ersoy University. My research
+            focuses on animal welfare, on-farm biosecurity, and the development of AI-assisted tools for the livestock
+            sector. </p>
+        <p style="text-align: justify; margin-bottom: 2rem;">You can contact me through <a
+                href="mailto:murat@dogusan.org"
                 style="color: #ffdacc; text-decoration: none; font-weight: bold;">murat@dogusan.org</a>. On the other
             hand you can visit <a href="https://thinkingbottle.com"
                 style="color: #ffdacc; text-decoration: none; font-weight: bold;">ThinkingBottle</a> for my blog.</p>
-        <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center; margin-top: 2rem;">
-            <a href="projects/forest-fire/index.html" class="button">Forest Fire Simulator</a>
-            <a href="projects/sample-calculator/index.html" class="button">Representation Calculation</a>
-            <a href="projects/GHG-simulator/index.html" class="button">Climate Change Simulator</a>
-
-            <a href="projects/vetxr/out/index.html" class="button">VetXR - Future of Veterinary Education</a>
-            <a href="projects/epix/index.html" class="button">Epix - Disease Spread Simulator</a>
-            <a href="projects/picture_maker/index.html" class="button">Picture Maker - Pre-made promt generator</a>
-            <a href="projects/exam-grader/index.html" class="button">Exam Grader - Answer Sheet Scorer</a>
-            <a href="projects/tesvik/index.html" class="button">Akademik Teşvik - Score Calculator</a>
+        <div class="app-grid">
+            <a href="projects/GHG-simulator/index.html" class="app-item">
+                <img src="projects/GHG-simulator/app_icon.png" class="app-icon" alt="GHG Sim">
+                <span class="app-label">Climate Change Sim</span>
+            </a>
+            <a href="projects/epix/index.html" class="app-item">
+                <img src="projects/epix/app_icon.png" class="app-icon" alt="Epix">
+                <span class="app-label">Epix</span>
+            </a>
+            <a href="projects/exam-grader/index.html" class="app-item">
+                <img src="projects/exam-grader/app_icon.png" class="app-icon" alt="Exam Grader">
+                <span class="app-label">Exam Grader</span>
+            </a>
+            <a href="projects/forest-fire/index.html" class="app-item">
+                <img src="projects/forest-fire/app_icon.png" class="app-icon" alt="Forest Fire">
+                <span class="app-label">Forest Fire Sim</span>
+            </a>
+            <a href="projects/picture_maker/index.html" class="app-item">
+                <img src="projects/picture_maker/app_icon.png" class="app-icon" alt="Picture Maker">
+                <span class="app-label">Picture Maker</span>
+            </a>
+            <a href="projects/sample-calculator/index.html" class="app-item">
+                <img src="projects/sample-calculator/app_icon.png" class="app-icon" alt="Sample Calc">
+                <span class="app-label">Representation Calc</span>
+            </a>
+            <a href="projects/tesvik/index.html" class="app-item">
+                <img src="projects/tesvik/app_icon.png" class="app-icon" alt="Teşvik">
+                <span class="app-label">Teşvik Calc</span>
+            </a>
+            <a href="projects/vetxr/out/index.html" class="app-item">
+                <img src="projects/vetxr/out/app_icon.png" class="app-icon" alt="VetXR">
+                <span class="app-label">VetXR</span>
+            </a>
         </div>
     </div>
 
@@ -127,9 +176,9 @@
             const elapsedTime = timestamp - startTime;
 
             // Use sine and cosine to create a smooth, looping motion
-            const speed = 0.0005;
-            const radiusX = 200;
-            const radiusY = 150;
+            const speed = 0.0012;
+            const radiusX = 250;
+            const radiusY = 200;
 
             const posX = Math.cos(elapsedTime * speed) * radiusX;
             const posY = Math.sin(elapsedTime * speed) * radiusY;
