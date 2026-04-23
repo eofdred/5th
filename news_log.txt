@@ -1,0 +1,28 @@
+[2026-04-24 00:19:40.628673] NEW (TUBITAK): 2523 TÜBİTAK–Kore Ulusal Araştırma Vakfı (NRF) İkili İş Birliği Seyahat Destek Çağrısı Açıldı
+[2026-04-24 00:19:40.628784] NEW (TUBITAK): Çip Tasarım Yarışması Ön Tasarım Raporu Sonuçları Açıklandı
+[2026-04-24 00:19:40.628849] NEW (TUBITAK): 2026 Yılı TÜBİTAK Bilim, Özel, Hizmet ve Teşvik Ödülleri Başvuruları Başladı
+[2026-04-24 00:19:40.628909] NEW (TUBITAK): Bilim Olimpiyatları Programı Birinci Aşama Sınavı Başvuru Takvimi Güncellendi
+[2026-04-24 00:19:40.628957] NEW (TUBITAK): EMBO Bilimsel Değişim Hibelerine Başvurular Devam Ediyor
+[2026-04-24 00:19:40.628998] NEW (TUBITAK): Robotaksi-Binek Otonom Araç Yarışması Teknik Yeterlilik Formu Sonuçları Açıklandı
+[2026-04-24 00:19:40.629037] NEW (TUBITAK): 2504 TÜBİTAK–CNR (İtalya) İkili İş Birliği Çağrısı Açıldı
+[2026-04-24 00:19:40.629086] NEW (TUBITAK): 1833 SAYEM Yeşil Dönüşüm 2026-1 Çağrısı 2. Aşaması Başvuruya Açıldı
+[2026-04-24 00:19:40.629125] NEW (TUBITAK): Dikey İnişli Roket Yarışması Ön Tasarım Raporu Sonuçları Açıklandı
+[2026-04-24 00:19:40.629164] NEW (TUBITAK): Bilim Merkezi Sergi Tasarım Yarışması Başvuruları Başladı
+[2026-04-24 00:19:40.629202] NEW (TUBITAK): 1601–Küresel Temiz Teknolojiler Girişimcilik Programı Teknoloji Ölçekleme ve Ticarileştirme Desteği Çağrısı Açıldı
+[2026-04-24 00:19:40.629240] NEW (TUBITAK): 4006-C Bilim Fuarları Festivali Desteği’nin 2. Çağrısı Yayınlandı
+[2026-04-24 00:19:40.629277] NEW (TUBITAK): 2509-TÜBİTAK ile Fransa Dışişleri Bakanlığı İkili İş Birliği (Bosphorus) Programı 2026 Yılı Çağrısı Açıldı
+[2026-04-24 00:19:40.629315] NEW (TUBITAK): 1719-Eureka Network Biyoteknoloji 2026 Çağrısı Açıldı
+[2026-04-24 00:19:40.629353] NEW (TUBITAK): TEKNOFEST Girişim Programı 2026 Yılı Başvuruları Başladı
+[2026-04-24 00:19:40.629390] NEW (TUBITAK): PRIMA PROGRAMI 2026 YILI BÖLÜM 2 ÇAĞRISI ULUSAL BİLGİ GÜNÜ ÇEVRİM İÇİ OLARAK GERÇEKLEŞTİRİLECEK
+[2026-04-24 00:19:40.629427] NEW (TUBITAK): 1832-Sanayide Yeşil Dönüşüm 2026-1 Çağrısı Başvuruya Açıldı
+[2026-04-24 00:19:40.629464] NEW (TUBITAK): 2247-C Stajyer Araştırmacı Burs Programı (STAR)–2026 Yılı 1. Dönem Proje Yürütücüsü Çağrısı Açıldı
+[2026-04-24 00:19:40.629503] NEW (UA): Mesleki Mükemmeliyet Merkezleri (CoVE) Projesi İletişim Formu
+[2026-04-24 00:19:40.629540] NEW (UA): 2025/R3 Erasmus+ Gençlik Değişimleri, Gençlik Çalışanlarının Hareketliliği ve Gençlik Katılımı Başvuru Sonuçları
+[2026-04-24 00:19:40.629577] NEW (UA): 2025 İkinci Dönem Erasmus+ DiscoverEU Dahil Etme Faaliyeti (KA155-YOU) Projeleri Başvuru Sonuçları
+[2026-04-24 00:19:40.629627] NEW (UA): Avrupa Dayanışma Programı 2025 Teklif Çağrısı Yılı Kalite Sertifikası (ESC50-QLA) Başvuru Sonuçları
+[2026-04-24 00:19:40.629674] NEW (UA): 2025 Yılı Gençlik Alanında Erasmus Akreditasyonu (KA150-YOU) Başvuru Sonuçları
+[2026-04-24 00:19:40.629712] NEW (UA): 2024 Başvuru Dönemi KA171 Ara Dağıtım Sonuçları
+[2026-04-24 00:19:40.629750] NEW (UA): 2026 yılı Erasmus+ Okul Gelişimi için Avrupa Ortaklıkları (KA240-SCH) Çevrim içi Bilgilendirme Toplantısı
+[2026-04-24 00:19:40.629787] NEW (UA): 2025 Yılı Erasmus+ Okul Eğitimi Alanında Erasmus Akreditasyonu (KA120-SCH) Projeleri Başvuru Sonuçları
+[2026-04-24 00:19:40.629824] NEW (UA): 2025 Yılı Erasmus+ Mesleki Eğitim Alanında Akreditasyon (KA120-VET) Projeleri Başvuru Sonuçları
+[2026-04-24 00:19:40.629862] NEW (UA): 2025 Yılı Erasmus+ Yetişkin Eğitimi Alanında Akreditasyon (KA120-ADU) Projeleri Başvuru Sonuçları
