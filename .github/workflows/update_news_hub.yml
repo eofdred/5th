@@ -1,0 +1,34 @@
+name: Update News Hub Data
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Every hour
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          pip install -r projects/news_hub/requirements.txt
+
+      - name: Run scraper
+        run: |
+          python projects/news_hub/news_logger.py
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add projects/news_hub/news_db.json projects/news_hub/news_data.js projects/news_hub/news_log.txt
+          git commit -m "Auto-update news data" || exit 0
+          git push

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Source News Hub</title>
+    <style>
+        :root {
+            --primary: #003366;
+            --primary-light: #004d99;
+            --accent: #cc0000;
+            --bg: #f0f2f5;
+            --text-main: #1c1e21;
+            --text-muted: #65676b;
+            --card-bg: #ffffff;
+            --unread-bg: #e7f3ff;
+            --tag-maku: #003366;
+            --tag-tubitak: #1a1a1a;
+            --tag-ua: #d9534f;
+        }
+
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text-main); margin: 0; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: white; padding: 2rem 1rem; text-align: center; }
+        
+        .filters {
+            max-width: 850px;
+            margin: -20px auto 1rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            border: 1px solid #ddd;
+            background: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .container { max-width: 850px; margin: 0 auto; padding: 1rem; }
+
+        .news-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: transform 0.2s;
+            position: relative;
+        }
+
+        .news-card.unread { border-left: 6px solid #1877f2; background: var(--unread-bg); }
+
+        .source-tag {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 800;
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: white;
+        }
+
+        .tag-MAKU { background: var(--tag-maku); }
+        .tag-TUBITAK { background: var(--tag-tubitak); }
+        .tag-UA { background: var(--tag-ua); }
+
+        .news-title { font-size: 1.3rem; font-weight: 700; color: var(--primary); text-decoration: none; display: block; margin-top: 0.5rem; }
+        .read .news-title { color: var(--text-muted); font-weight: 500; }
+
+        .card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #eee; }
+        
+        .btn-main { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .btn-mark { background: none; border: 1px solid #ddd; color: var(--text-muted); cursor: pointer; padding: 4px 8px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Global News Hub</h1>
+    <p>Filtered announcements from multiple sources</p>
+</header>
+
+<div class="filters" id="filter-bar">
+    <button class="filter-btn active" onclick="setFilter('ALL')">All Sources</button>
+</div>
+
+<div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 10px;">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div id="count-stat" style="font-weight: 600; color: var(--text-muted);">Loading...</div>
+            <label style="display: flex; align-items: center; gap: 6px; font-size: 0.9rem; font-weight: 600; color: var(--text-muted); cursor: pointer;">
+                <input type="checkbox" id="unread-only-toggle" onchange="render()" style="width: 16px; height: 16px; cursor: pointer;">
+                Only unread
+            </label>
+        </div>
+        <button class="btn-mark" onclick="markAllAsRead()">Mark All as Read</button>
+    </div>
+    <div id="news-container"></div>
+</div>
+
+<script src="news_data.js"></script>
+<script>
+    let currentFilter = 'ALL';
+    let readStatus = JSON.parse(localStorage.getItem('news_read_status') || '{}');
+
+    function saveRead() { localStorage.setItem('news_read_status', JSON.stringify(readStatus)); }
+
+    function setFilter(source) {
+        currentFilter = source;
+        const buttons = document.querySelectorAll('.filter-btn');
+        buttons.forEach(btn => {
+            const isAllBtn = btn.innerText === 'All Sources' && source === 'ALL';
+            const isSourceBtn = newsData.sources[source] && btn.innerText === newsData.sources[source].name;
+            btn.classList.toggle('active', isAllBtn || isSourceBtn);
+        });
+        render();
+    }
+
+    function toggleRead(id, event) {
+        if(event) event.stopPropagation();
+        readStatus[id] = !readStatus[id];
+        saveRead();
+        render();
+    }
+
+    function markAllAsRead() {
+        newsData.news.forEach(item => { if(currentFilter === 'ALL' || item.source === currentFilter) readStatus[item.id] = true; });
+        saveRead();
+        render();
+    }
+
+    function render() {
+        const container = document.getElementById('news-container');
+        const filterBar = document.getElementById('filter-bar');
+        const unreadOnly = document.getElementById('unread-only-toggle').checked;
+        
+        if (typeof newsData === 'undefined') return;
+
+        // Build filter buttons if first time
+        if (filterBar.children.length === 1) {
+            Object.keys(newsData.sources).forEach(key => {
+                const btn = document.createElement('button');
+                btn.className = 'filter-btn';
+                btn.innerText = newsData.sources[key].name;
+                btn.onclick = () => setFilter(key);
+                filterBar.appendChild(btn);
+            });
+        }
+
+        container.innerHTML = '';
+        let unread = 0;
+        let visible = 0;
+
+        newsData.news.forEach(item => {
+            if (currentFilter !== 'ALL' && item.source !== currentFilter) return;
+            
+            const isRead = readStatus[item.id] === true;
+            if (!isRead) unread++;
+            
+            if (unreadOnly && isRead) return;
+            
+            visible++;
+
+            const sourceInfo = newsData.sources[item.source] || { name: 'Unknown', color: '#666' };
+            const card = document.createElement('div');
+            card.className = `news-card ${isRead ? 'read' : 'unread'}`;
+            card.innerHTML = `
+                <span class="source-tag tag-${item.source || 'UNKNOWN'}" style="background-color: ${sourceInfo.color || ''}">${sourceInfo.name}</span>
+                <div style="font-size: 0.8rem; color: #888;">${item.display_date || item.date}</div>
+                <a href="${item.link}" target="_blank" onclick="readStatus['${item.id}']=true; saveRead();" class="news-title">${item.title}</a>
+                <div class="card-footer">
+                    <a href="${item.link}" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: bold;">View Details →</a>
+                    <button class="btn-mark" onclick="toggleRead('${item.id}', event)">${isRead ? 'Unread' : 'Done'}</button>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        document.getElementById('count-stat').innerText = `${unread} unread out of ${newsData.news.filter(i => currentFilter === 'ALL' || i.source === currentFilter).length} total`;
+    }
+
+    window.onload = render;
+</script>
+
+</body>
+</html>
