@@ -13,12 +13,6 @@ LOG_FILE = os.path.join(SCRIPT_DIR, "news_log.txt")
 JS_FILE = os.path.join(SCRIPT_DIR, "news_data.js")
 
 SOURCES = {
-    "MAKU": {
-        "name": "MAKÜ",
-        "url": "https://depo.mehmetakif.edu.tr/api/v1/front/mehmetakif.edu.tr/tr/contents/35/1/-?page=1",
-        "base_url": "https://mehmetakif.edu.tr/tr/content/",
-        "color": "#003366"
-    },
     "TUBITAK": {
         "name": "TÜBİTAK",
         "url": "https://tubitak.gov.tr/tr/duyuru",
