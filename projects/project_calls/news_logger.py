@@ -6,7 +6,7 @@ import os
 from datetime import datetime
 import re
 
-# Configuration - Relative to script location for portability
+# Configuration
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_FILE = os.path.join(SCRIPT_DIR, "news_db.json")
 LOG_FILE = os.path.join(SCRIPT_DIR, "news_log.txt")
@@ -34,9 +34,7 @@ MONTHS_TR = {
 
 def normalize_date(date_str, source):
     try:
-        if source == "MAKU":
-            return date_str
-        elif source == "UA":
+        if source == "UA":
             d, m, y = date_str.split('.')
             return f"{y}-{m}-{d} 00:00:00"
         elif source == "TUBITAK":
@@ -49,29 +47,6 @@ def normalize_date(date_str, source):
     except:
         pass
     return "0000-00-00 00:00:00"
-
-def fetch_maku():
-    items = []
-    try:
-        r = requests.get(SOURCES["MAKU"]["url"], timeout=15)
-        data = r.json()
-        for layout in data.get('layouts', []):
-            if 'contents' in layout.get('data', {}):
-                for item in layout['data']['contents'].get('data', []):
-                    datas = item.get('datas', [])
-                    if datas:
-                        trans = datas[0]
-                        raw_date = item.get('doing_at', '0000-00-00 00:00:00')
-                        items.append({
-                            'id': f"maku_{item['id']}",
-                            'title': trans.get('title', '').strip(),
-                            'link': f"{SOURCES['MAKU']['base_url']}{item['id']}/{trans.get('slug', '')}",
-                            'date': normalize_date(raw_date, "MAKU"),
-                            'display_date': raw_date,
-                            'source': 'MAKU'
-                        })
-    except Exception as e: print(f"Error MAKU: {e}")
-    return items
 
 def fetch_tubitak():
     items = []
@@ -146,7 +121,8 @@ def main():
     db = load_db()
     seen_ids = {str(item['id']): item for item in db}
     
-    current_news = fetch_maku() + fetch_tubitak() + fetch_ua()
+    # Only TÜBİTAK and UA
+    current_news = fetch_tubitak() + fetch_ua()
     
     updated_db = []
     new_count = 0
@@ -170,7 +146,9 @@ def main():
 
     for old_id, old_item in seen_ids.items():
         if old_id not in processed_ids:
-            updated_db.append(old_item)
+            # Double check to remove any remaining MAKU items from old DB
+            if old_item.get('source') != 'MAKU':
+                updated_db.append(old_item)
 
     save_db(updated_db)
     print(f"Done. {new_count} new items found. Total database size: {len(updated_db)} items.")
