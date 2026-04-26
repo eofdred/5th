@@ -6,26 +6,30 @@ import os
 from datetime import datetime
 import re
 
-# Configuration
-DB_FILE = "news_db.json"
-LOG_FILE = "news_log.txt"
-JS_FILE = "news_data.js"
+# Configuration - Relative to script location for portability
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_FILE = os.path.join(SCRIPT_DIR, "news_db.json")
+LOG_FILE = os.path.join(SCRIPT_DIR, "news_log.txt")
+JS_FILE = os.path.join(SCRIPT_DIR, "news_data.js")
 
 SOURCES = {
     "MAKU": {
         "name": "MAKÜ",
         "url": "https://depo.mehmetakif.edu.tr/api/v1/front/mehmetakif.edu.tr/tr/contents/35/1/-?page=1",
-        "base_url": "https://mehmetakif.edu.tr/tr/content/"
+        "base_url": "https://mehmetakif.edu.tr/tr/content/",
+        "color": "#003366"
     },
     "TUBITAK": {
         "name": "TÜBİTAK",
         "url": "https://tubitak.gov.tr/tr/duyuru",
-        "base_url": "https://tubitak.gov.tr"
+        "base_url": "https://tubitak.gov.tr",
+        "color": "#1a1a1a"
     },
     "UA": {
         "name": "Ulusal Ajans",
         "url": "https://www.ua.gov.tr/haber/",
-        "base_url": "https://www.ua.gov.tr"
+        "base_url": "https://www.ua.gov.tr",
+        "color": "#d9534f"
     }
 }
 
@@ -37,14 +41,11 @@ MONTHS_TR = {
 def normalize_date(date_str, source):
     try:
         if source == "MAKU":
-            # Format: 2026-04-22 19:53:21
             return date_str
         elif source == "UA":
-            # Format: 06.04.2026
             d, m, y = date_str.split('.')
             return f"{y}-{m}-{d} 00:00:00"
         elif source == "TUBITAK":
-            # Format: 20 Nis 2026
             parts = date_str.split()
             if len(parts) >= 3:
                 day = parts[0].zfill(2)
@@ -139,11 +140,15 @@ def save_db(db):
     with open(DB_FILE, 'w', encoding='utf-8') as f:
         json.dump(db, f, ensure_ascii=False, indent=4)
     with open(JS_FILE, 'w', encoding='utf-8') as f:
-        data = {"sources": SOURCES, "news": sorted(db, key=lambda x: x.get('date', ''), reverse=True)}
+        data = {
+            "sources": SOURCES, 
+            "news": sorted(db, key=lambda x: x.get('date', ''), reverse=True),
+            "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        }
         f.write(f"const newsData = {json.dumps(data, ensure_ascii=False)};")
 
 def main():
-    print("Syncing all sources with date normalization...")
+    print("Syncing all sources...")
     db = load_db()
     seen_ids = {str(item['id']): item for item in db}
     
@@ -151,7 +156,6 @@ def main():
     
     updated_db = []
     new_count = 0
-    # Create a fresh set of IDs for this fetch to avoid duplicates in updated_db
     processed_ids = set()
 
     for item in current_news:
@@ -166,12 +170,10 @@ def main():
             with open(LOG_FILE, 'a', encoding='utf-8') as f:
                 f.write(f"[{datetime.now()}] NEW ({item['source']}): {item['title']}\n")
         else:
-            # Preserve read status but update display info if needed
             existing = seen_ids[item_id]
             item['read'] = existing.get('read', False)
             updated_db.append(item)
 
-    # Keep older items not in current top fetch
     for old_id, old_item in seen_ids.items():
         if old_id not in processed_ids:
             updated_db.append(old_item)

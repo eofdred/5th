@@ -1,0 +1,33 @@
+name: Sync Project Calls
+
+on:
+  schedule:
+    - cron: '0 */6 * * *' # Every 6 hours
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4
+
+      - name: Run news logger
+        run: |
+          python3 projects/project_calls/news_logger.py
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add projects/project_calls/news_db.json projects/project_calls/news_data.js projects/project_calls/news_log.txt
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update news: $(date)" && git push)

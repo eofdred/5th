@@ -74,3 +74,17 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-04-23 23:53:54.590888] NEW (UA): 2025 Yılı Erasmus+ Okul Eğitimi Alanında Erasmus Akreditasyonu (KA120-SCH) Projeleri Başvuru Sonuçları
 [2026-04-23 23:53:54.590930] NEW (UA): 2025 Yılı Erasmus+ Mesleki Eğitim Alanında Akreditasyon (KA120-VET) Projeleri Başvuru Sonuçları
 [2026-04-23 23:53:54.590968] NEW (UA): 2025 Yılı Erasmus+ Yetişkin Eğitimi Alanında Akreditasyon (KA120-ADU) Projeleri Başvuru Sonuçları
+[2026-04-27 01:35:04.268759] NEW (MAKU): Rektörümüz Prof. Dr. Hüseyin Dalgar, 23 Nisan Ulusal Egemenlik ve Çocuk Bayramı dolayısıyla bir mesaj yayımladı
+[2026-04-27 01:35:04.273618] NEW (MAKU): Üniversitemizden kadın ve aile çalışmalarına dijital destek sistemi
+[2026-04-27 01:35:04.275003] NEW (MAKU): Bilim Merkezi Sergi Tasarım Yarışması Başvuruları Başladı
+[2026-04-27 01:35:04.277800] NEW (MAKU): XXI. Deney Hayvanları Kullanım Sertifikası Kursu (Rat, Fare, Tavşan, Kobay, Hamster ve Gerbil için)
+[2026-04-27 01:35:04.279327] NEW (MAKU): Üniversitemiz Merkez Yerleşkesinde bulunan halı sahamızın çalışma saatleri güncellenmiştir.
+[2026-04-27 01:35:04.280690] NEW (MAKU): 2025 Proje Yılı Erasmus+ Programı KA 131 Personel Hareketliliği Kesin Sonuçları
+[2026-04-27 01:35:04.283415] NEW (MAKU): (4/B) Sözleşmeli Personelden Yedek Olarak Atanmaya Hak Kazanan Adayların İlanına İlişkin Duyuru
+[2026-04-27 01:35:04.284708] NEW (MAKU): TEKNOFEST Girişim Programı 2026 başvuruları başladı
+[2026-04-27 01:35:04.285961] NEW (MAKU): Öğretim Üyesi Alım İlanı
+[2026-04-27 01:35:04.289957] NEW (MAKU): Reformer Pilates Özel Derslerimiz Başlıyor
+[2026-04-27 01:35:04.291522] NEW (MAKU): 2025 Proje Yılı Erasmus+ Programı KA131 Personel Ders Verme ve Eğitim Alma Hareketliliği" başvuruları geçici sonuçları
+[2026-04-27 01:35:04.293173] NEW (MAKU): (4/B) Sözleşmeli Personelden Yedek Olarak Atanmaya Hak Kazanan Adayların İlanına İlişkin Duyuru
+[2026-04-27 01:35:04.294611] NEW (TUBITAK): Uluslararası İnsansız Hava Araçları Yarışması ile Liseler Arası İnsansız Hava Araçları Yarışması Proje Sunum Raporu Sonuçları Açıklandı
+[2026-04-27 01:35:04.297867] NEW (TUBITAK): 1007 Programı Kapsamında, Savunma ve Güvenlik Teknolojileri Alanında Yeni Bir Proje Çağrısı Açıldı
