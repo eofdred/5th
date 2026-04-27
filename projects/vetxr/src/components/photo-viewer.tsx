@@ -172,4 +172,3 @@ const PhotoViewer = forwardRef<PhotoViewerRef, PhotoViewerProps>(({ imageSrc, ma
 PhotoViewer.displayName = 'PhotoViewer';
 
 export default PhotoViewer;
-hotoViewer;
