@@ -1,5 +1,14 @@
 [
     {
+        "id": "tubitak_2247-c-stajyer-arastirmaci-burs-programi-star-2026-yili-1-donem-cagrilari-basvuruya-acildi",
+        "title": "2247-C Stajyer Araştırmacı Burs Programı (STAR)–2026 Yılı 1. Dönem Çağrıları Başvuruya Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2247-c-stajyer-arastirmaci-burs-programi-star-2026-yili-1-donem-cagrilari-basvuruya-acildi",
+        "date": "2026-04-24 00:00:00",
+        "display_date": "24 Nis 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_uluslararasi-insansiz-hava-araclari-yarismasi-ile-liseler-arasi-insansiz-hava-araclari-yarismasi-proje-sunum-raporu-sonuclari-aciklandi-0",
         "title": "Uluslararası İnsansız Hava Araçları Yarışması ile Liseler Arası İnsansız Hava Araçları Yarışması Proje Sunum Raporu Sonuçları Açıklandı",
         "link": "https://tubitak.gov.tr/tr/duyuru/uluslararasi-insansiz-hava-araclari-yarismasi-ile-liseler-arasi-insansiz-hava-araclari-yarismasi-proje-sunum-raporu-sonuclari-aciklandi-0",
@@ -153,15 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_prima-programi-2026-yili-bolum-2-cagrisi-ulusal-bilgi-gunu-cevrim-ici-olarak-gerceklestirilecek",
-        "title": "PRIMA PROGRAMI 2026 YILI BÖLÜM 2 ÇAĞRISI ULUSAL BİLGİ GÜNÜ ÇEVRİM İÇİ OLARAK GERÇEKLEŞTİRİLECEK",
-        "link": "https://tubitak.gov.tr/tr/duyuru/prima-programi-2026-yili-bolum-2-cagrisi-ulusal-bilgi-gunu-cevrim-ici-olarak-gerceklestirilecek",
-        "date": "2026-04-02 00:00:00",
-        "display_date": "02 Nis 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_mesleki-mukemmeliyet-merkezleri-cove-projesi-iletisim-formu",
         "title": "Mesleki Mükemmeliyet Merkezleri (CoVE) Projesi İletişim Formu",
         "link": "https://www.ua.gov.tr/haber/mesleki-mukemmeliyet-merkezleri-cove-projesi-iletisim-formu/",
@@ -249,6 +249,15 @@
         "date": "2026-02-04 00:00:00",
         "display_date": "04.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_prima-programi-2026-yili-bolum-2-cagrisi-ulusal-bilgi-gunu-cevrim-ici-olarak-gerceklestirilecek",
+        "title": "PRIMA PROGRAMI 2026 YILI BÖLÜM 2 ÇAĞRISI ULUSAL BİLGİ GÜNÜ ÇEVRİM İÇİ OLARAK GERÇEKLEŞTİRİLECEK",
+        "link": "https://tubitak.gov.tr/tr/duyuru/prima-programi-2026-yili-bolum-2-cagrisi-ulusal-bilgi-gunu-cevrim-ici-olarak-gerceklestirilecek",
+        "date": "2026-04-02 00:00:00",
+        "display_date": "02 Nis 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {

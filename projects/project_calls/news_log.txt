@@ -88,3 +88,4 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-04-27 01:35:04.293173] NEW (MAKU): (4/B) Sözleşmeli Personelden Yedek Olarak Atanmaya Hak Kazanan Adayların İlanına İlişkin Duyuru
 [2026-04-27 01:35:04.294611] NEW (TUBITAK): Uluslararası İnsansız Hava Araçları Yarışması ile Liseler Arası İnsansız Hava Araçları Yarışması Proje Sunum Raporu Sonuçları Açıklandı
 [2026-04-27 01:35:04.297867] NEW (TUBITAK): 1007 Programı Kapsamında, Savunma ve Güvenlik Teknolojileri Alanında Yeni Bir Proje Çağrısı Açıldı
+[2026-04-27 16:01:05.019481] NEW (TUBITAK): 2247-C Stajyer Araştırmacı Burs Programı (STAR)–2026 Yılı 1. Dönem Çağrıları Başvuruya Açıldı
