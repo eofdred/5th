@@ -69,6 +69,12 @@ export default function Home() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [autoStartVR, setAutoStartVR] = useState(false);
+  const [isFullscreenSupported, setIsFullscreenSupported] = useState(false);
+
+  useEffect(() => {
+    setIsFullscreenSupported(typeof document !== 'undefined' && (document.fullscreenEnabled || (document as any).webkitFullscreenEnabled));
+  }, []);
 
   useEffect(() => {
     const audio = audioRef.current;

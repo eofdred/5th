@@ -19,7 +19,7 @@ export interface PhotoViewerRef {
   toggleGyroscope: () => Promise<void>;
 }
 
-const PhotoViewer = forwardRef<PhotoViewerRef, PhotoViewerProps>(({ imageSrc, markers }, ref) => {
+const PhotoViewer = forwardRef<PhotoViewerRef, PhotoViewerProps>(({ imageSrc, markers, autoStartVR }, ref) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const viewerRef = useRef<Viewer | null>(null);
   const { toast } = useToast();
@@ -172,3 +172,4 @@ const PhotoViewer = forwardRef<PhotoViewerRef, PhotoViewerProps>(({ imageSrc, ma
 PhotoViewer.displayName = 'PhotoViewer';
 
 export default PhotoViewer;
+hotoViewer;
