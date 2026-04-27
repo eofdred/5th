@@ -114,14 +114,49 @@ export default function Home() {
     }
   }, [selectedTopic]);
 
-  const handleTopicClick = (topic: Topic) => {
-    if (topic.view360) {
-      setSelectedTopic(topic);
+  const handleTopicClick = async (topic: Topic) => {
+    if (!topic.view360) return;
+
+    let vrGranted = false;
+    const isMobile = typeof window !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    if (isMobile) {
+      if (typeof window !== 'undefined' && typeof (window as any).DeviceOrientationEvent !== 'undefined' && typeof (window as any).DeviceOrientationEvent.requestPermission === 'function') {
+        try {
+          const permissionState = await (window as any).DeviceOrientationEvent.requestPermission();
+          vrGranted = permissionState === 'granted';
+        } catch (error) {
+          console.error('Error requesting VR permission on click:', error);
+        }
+      } else {
+        // Assume granted on Android/mobile without requestPermission API
+        vrGranted = true;
+      }
     }
+
+    setAutoStartVR(vrGranted);
+    setSelectedTopic(topic);
   };
 
   const handleDialogClose = () => {
+    if (typeof document !== 'undefined' && document.fullscreenElement) {
+      document.exitFullscreen().catch(console.error);
+    }
     setSelectedTopic(null);
+  };
+
+  const toggleFullscreen = () => {
+    if (typeof document === 'undefined') return;
+    
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch((err) => {
+        console.error(`Error attempting to enable fullscreen: ${err.message}`);
+      });
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen().catch(console.error);
+      }
+    }
   };
 
   const togglePlay = () => {
@@ -197,7 +232,7 @@ export default function Home() {
               <div className="absolute right-20 top-6 z-50 flex gap-4">
                 {isFullscreenSupported && (
                   <button
-                    onClick={() => photoViewerRef.current?.toggleFullscreen()}
+                    onClick={toggleFullscreen}
                     className="flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                     aria-label="Toggle Fullscreen"
                   >
