@@ -96,7 +96,7 @@ const PhotoViewer = forwardRef<PhotoViewerRef, PhotoViewerProps>(({ imageSrc, ma
             container: container,
             panorama: resolvedImage, // Use resolved string
             loadingTxt: 'Loading...',
-            navbar: ['zoom', 'fullscreen', 'caption'],
+            navbar: false,
             defaultZoomLvl: 30,
             plugins: [
               [MarkersPlugin as any, {}],

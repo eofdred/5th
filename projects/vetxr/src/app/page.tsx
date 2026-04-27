@@ -14,7 +14,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog';
 import dynamic from 'next/dynamic';
 import { Skeleton } from '@/components/ui/skeleton';
-import { X, Loader2, Play, Pause } from 'lucide-react';
+import { X, Loader2, Play, Pause, Maximize } from 'lucide-react';
 import type { PhotoViewerRef } from '@/components/photo-viewer';
 
 const PhotoViewer = dynamic(() => import('@/components/photo-viewer'), {
@@ -193,13 +193,22 @@ export default function Home() {
                 imageSrc={selectedTopic.view360.image}
                 markers={selectedTopic.markers}
               />
-              <button
-                onClick={() => photoViewerRef.current?.toggleGyroscope()}
-                className="absolute right-20 top-6 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-sm font-bold uppercase text-white opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                aria-label="Toggle Gyroscope"
-              >
-                vr
-              </button>
+              <div className="absolute right-20 top-6 z-50 flex gap-4">
+                <button
+                  onClick={() => photoViewerRef.current?.toggleFullscreen()}
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                  aria-label="Toggle Fullscreen"
+                >
+                  <Maximize className="h-5 w-5" />
+                </button>
+                <button
+                  onClick={() => photoViewerRef.current?.toggleGyroscope()}
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-sm font-bold uppercase text-white opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                  aria-label="Toggle Gyroscope"
+                >
+                  vr
+                </button>
+              </div>
 
               {selectedTopic.audio && (
                 <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-3">
