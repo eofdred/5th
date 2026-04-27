@@ -114,28 +114,42 @@ export default function Home() {
     }
   }, [selectedTopic]);
 
-  const handleTopicClick = async (topic: Topic) => {
+  const handleTopicClick = (topic: Topic) => {
     if (!topic.view360) return;
 
-    let vrGranted = false;
     const isMobile = typeof window !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
     if (isMobile) {
       if (typeof window !== 'undefined' && typeof (window as any).DeviceOrientationEvent !== 'undefined' && typeof (window as any).DeviceOrientationEvent.requestPermission === 'function') {
         try {
-          const permissionState = await (window as any).DeviceOrientationEvent.requestPermission();
-          vrGranted = permissionState === 'granted';
-        } catch (error) {
-          console.error('Error requesting VR permission on click:', error);
+          const req = (window as any).DeviceOrientationEvent.requestPermission();
+          if (req && typeof req.then === 'function') {
+            req.then((permissionState: string) => {
+              setAutoStartVR(permissionState === 'granted');
+              setSelectedTopic(topic);
+            }).catch((error: any) => {
+              console.error('Error requesting VR permission on click:', error);
+              setAutoStartVR(false);
+              setSelectedTopic(topic);
+            });
+          } else {
+            setAutoStartVR(req === 'granted');
+            setSelectedTopic(topic);
+          }
+        } catch (syncError) {
+          console.error('Sync error requesting VR permission:', syncError);
+          setAutoStartVR(false);
+          setSelectedTopic(topic);
         }
       } else {
         // Assume granted on Android/mobile without requestPermission API
-        vrGranted = true;
+        setAutoStartVR(true);
+        setSelectedTopic(topic);
       }
+    } else {
+      setAutoStartVR(false);
+      setSelectedTopic(topic);
     }
-
-    setAutoStartVR(vrGranted);
-    setSelectedTopic(topic);
   };
 
   const handleDialogClose = () => {
