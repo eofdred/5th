@@ -16,7 +16,7 @@ interface PhotoViewerProps {
 }
 
 export interface PhotoViewerRef {
-  toggleGyroscope: () => void;
+  toggleGyroscope: () => Promise<void>;
 }
 
 const PhotoViewer = forwardRef<PhotoViewerRef, PhotoViewerProps>(({ imageSrc, markers }, ref) => {
@@ -36,21 +36,49 @@ const PhotoViewer = forwardRef<PhotoViewerRef, PhotoViewerProps>(({ imageSrc, ma
   }, [imageSrc]);
 
   useImperativeHandle(ref, () => ({
-    toggleGyroscope() {
+    async toggleGyroscope() {
       const gyroscopePlugin = viewerRef.current?.getPlugin(GyroscopePlugin);
-      if (gyroscopePlugin) {
-        if ((gyroscopePlugin as any).isStarted) {
-          (gyroscopePlugin as any).stop();
-        } else {
-          (gyroscopePlugin as any).start().catch(() => {
+      if (!gyroscopePlugin) return;
+
+      const pluginAny = gyroscopePlugin as any;
+
+      if (pluginAny.isStarted) {
+        pluginAny.stop();
+        return;
+      }
+
+      const startGyro = () => {
+        pluginAny.start().catch((err: any) => {
+          console.error('Gyroscope start error:', err);
+          toast({
+            variant: 'destructive',
+            title: 'Gyroscope Error',
+            description:
+              'Could not activate motion controls. Please ensure your device supports it and permissions are granted.',
+          });
+        });
+      };
+
+      // Request permission for iOS 13+ devices
+      if (typeof window !== 'undefined' && typeof (window as any).DeviceOrientationEvent !== 'undefined' && typeof (window as any).DeviceOrientationEvent.requestPermission === 'function') {
+        try {
+          const permissionState = await (window as any).DeviceOrientationEvent.requestPermission();
+          if (permissionState === 'granted') {
+            startGyro();
+          } else {
             toast({
               variant: 'destructive',
-              title: 'Gyroscope Error',
-              description:
-                'Could not activate motion controls. Please ensure your device supports it and permissions are granted.',
+              title: 'Permission Denied',
+              description: 'Motion and Orientation permission is required for VR mode.',
             });
-          });
+          }
+        } catch (error) {
+          console.error('Error requesting device orientation permission:', error);
+          startGyro(); // Fallback attempt
         }
+      } else {
+        // Non iOS 13+ devices
+        startGyro();
       }
     },
   }));

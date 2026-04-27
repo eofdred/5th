@@ -14,7 +14,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog';
 import dynamic from 'next/dynamic';
 import { Skeleton } from '@/components/ui/skeleton';
-import { X, Loader2 } from 'lucide-react';
+import { X, Loader2, Play, Pause } from 'lucide-react';
 import type { PhotoViewerRef } from '@/components/photo-viewer';
 
 const PhotoViewer = dynamic(() => import('@/components/photo-viewer'), {
@@ -66,7 +66,37 @@ export default function Home() {
   const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const photoViewerRef = useRef<PhotoViewerRef>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [duration, setDuration] = useState(0);
 
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const updateProgress = () => setProgress(audio.currentTime);
+    const updateDuration = () => setDuration(audio.duration);
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+    const handleEnded = () => {
+      setIsPlaying(false);
+      setProgress(0);
+    };
+
+    audio.addEventListener('timeupdate', updateProgress);
+    audio.addEventListener('loadedmetadata', updateDuration);
+    audio.addEventListener('play', handlePlay);
+    audio.addEventListener('pause', handlePause);
+    audio.addEventListener('ended', handleEnded);
+
+    return () => {
+      audio.removeEventListener('timeupdate', updateProgress);
+      audio.removeEventListener('loadedmetadata', updateDuration);
+      audio.removeEventListener('play', handlePlay);
+      audio.removeEventListener('pause', handlePause);
+      audio.removeEventListener('ended', handleEnded);
+    };
+  }, []);
 
   useEffect(() => {
     if (selectedTopic && selectedTopic.audio) {
@@ -92,7 +122,26 @@ export default function Home() {
 
   const handleDialogClose = () => {
     setSelectedTopic(null);
-  }
+  };
+
+  const togglePlay = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+    }
+  };
+
+  const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!audioRef.current || duration === 0) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const newProgress = (clickX / rect.width) * duration;
+    audioRef.current.currentTime = newProgress;
+    setProgress(newProgress);
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -151,6 +200,31 @@ export default function Home() {
               >
                 vr
               </button>
+
+              {selectedTopic.audio && (
+                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-3">
+                  <div 
+                    className="w-48 h-1.5 bg-white/20 rounded-full overflow-hidden relative cursor-pointer"
+                    onClick={handleProgressClick}
+                  >
+                    <div 
+                      className="h-full bg-white/70 absolute left-0 top-0 transition-all duration-100 ease-linear pointer-events-none"
+                      style={{ width: `${duration > 0 ? (progress / duration) * 100 : 0}%` }}
+                    />
+                  </div>
+                  <button
+                    onClick={togglePlay}
+                    className="flex h-14 w-14 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md transition-all hover:bg-black/60 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    aria-label={isPlaying ? "Pause" : "Play"}
+                  >
+                    {isPlaying ? (
+                      <Pause className="h-6 w-6" fill="currentColor" />
+                    ) : (
+                      <Play className="h-6 w-6 ml-1" fill="currentColor" />
+                    )}
+                  </button>
+                </div>
+              )}
             </>
           )}
           <DialogClose className="absolute right-6 top-6 z-50 rounded-full bg-black/50 p-1 text-white opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none">
