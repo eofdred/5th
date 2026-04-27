@@ -192,15 +192,18 @@ export default function Home() {
                 key={selectedTopic.slug}
                 imageSrc={selectedTopic.view360.image}
                 markers={selectedTopic.markers}
+                autoStartVR={autoStartVR}
               />
               <div className="absolute right-20 top-6 z-50 flex gap-4">
-                <button
-                  onClick={() => photoViewerRef.current?.toggleFullscreen()}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                  aria-label="Toggle Fullscreen"
-                >
-                  <Maximize className="h-5 w-5" />
-                </button>
+                {isFullscreenSupported && (
+                  <button
+                    onClick={() => photoViewerRef.current?.toggleFullscreen()}
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                    aria-label="Toggle Fullscreen"
+                  >
+                    <Maximize className="h-5 w-5" />
+                  </button>
+                )}
                 <button
                   onClick={() => photoViewerRef.current?.toggleGyroscope()}
                   className="flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-sm font-bold uppercase text-white opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"

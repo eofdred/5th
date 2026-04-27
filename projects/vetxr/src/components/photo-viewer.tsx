@@ -113,6 +113,17 @@ const PhotoViewer = forwardRef<PhotoViewerRef, PhotoViewerProps>(({ imageSrc, ma
             }
           }
 
+          viewerRef.current.on('ready', () => {
+            if (autoStartVR) {
+              const gyroscopePlugin = viewerRef.current?.getPlugin(GyroscopePlugin);
+              if (gyroscopePlugin) {
+                (gyroscopePlugin as any).start().catch((err: any) => {
+                  console.error('Auto VR start error:', err);
+                });
+              }
+            }
+          });
+
           viewerRef.current.on('click', (e: any, data: any) => {
             console.log(
               `User clicked at: latitude ${data.latitude}, longitude ${data.longitude}`
