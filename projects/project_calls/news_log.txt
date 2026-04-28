@@ -89,3 +89,6 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-04-27 01:35:04.294611] NEW (TUBITAK): Uluslararası İnsansız Hava Araçları Yarışması ile Liseler Arası İnsansız Hava Araçları Yarışması Proje Sunum Raporu Sonuçları Açıklandı
 [2026-04-27 01:35:04.297867] NEW (TUBITAK): 1007 Programı Kapsamında, Savunma ve Güvenlik Teknolojileri Alanında Yeni Bir Proje Çağrısı Açıldı
 [2026-04-27 16:01:05.019481] NEW (TUBITAK): 2247-C Stajyer Araştırmacı Burs Programı (STAR)–2026 Yılı 1. Dönem Çağrıları Başvuruya Açıldı
+[2026-04-28 08:37:05.546963] NEW (TUBITAK): 2537 TÜBİTAK–Çek Bilimler Akademisi (CAS) İkili İş Birliği Seyahat Destek Çağrısı Açıldı
+[2026-04-28 08:37:05.547015] NEW (TUBITAK): 4008 Özel Gereksinimli Bireylere Yönelik Kapsayıcı Toplum Uygulamaları Destekleme Programı Çağrısı Sonuçlandı
+[2026-04-28 08:37:05.547043] NEW (TUBITAK): Eureka–Xecs 6. Çağrısı Açıldı

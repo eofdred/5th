@@ -1,5 +1,32 @@
 [
     {
+        "id": "tubitak_2537-tubitak-cek-bilimler-akademisi-cas-ikili-birligi-seyahat-destek-cagrisi-acildi",
+        "title": "2537 TÜBİTAK–Çek Bilimler Akademisi (CAS) İkili İş Birliği Seyahat Destek Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2537-tubitak-cek-bilimler-akademisi-cas-ikili-birligi-seyahat-destek-cagrisi-acildi",
+        "date": "2026-04-28 00:00:00",
+        "display_date": "28 Nis 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_4008-ozel-gereksinimli-bireylere-yonelik-kapsayici-toplum-uygulamalari-destekleme-programi-cagrisi-sonuclandi-0",
+        "title": "4008 Özel Gereksinimli Bireylere Yönelik Kapsayıcı Toplum Uygulamaları Destekleme Programı Çağrısı Sonuçlandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/4008-ozel-gereksinimli-bireylere-yonelik-kapsayici-toplum-uygulamalari-destekleme-programi-cagrisi-sonuclandi-0",
+        "date": "2026-04-28 00:00:00",
+        "display_date": "28 Nis 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_eureka-xecs-6-cagrisi-acildi",
+        "title": "Eureka–Xecs 6. Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/eureka-xecs-6-cagrisi-acildi",
+        "date": "2026-04-28 00:00:00",
+        "display_date": "28 Nis 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_2247-c-stajyer-arastirmaci-burs-programi-star-2026-yili-1-donem-cagrilari-basvuruya-acildi",
         "title": "2247-C Stajyer Araştırmacı Burs Programı (STAR)–2026 Yılı 1. Dönem Çağrıları Başvuruya Açıldı",
         "link": "https://tubitak.gov.tr/tr/duyuru/2247-c-stajyer-arastirmaci-burs-programi-star-2026-yili-1-donem-cagrilari-basvuruya-acildi",
@@ -135,33 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_2509-tubitak-ile-fransa-disisleri-bakanligi-ikili-birligi-bosphorus-programi-2026-yili-cagrisi-acildi",
-        "title": "2509-TÜBİTAK ile Fransa Dışişleri Bakanlığı İkili İş Birliği (Bosphorus) Programı 2026 Yılı Çağrısı Açıldı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/2509-tubitak-ile-fransa-disisleri-bakanligi-ikili-birligi-bosphorus-programi-2026-yili-cagrisi-acildi",
-        "date": "2026-04-06 00:00:00",
-        "display_date": "06 Nis 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
-        "id": "tubitak_1719-eureka-network-biyoteknoloji-2026-cagrisi-acildi",
-        "title": "1719-Eureka Network Biyoteknoloji 2026 Çağrısı Açıldı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/1719-eureka-network-biyoteknoloji-2026-cagrisi-acildi",
-        "date": "2026-04-06 00:00:00",
-        "display_date": "06 Nis 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
-        "id": "tubitak_teknofest-girisim-programi-2026-yili-basvurulari-basladi",
-        "title": "TEKNOFEST Girişim Programı 2026 Yılı Başvuruları Başladı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/teknofest-girisim-programi-2026-yili-basvurulari-basladi",
-        "date": "2026-04-03 00:00:00",
-        "display_date": "03 Nis 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_mesleki-mukemmeliyet-merkezleri-cove-projesi-iletisim-formu",
         "title": "Mesleki Mükemmeliyet Merkezleri (CoVE) Projesi İletişim Formu",
         "link": "https://www.ua.gov.tr/haber/mesleki-mukemmeliyet-merkezleri-cove-projesi-iletisim-formu/",
@@ -249,6 +249,33 @@
         "date": "2026-02-04 00:00:00",
         "display_date": "04.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_2509-tubitak-ile-fransa-disisleri-bakanligi-ikili-birligi-bosphorus-programi-2026-yili-cagrisi-acildi",
+        "title": "2509-TÜBİTAK ile Fransa Dışişleri Bakanlığı İkili İş Birliği (Bosphorus) Programı 2026 Yılı Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2509-tubitak-ile-fransa-disisleri-bakanligi-ikili-birligi-bosphorus-programi-2026-yili-cagrisi-acildi",
+        "date": "2026-04-06 00:00:00",
+        "display_date": "06 Nis 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_1719-eureka-network-biyoteknoloji-2026-cagrisi-acildi",
+        "title": "1719-Eureka Network Biyoteknoloji 2026 Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/1719-eureka-network-biyoteknoloji-2026-cagrisi-acildi",
+        "date": "2026-04-06 00:00:00",
+        "display_date": "06 Nis 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_teknofest-girisim-programi-2026-yili-basvurulari-basladi",
+        "title": "TEKNOFEST Girişim Programı 2026 Yılı Başvuruları Başladı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/teknofest-girisim-programi-2026-yili-basvurulari-basladi",
+        "date": "2026-04-03 00:00:00",
+        "display_date": "03 Nis 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
