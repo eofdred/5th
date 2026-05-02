@@ -241,6 +241,7 @@
             color: #f8fafc;
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 
 <body>
@@ -281,14 +282,13 @@
         <div class="actions">
             <button id="btnSearch" class="btn-primary" onclick="runSearch()">
                 <div class="loader" id="searchLoader"></div>
-                <span>1. Run First Search</span>
+                <span>Search</span>
             </button>
-            <button id="btnDedupe" class="btn-secondary" onclick="runDeduplication()" disabled>
-                <div class="loader" id="dedupeLoader"></div>
-                <span>2. Filter & Fetch Abstracts</span>
+            <button id="btnDownloadCSV" class="btn-success" onclick="downloadCSV()" disabled>
+                <span>Download CSV</span>
             </button>
-            <button id="btnDownload" class="btn-success" onclick="downloadCSV()" disabled>
-                <span>3. Download CSV</span>
+            <button id="btnDownloadXLSX" class="btn-secondary" onclick="downloadXLSX()" disabled>
+                <span>Download XLSX</span>
             </button>
         </div>
 
@@ -296,14 +296,6 @@
             <div class="stat-row">
                 <span class="stat-label">Raw Papers Found:</span>
                 <span class="stat-value" id="statRaw">0</span>
-            </div>
-            <div class="stat-row">
-                <span class="stat-label" style="padding-left: 1rem;">↳ PubMed:</span>
-                <span class="stat-value" id="statPubMed" style="color: #94a3b8; font-size: 0.95rem;">0</span>
-            </div>
-            <div class="stat-row">
-                <span class="stat-label" style="padding-left: 1rem;">↳ Scopus:</span>
-                <span class="stat-value" id="statScopus" style="color: #94a3b8; font-size: 0.95rem;">0</span>
             </div>
             <div class="stat-row">
                 <span class="stat-label">Duplicates & Non-Research Removed:</span>
@@ -317,8 +309,6 @@
     </div>
 
     <script>
-        const SCOPUS_API_KEY = "d5ab23e213d36b6d6ed306463072e475";
-
         let globalPapers = []; // Array of {title, doi, year, source, type, uid, abstract}
         let uniquePapers = [];
 
@@ -344,32 +334,55 @@
             errorBox.style.display = 'none';
             btn.disabled = true;
             loader.style.display = 'block';
-            document.getElementById('btnDedupe').disabled = true;
-            document.getElementById('btnDownload').disabled = true;
+            document.getElementById('btnDownloadCSV').disabled = true;
+            document.getElementById('btnDownloadXLSX').disabled = true;
 
             globalPapers = [];
             uniquePapers = [];
-            updateStats(0, 0, 0, 0, 0);
+            updateStats(0, 0, 0);
 
             try {
-                // Run Concurrently
-                const [pubmedResults, scopusResults] = await Promise.all([
-                    fetchPubMed(query),
-                    fetchScopus(query)
-                ]);
+                const pubmedResults = await fetchPubMed(query);
 
                 // Post-filter: validate each paper actually contains the query terms
-                // This catches any thesaurus/MeSH expansion leakage from either API
+                // This catches any thesaurus/MeSH expansion leakage
                 const filteredPubmed = pubmedResults.filter(p => matchesQuery(query, searchTitle, searchAbstract, p));
-                const filteredScopus = scopusResults.filter(p => matchesQuery(query, searchTitle, searchAbstract, p));
 
-                globalPapers = [...filteredPubmed, ...filteredScopus];
-                uniquePapers = []; // Reset unique papers until deduplication runs
+                globalPapers = filteredPubmed;
 
-                updateStats(globalPapers.length, filteredPubmed.length, filteredScopus.length, 0, 0);
+                const seenTitles = new Set();
+                const seenDois = new Set();
+                uniquePapers = [];
 
-                if (globalPapers.length > 0) {
-                    document.getElementById('btnDedupe').disabled = false;
+                for (const p of globalPapers) {
+                    const cleanTitle = p.title.trim().toLowerCase();
+                    const doi = p.doi.trim();
+
+                    // Only keep Original Research Papers
+                    if (p.type !== 'Research Paper') {
+                        continue;
+                    }
+
+                    // Deduplicate
+                    if ((doi && seenDois.has(doi)) || (cleanTitle && seenTitles.has(cleanTitle))) {
+                        continue;
+                    }
+
+                    uniquePapers.push(p);
+                    if (doi) seenDois.add(doi);
+                    if (cleanTitle) seenTitles.add(cleanTitle);
+                }
+
+                // Fetch missing Abstracts for PubMed papers
+                await fetchPubMedAbstracts(uniquePapers);
+
+                const itemsRemoved = globalPapers.length - uniquePapers.length;
+
+                updateStats(globalPapers.length, itemsRemoved, uniquePapers.length);
+
+                if (uniquePapers.length > 0) {
+                    document.getElementById('btnDownloadCSV').disabled = false;
+                    document.getElementById('btnDownloadXLSX').disabled = false;
                 }
 
             } catch (err) {
@@ -512,130 +525,7 @@
             return records;
         }
 
-        async function fetchScopus(query) {
-            let records = [];
 
-            const searchTitle = document.getElementById('searchTitle').checked;
-            const searchAbstract = document.getElementById('searchAbstract').checked;
-
-            let scopusQuery = query;
-            if (searchTitle && searchAbstract) scopusQuery = `TITLE-ABS(${query})`;
-            else if (searchTitle) scopusQuery = `TITLE(${query})`;
-            else if (searchAbstract) scopusQuery = `ABS(${query})`;
-
-            const encodedQuery = encodeURIComponent(scopusQuery);
-
-            let maxResults = 5000; // API safety limit for deep pagination
-            let start = 0;
-            let isFirstRequest = true;
-
-            while (start < maxResults) {
-                const url = `https://api.elsevier.com/content/search/scopus?query=${encodedQuery}&count=25&start=${start}&sort=-coverDate`;
-
-                const res = await fetch(url, {
-                    headers: {
-                        'X-ELS-APIKey': SCOPUS_API_KEY,
-                        'Accept': 'application/json'
-                    }
-                });
-
-                if (!res.ok) {
-                    console.error("Scopus API Error:", await res.text());
-                    break;
-                }
-
-                const data = await res.json();
-
-                if (isFirstRequest) {
-                    const totalAvailable = parseInt(data['search-results']?.['opensearch:totalResults'] || "0");
-                    if (totalAvailable < maxResults) maxResults = totalAvailable;
-                    isFirstRequest = false;
-                }
-
-                const entries = data['search-results']?.entry || [];
-
-                if (entries.length === 0) break;
-
-                entries.forEach(article => {
-                    const title = article['dc:title'] || '';
-                    const doi = article['prism:doi'] || '';
-                    const coverDate = article['prism:coverDate'] || '';
-                    const year = coverDate ? coverDate.split('-')[0] : '';
-                    const abstractText = article['dc:description'] || '';
-
-                    // Parse Document Type
-                    let type = 'Other';
-                    const subtype = (article['subtypeDescription'] || '').toLowerCase();
-                    if (subtype.includes('review')) {
-                        type = 'Review';
-                    } else if (subtype.includes('article')) {
-                        type = 'Research Paper';
-                    } else if (subtype.includes('chapter')) {
-                        type = 'Book Chapter';
-                    }
-
-                    if (title) records.push({ title, doi, year, source: 'Scopus', type, uid: null, abstract: abstractText });
-                });
-
-                start += 25;
-            }
-            return records;
-        }
-
-        async function runDeduplication() {
-            const btn = document.getElementById('btnDedupe');
-            const loader = document.getElementById('dedupeLoader');
-            btn.disabled = true;
-            loader.style.display = 'block';
-
-            try {
-                const seenTitles = new Set();
-                const seenDois = new Set();
-                uniquePapers = [];
-
-                for (const p of globalPapers) {
-                    const cleanTitle = p.title.trim().toLowerCase();
-                    const doi = p.doi.trim();
-
-                    // Only keep Original Research Papers
-                    if (p.type !== 'Research Paper') {
-                        continue;
-                    }
-
-                    // Deduplicate
-                    if ((doi && seenDois.has(doi)) || (cleanTitle && seenTitles.has(cleanTitle))) {
-                        continue;
-                    }
-
-                    uniquePapers.push(p);
-                    if (doi) seenDois.add(doi);
-                    if (cleanTitle) seenTitles.add(cleanTitle);
-                }
-
-                // Fetch missing Abstracts for PubMed papers
-                // Scopus papers already got their abstract from the search 'dc:description'
-                await fetchPubMedAbstracts(uniquePapers);
-
-                const itemsRemoved = globalPapers.length - uniquePapers.length;
-
-                // Retain raw counts
-                const currentRaw = parseInt(document.getElementById('statRaw').innerText);
-                const currentPub = parseInt(document.getElementById('statPubMed').innerText);
-                const currentScop = parseInt(document.getElementById('statScopus').innerText);
-
-                updateStats(currentRaw, currentPub, currentScop, itemsRemoved, uniquePapers.length);
-
-                // Enable Download
-                if (uniquePapers.length > 0) {
-                    document.getElementById('btnDownload').disabled = false;
-                }
-            } catch (err) {
-                showError("Filtering/Abstract fetch failed: " + err.message);
-            } finally {
-                btn.disabled = false;
-                loader.style.display = 'none';
-            }
-        }
 
         async function fetchPubMedAbstracts(papers) {
             // Filter out papers from PubMed that don't have an abstract yet
@@ -722,10 +612,29 @@
             document.body.removeChild(link);
         }
 
-        function updateStats(raw, pubmed, scopus, dupes, unique) {
+        function downloadXLSX() {
+            if (uniquePapers.length === 0) return;
+            if (typeof XLSX === 'undefined') {
+                showError("XLSX library not loaded yet. Please try again in a moment.");
+                return;
+            }
+
+            const data = uniquePapers.map(p => ({
+                Title: p.title,
+                DOI: p.doi,
+                Year: p.year,
+                Type: p.type,
+                Abstract: p.abstract
+            }));
+
+            const worksheet = XLSX.utils.json_to_sheet(data);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Papers");
+            XLSX.writeFile(workbook, "systematic_review_results.xlsx");
+        }
+
+        function updateStats(raw, dupes, unique) {
             document.getElementById('statRaw').innerText = raw;
-            document.getElementById('statPubMed').innerText = pubmed;
-            document.getElementById('statScopus').innerText = scopus;
             document.getElementById('statDupes').innerText = dupes;
             document.getElementById('statUnique').innerText = unique;
         }
