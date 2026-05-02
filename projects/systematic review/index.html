@@ -258,7 +258,7 @@
         <div class="form-group">
             <label for="searchQuery">Database Search Query:</label>
             <textarea id="searchQuery"
-                placeholder="e.g. pain AND (indicator OR assessment) AND (ruminant OR cattle OR sheep)"></textarea>
+                placeholder="e.g. pain AND (indicator OR assessment) AND (ruminant OR cattle OR sheep)">"animal welfare" OR "well-being"</textarea>
 
             <div class="checkbox-group"
                 style="margin-top: 1rem; display: flex; gap: 1.5rem; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; border: 1px solid var(--border);">
@@ -396,64 +396,49 @@
 
         /**
          * Client-side Boolean query validator.
-         * Parses the user's AND/OR query and checks whether the paper's
-         * title and/or abstract actually contain the required terms.
+         * Safely evaluates complex AND/OR/NOT boolean queries using a JS parser.
          * This is the definitive guard against API thesaurus/MeSH expansion leakage.
          */
         function matchesQuery(query, searchTitle, searchAbstract, paper) {
-            // Build the text to search against based on user's checkbox selection
             let text = '';
             if (searchTitle) text += ' ' + paper.title.toLowerCase();
             if (searchAbstract) text += ' ' + (paper.abstract || '').toLowerCase();
-
-            // Split query by top-level AND (not inside parentheses)
-            const andGroups = splitByTopLevelAnd(query);
-
-            for (const group of andGroups) {
-                // Strip outer parentheses and split OR terms
-                const stripped = group.trim().replace(/^\(|\)$/g, '').trim();
-                const orTerms = stripped.split(/\bOR\b/i).map(t =>
-                    t.trim().replace(/^"|"$/g, '').toLowerCase() // strip surrounding quotes
-                ).filter(t => t.length > 0);
-
-                // At least one OR term must appear as a whole word in the text
-                const matched = orTerms.some(term => {
-                    // Escape special regex chars in the term
-                    const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                    const regex = new RegExp(`\\b${escaped}\\b`, 'i');
-                    return regex.test(text);
-                });
-
-                if (!matched) return false; // This AND group failed — paper is rejected
-            }
-            return true; // All AND groups passed
+            
+            // Remove common PubMed tags like [tiab] or [ti:noexp] just in case
+            let cleanQuery = query.replace(/\[[a-zA-Z:]+\]/g, '');
+            
+            return evaluateBoolean(cleanQuery, text);
         }
 
-        /**
-         * Splits a Boolean query string by top-level AND operators,
-         * respecting parentheses so nested ORs are kept intact.
-         */
-        function splitByTopLevelAnd(query) {
-            const groups = [];
-            let depth = 0;
-            let current = '';
-            const tokens = query.split(/(\bAND\b)/i);
-            for (const token of tokens) {
-                if (/^AND$/i.test(token.trim())) {
-                    if (depth === 0) {
-                        if (current.trim()) groups.push(current.trim());
-                        current = '';
-                    } else {
-                        current += token;
-                    }
+        function evaluateBoolean(query, text) {
+            let q = query.replace(/\(/g, ' ( ').replace(/\)/g, ' ) ');
+            const regex = /"([^"]+)"|([^\s()]+)|\(|\)/g;
+            let match;
+            let jsExpr = '';
+            
+            while ((match = regex.exec(q)) !== null) {
+                if (match[0] === '(' || match[0] === ')') {
+                    jsExpr += match[0] + ' ';
+                } else if (match[0].toUpperCase() === 'AND') {
+                    jsExpr += '&& ';
+                } else if (match[0].toUpperCase() === 'OR') {
+                    jsExpr += '|| ';
+                } else if (match[0].toUpperCase() === 'NOT') {
+                    jsExpr += '! ';
                 } else {
-                    depth += (token.match(/\(/g) || []).length;
-                    depth -= (token.match(/\)/g) || []).length;
-                    current += token;
+                    let term = (match[1] || match[2]).toLowerCase();
+                    let escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                    let test = new RegExp(`\\b${escaped}\\b`, 'i').test(text);
+                    jsExpr += test + ' ';
                 }
             }
-            if (current.trim()) groups.push(current.trim());
-            return groups;
+            
+            try {
+                return Function(`"use strict"; return (${jsExpr});`)();
+            } catch (e) {
+                console.warn("Could not evaluate query client-side, defaulting to true", query, e);
+                return true; 
+            }
         }
 
         async function fetchPubMed(query) {
