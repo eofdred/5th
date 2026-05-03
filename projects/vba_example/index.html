@@ -23,6 +23,7 @@
                 Dış Hava Durumu
             </div>
             <div class="weather-display">
+                <div id="sim-time-display" style="font-size: 1.5rem; font-weight: 600; color: var(--accent-orange); margin-bottom: 0.5rem;">12:00</div>
                 <div class="temp-main" id="outdoor-temp-display">24°C</div>
                 <p id="weather-status">Parçalı Bulutlu</p>
                 <div class="weather-stats">
@@ -53,10 +54,6 @@
                 <div class="slider-container">
                     <input type="range" id="ac-slider" min="16" max="30" value="22">
                 </div>
-                <div class="btn-group">
-                    <button id="btn-eco" class="active">ECO</button>
-                    <button id="btn-turbo">TURBO</button>
-                </div>
             </div>
         </section>
 
@@ -78,6 +75,22 @@
             </div>
         </section>
     </main>
+
+    <section class="panel explanation-section" style="width: 95%; max-width: 1400px; margin: 2rem auto; margin-bottom: 4rem;">
+        <div class="panel-title">Simülasyonun Matematiksel Modeli</div>
+        <div class="math-content" style="color: var(--text-secondary); line-height: 1.8;">
+            <p>Bu simülasyon, iç mekan termal dinamiklerini modellemek için <strong>Veri Bilimi</strong> prensiplerini ve diferansiyel denklemleri temel alır. Hissedilen iç sıcaklık şu değişkenlerin bir fonksiyonu olarak hesaplanır:</p>
+            <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 12px; margin: 1rem 0; font-family: monospace; color: var(--accent-blue);">
+                ΔT_i / Δt = k_ac * (T_ac - T_i) + k_leak * (T_out - T_i)
+            </div>
+            <ul>
+                <li><strong>Isıl Denge:</strong> İç sıcaklık (T_i), her zaman dış sıcaklık (T_out) ile dengelenmeye çalışır (Isıl sızıntı - k_leak).</li>
+                <li><strong>Kontrol Mekanizması:</strong> İklimlendirme sistemi (AC), iç sıcaklığı hedef değere (T_ac) çekmek için aktif bir güç uygular (k_ac).</li>
+                <li><strong>Hissedilen Sıcaklık Faktörü:</strong> Nem (%) ve rüzgar hızı (km/h) parametreleri, özellikle ekstrem koşullarda vücut ısısının tahliyesini etkileyerek "hissedilen" konfor seviyesini değiştirir.</li>
+                <li><strong>Zaman Döngüsü:</strong> Simülasyonda 24 saatlik döngü, 60 saniyelik gerçek zamana sıkıştırılarak (1:1440 oranı) iklimsel değişimin karakterler üzerindeki etkisi hızlandırılmış olarak gözlemlenir.</li>
+            </ul>
+        </div>
+    </section>
 
     <footer>
         <p>&copy; 2026 VBA Simulation Framework. Veri Bilimi ve Analitiği Öğrencileri için Tasarlanmıştır.</p>

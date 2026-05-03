@@ -302,3 +302,22 @@ footer {
         min-height: 300px;
     }
 }
+
+.explanation-section ul {
+    list-style: none;
+    margin-top: 1rem;
+}
+
+.explanation-section li {
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.explanation-section li::before {
+    content: "•";
+    color: var(--accent-blue);
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}

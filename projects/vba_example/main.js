@@ -9,10 +9,12 @@ class Simulation {
         this.indoorTemp = 22;
         this.acSetting = 22;
         this.humidity = 45;
-        this.time = 0;
-        this.thermalEfficiency = 0.02; // How fast indoor temp changes
+        this.windSpeed = 10;
+        this.simTime = 12.0; // Starting at 12:00 PM
+        this.thermalEfficiency = 0.02; 
         
         // DOM Elements
+        this.timeDisplay = document.getElementById('sim-time-display');
         this.outdoorDisplay = document.getElementById('outdoor-temp-display');
         this.indoorDisplay = document.getElementById('indoor-temp-display');
         this.acDisplay = document.getElementById('ac-setting-display');
@@ -55,28 +57,38 @@ class Simulation {
     }
 
     loop() {
-        // 1. Update Weather (Outdoor)
-        // Sine wave oscillation between 5°C and 35°C
-        this.time += 0.005;
-        this.outdoorTemp = 20 + Math.sin(this.time) * 15;
+        // 1. Update Time (1 day = 60 seconds)
+        // 24 hours / (60 seconds * 60 fps) = 0.0066...
+        this.simTime = (this.simTime + 0.00666) % 24;
         
-        // 2. Update Indoor Temp
-        // Indoor temp moves towards AC setting but is pulled by Outdoor temp
+        // 2. Update Weather (Outdoor)
+        // Temperature peaks at 14:00 (2 PM) and is lowest at 02:00 AM
+        // Using a shifted cosine wave for natural daily cycle
+        const hourOffset = (this.simTime - 14) * (Math.PI / 12);
+        const baseTemp = 20;
+        const amplitude = 12;
+        this.outdoorTemp = baseTemp + Math.cos(hourOffset) * amplitude;
+        
+        // 3. Update Indoor Temp
         const deltaAC = this.acSetting - this.indoorTemp;
         const deltaOutdoor = this.outdoorTemp - this.indoorTemp;
+        this.indoorTemp += deltaAC * 0.015 + deltaOutdoor * 0.003;
         
-        // Simulating AC power vs Insulation leakage
-        this.indoorTemp += deltaAC * 0.01 + deltaOutdoor * 0.002;
-        
-        // 3. Update Humidity (Slowly fluctuates)
-        this.humidity = 40 + Math.sin(this.time * 0.5) * 20;
+        // 4. Update Other Stats
+        this.humidity = 40 + Math.sin(this.simTime * Math.PI / 12) * 15;
+        this.windSpeed = 10 + Math.random() * 5;
 
-        // 4. Update UI
+        // 5. Update UI
+        const hours = Math.floor(this.simTime);
+        const minutes = Math.floor((this.simTime % 1) * 60);
+        this.timeDisplay.innerText = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+        
         this.outdoorDisplay.innerText = `${this.outdoorTemp.toFixed(1)}°C`;
         this.indoorDisplay.innerText = `${this.indoorTemp.toFixed(1)}°C`;
         this.humidityDisplay.innerText = `${Math.round(this.humidity)}%`;
+        document.getElementById('wind-display').innerText = `${this.windSpeed.toFixed(1)} km/h`;
         
-        // 5. Update Characters
+        // 6. Update Characters
         this.chars.forEach(char => char.update(this.indoorTemp));
 
         requestAnimationFrame(() => this.loop());
