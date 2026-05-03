@@ -37,7 +37,6 @@ class Simulation {
         this.acDisplay = document.getElementById('ac-setting-display');
         this.acSlider = document.getElementById('ac-slider');
         this.humidityDisplay = document.getElementById('humidity-display');
-        this.acStatus = document.getElementById('ac-status');
         this.btnPlay = document.getElementById('btn-play');
         this.powerDisplay = document.getElementById('current-power');
         this.energyDisplay = document.getElementById('total-energy');
@@ -125,16 +124,7 @@ class Simulation {
     }
 
     updateACStatus() {
-        if (this.acSetting < this.indoorTemp) {
-            this.acStatus.innerText = 'SOĞUTMA MODU';
-            this.acStatus.style.color = '#38bdf8';
-        } else if (this.acSetting > this.indoorTemp) {
-            this.acStatus.innerText = 'ISITMA MODU';
-            this.acStatus.style.color = '#fb923c';
-        } else {
-            this.acStatus.innerText = 'BEKLEMEDE';
-            this.acStatus.style.color = '#94a3b8';
-        }
+        // Mode indicator removed as per request
     }
 
     calculateEnergy(delta) {
