@@ -10,10 +10,15 @@ class Simulation {
         this.acSetting = 22;
         this.humidity = 45;
         this.windSpeed = 10;
-        this.simTime = 0.0; // Starting at 00:00
+        this.simTime = 0.0; 
         this.thermalEfficiency = 0.02; 
         this.isRunning = false;
-        this.totalEnergy = 0; // kWh
+        this.totalEnergy = 0; 
+        this.minTemp = 8;
+        this.maxTemp = 32;
+        
+        // Initializing UI with placeholders
+        this.firstUpdate = true;
         
         // Data for charts
         this.dataPoints = {
@@ -47,8 +52,17 @@ class Simulation {
             this.updateACStatus();
         });
 
+        document.getElementById('min-temp-input').addEventListener('change', (e) => {
+            this.minTemp = parseFloat(e.target.value);
+        });
+
+        document.getElementById('max-temp-input').addEventListener('change', (e) => {
+            this.maxTemp = parseFloat(e.target.value);
+        });
+
         this.btnPlay.addEventListener('click', () => {
             if (!this.isRunning) {
+                this.firstUpdate = false;
                 this.resetSimulation();
                 this.isRunning = true;
                 this.btnPlay.disabled = true;
@@ -125,13 +139,13 @@ class Simulation {
 
     calculateEnergy(delta) {
         // High efficiency inverter AC model
-        // Base power 100W, Max 1500W
-        const basePower = 0.1; // kW
-        const loadFactor = Math.min(Math.abs(delta) * 0.2, 1.4); // Max 1.4kW additional load
+        // Base power 20W (standby/fan), Max 1500W
+        const basePower = 0.02; // kW (20W)
+        const loadFactor = Math.min(Math.abs(delta) * 0.25, 1.48); // Dynamic compressor load
         const currentPowerKW = basePower + loadFactor;
         
-        // simTime advances by 0.0066 hours per frame (1 day in 60s)
-        const frameTimeHours = 0.00666; 
+        // simTime advances by 0.04 hours per frame (1 day in 10s @ 60fps)
+        const frameTimeHours = 0.04; 
         const frameEnergy = currentPowerKW * frameTimeHours;
         
         this.totalEnergy += frameEnergy;
@@ -143,18 +157,26 @@ class Simulation {
         const minutes = Math.floor((this.simTime % 1) * 60);
         this.timeDisplay.innerText = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
         
-        this.outdoorDisplay.innerText = `${this.outdoorTemp.toFixed(1)}°C`;
-        this.indoorDisplay.innerText = `${this.indoorTemp.toFixed(1)}°C`;
-        this.humidityDisplay.innerText = `${Math.round(this.humidity)}%`;
-        document.getElementById('wind-display').innerText = `${this.windSpeed.toFixed(1)} km/h`;
-        this.energyDisplay.innerText = `${this.totalEnergy.toFixed(2)} kWh`;
+        if (this.isRunning || !this.firstUpdate) {
+            this.outdoorDisplay.innerText = `${this.outdoorTemp.toFixed(1)}°C`;
+            this.indoorDisplay.innerText = `${this.indoorTemp.toFixed(1)}°C`;
+            this.humidityDisplay.innerText = `${Math.round(this.humidity)}%`;
+            document.getElementById('wind-display').innerText = `${this.windSpeed.toFixed(1)} km/h`;
+            this.energyDisplay.innerText = `${this.totalEnergy.toFixed(2)} kWh`;
+        } else {
+            this.outdoorDisplay.innerText = "--°C";
+            this.indoorDisplay.innerText = "--°C";
+            this.humidityDisplay.innerText = "--%";
+            document.getElementById('wind-display').innerText = "-- km/h";
+        }
     }
 
     loop() {
         if (!this.isRunning) return;
 
-        // 1. Update Time
-        this.simTime += 0.00666;
+        // 1. Update Time (1 day = 10 seconds)
+        // 24 hours / (10 seconds * 60 fps) = 0.04
+        this.simTime += 0.04;
         
         if (this.simTime >= 24) {
             this.simTime = 24;
@@ -167,8 +189,8 @@ class Simulation {
 
         // 2. Update Weather
         const hourOffset = (this.simTime - 14) * (Math.PI / 12);
-        const baseTemp = 20;
-        const amplitude = 12;
+        const baseTemp = (this.maxTemp + this.minTemp) / 2;
+        const amplitude = (this.maxTemp - this.minTemp) / 2;
         this.outdoorTemp = baseTemp + Math.cos(hourOffset) * amplitude;
         this.humidity = 40 + Math.sin(this.simTime * Math.PI / 12) * 15;
         this.windSpeed = 10 + Math.random() * 2;
@@ -181,17 +203,23 @@ class Simulation {
         const currentWatts = this.calculateEnergy(deltaAC);
         this.powerDisplay.innerText = `${Math.round(currentWatts)} W`;
 
-        // 4. Update Data Points for Chart (every 30 sim minutes)
-        if (Math.floor(this.simTime * 2) > this.dataPoints.labels.length - 1) {
+        // 4. Update Data Points for Chart (every 10 sim minutes)
+        if (Math.floor(this.simTime * 6) > this.dataPoints.labels.length - 1) {
             const hours = Math.floor(this.simTime);
             const minutes = Math.floor((this.simTime % 1) * 60);
-            this.dataPoints.labels.push(`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`);
-            this.dataPoints.outdoor.push(this.outdoorTemp.toFixed(1));
-            this.dataPoints.indoor.push(this.indoorTemp.toFixed(1));
-            this.dataPoints.ac.push(this.acSetting);
-            this.dataPoints.humidity.push(this.humidity.toFixed(1));
-            this.dataPoints.wind.push(this.windSpeed.toFixed(1));
-            this.chart.update('none'); // Update without animation for performance
+            const timeLabel = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+            
+            this.chart.data.labels.push(timeLabel);
+            this.chart.data.datasets[0].data.push(this.outdoorTemp.toFixed(1));
+            this.chart.data.datasets[1].data.push(this.indoorTemp.toFixed(1));
+            this.chart.data.datasets[2].data.push(this.acSetting);
+            this.chart.data.datasets[3].data.push(this.humidity.toFixed(1));
+            this.chart.data.datasets[4].data.push(this.windSpeed.toFixed(1));
+            
+            this.chart.update('none');
+            
+            // Keep arrays in sync
+            this.dataPoints.labels.push(timeLabel);
         }
 
         // 5. Update UI & Characters

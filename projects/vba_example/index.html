@@ -25,10 +25,18 @@
             </div>
             <div class="weather-display">
                 <div id="sim-time-display" style="font-size: 1.5rem; font-weight: 600; color: var(--accent-orange); margin-bottom: 0.5rem;">00:00</div>
-                <div class="temp-main" id="outdoor-temp-display">20°C</div>
+                <div class="temp-main" id="outdoor-temp-display">--°C</div>
                 <button id="btn-play" class="active" style="margin-bottom: 1rem; width: 120px;">BAŞLAT</button>
                 <p id="weather-status">Simülasyon Hazır</p>
                 <div class="weather-stats">
+                    <div class="stat-card">
+                        <div class="stat-label">Min Sıcaklık</div>
+                        <input type="number" id="min-temp-input" value="8" style="width: 100%; background: transparent; border: none; border-bottom: 1px solid var(--card-border); color: var(--accent-blue); font-size: 1.1rem; font-weight: 600;">
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Max Sıcaklık</div>
+                        <input type="number" id="max-temp-input" value="32" style="width: 100%; background: transparent; border: none; border-bottom: 1px solid var(--card-border); color: var(--accent-red); font-size: 1.1rem; font-weight: 600;">
+                    </div>
                     <div class="stat-card">
                         <div class="stat-label">Nem</div>
                         <div class="stat-value" id="humidity-display">45%</div>

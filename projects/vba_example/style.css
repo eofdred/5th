@@ -343,3 +343,18 @@ footer {
     left: 0;
     font-weight: bold;
 }
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input:focus {
+    outline: none;
+    border-bottom-color: var(--accent-blue) !important;
+}
