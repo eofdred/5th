@@ -104,9 +104,7 @@ class Simulation {
                 datasets: [
                     { label: 'Dış Sıcaklık (°C)', data: this.dataPoints.outdoor, borderColor: '#fb923c', tension: 0.4, borderWidth: 2, pointRadius: 0 },
                     { label: 'İç Sıcaklık (°C)', data: this.dataPoints.indoor, borderColor: '#38bdf8', tension: 0.4, borderWidth: 2, pointRadius: 0 },
-                    { label: 'AC Ayarı (°C)', data: this.dataPoints.ac, borderColor: '#f8fafc', borderDash: [5, 5], tension: 0, borderWidth: 1, pointRadius: 0 },
-                    { label: 'Nem (%)', data: this.dataPoints.humidity, borderColor: '#4ade80', tension: 0.4, borderWidth: 1, pointRadius: 0, hidden: true },
-                    { label: 'Rüzgar (km/h)', data: this.dataPoints.wind, borderColor: '#94a3b8', tension: 0.4, borderWidth: 1, pointRadius: 0, hidden: true }
+                    { label: 'AC Ayarı (°C)', data: this.dataPoints.ac, borderColor: '#f8fafc', borderDash: [5, 5], tension: 0, borderWidth: 1, pointRadius: 0 }
                 ]
             },
             options: {
@@ -203,8 +201,6 @@ class Simulation {
             this.chart.data.datasets[0].data.push(this.outdoorTemp.toFixed(1));
             this.chart.data.datasets[1].data.push(this.indoorTemp.toFixed(1));
             this.chart.data.datasets[2].data.push(this.acSetting);
-            this.chart.data.datasets[3].data.push(this.humidity.toFixed(1));
-            this.chart.data.datasets[4].data.push(this.windSpeed.toFixed(1));
             
             this.chart.update('none');
             
