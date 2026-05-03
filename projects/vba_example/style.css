@@ -248,12 +248,34 @@ button.active {
 .environment-indicator {
     position: absolute;
     top: 1rem;
-    right: 1rem;
-    background: rgba(255, 255, 255, 0.1);
+    left: 1rem;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--accent-blue);
     padding: 0.5rem 1rem;
     border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--accent-blue);
+    z-index: 10;
+}
+
+#btn-play {
+    background: var(--accent-orange);
+    color: #000;
+    font-weight: 800;
+    border: none;
+    box-shadow: 0 4px 15px rgba(251, 146, 60, 0.3);
+}
+
+#btn-play:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(251, 146, 60, 0.5);
+}
+
+#btn-play:disabled {
+    background: var(--text-secondary);
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 /* Animations */
