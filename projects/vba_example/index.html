@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VBA Simulation - Veri Bilimi ve Analitiği</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Veri Bilimi ve Analitiği</h1>
+        <p>Simulation Model Example: Climate & Comfort Dynamics</p>
+    </header>
+
+    <main class="simulation-container">
+        <!-- Left Panel: Weather -->
+        <section class="panel">
+            <div class="panel-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path><circle cx="12" cy="12" r="4"></circle></svg>
+                Dış Hava Durumu
+            </div>
+            <div class="weather-display">
+                <div class="temp-main" id="outdoor-temp-display">24°C</div>
+                <p id="weather-status">Parçalı Bulutlu</p>
+                <div class="weather-stats">
+                    <div class="stat-card">
+                        <div class="stat-label">Nem</div>
+                        <div class="stat-value" id="humidity-display">45%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Rüzgar</div>
+                        <div class="stat-value" id="wind-display">12 km/h</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Middle Panel: AC Control -->
+        <section class="panel">
+            <div class="panel-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
+                İklimlendirme (AC)
+            </div>
+            <div class="ac-controls">
+                <div class="ac-display">
+                    <div class="ac-mode" id="ac-status">SOĞUTMA MODU</div>
+                    <div class="ac-temp" id="ac-setting-display">22°C</div>
+                    <div class="pulse" style="font-size: 0.7rem; color: var(--accent-blue);">AKTİF</div>
+                </div>
+                <div class="slider-container">
+                    <input type="range" id="ac-slider" min="16" max="30" value="22">
+                </div>
+                <div class="btn-group">
+                    <button id="btn-eco" class="active">ECO</button>
+                    <button id="btn-turbo">TURBO</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Panel: People -->
+        <section class="panel">
+            <div class="panel-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                Simülasyon Alanı
+            </div>
+            <div class="people-stage" id="stage">
+                <div class="environment-indicator">Hissedilen: <span id="indoor-temp-display">22°C</span></div>
+                
+                <!-- Character 1 -->
+                <div class="character sway-anim" id="char-1"></div>
+                <!-- Character 2 -->
+                <div class="character sway-anim" style="animation-delay: -1.5s;" id="char-2"></div>
+                <!-- Character 3 -->
+                <div class="character sway-anim" style="animation-delay: -0.7s;" id="char-3"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 VBA Simulation Framework. Veri Bilimi ve Analitiği Öğrencileri için Tasarlanmıştır.</p>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
