@@ -16,6 +16,10 @@ class Simulation {
         this.totalEnergy = 0; 
         this.minTemp = 8;
         this.maxTemp = 32;
+        this.dayCount = 0;
+        this.historyData = [];
+        this.indoorTempSum = 0;
+        this.tickCount = 0;
         
         // Initializing UI with placeholders
         this.firstUpdate = true;
@@ -57,6 +61,10 @@ class Simulation {
 
         document.getElementById('max-temp-input').addEventListener('change', (e) => {
             this.maxTemp = parseFloat(e.target.value);
+        });
+
+        document.getElementById('btn-download-csv').addEventListener('click', () => {
+            this.downloadCSV();
         });
 
         this.btnPlay.addEventListener('click', () => {
@@ -170,8 +178,9 @@ class Simulation {
             this.simTime = 24;
             this.isRunning = false;
             this.btnPlay.disabled = false;
-            this.btnPlay.innerText = 'TEKRARLAT';
+            this.btnPlay.innerText = 'SONRAKİ GÜN';
             this.updateUI();
+            this.recordHistory();
             return;
         }
 
@@ -187,6 +196,9 @@ class Simulation {
         const deltaAC = this.acSetting - this.indoorTemp;
         const deltaOutdoor = this.outdoorTemp - this.indoorTemp;
         this.indoorTemp += deltaAC * 0.015 + deltaOutdoor * 0.003;
+        
+        this.indoorTempSum += this.indoorTemp;
+        this.tickCount++;
         
         const currentWatts = this.calculateEnergy(deltaAC);
         this.powerDisplay.innerText = `${Math.round(currentWatts)} W`;
@@ -213,6 +225,61 @@ class Simulation {
         this.chars.forEach(char => char.update(this.indoorTemp));
 
         requestAnimationFrame(() => this.loop());
+    }
+
+    recordHistory() {
+        this.dayCount++;
+        const meanIndoor = (this.indoorTempSum / this.tickCount).toFixed(1);
+        const record = {
+            day: this.dayCount,
+            min: this.minTemp,
+            max: this.maxTemp,
+            ac: this.acSetting,
+            mean: meanIndoor,
+            energy: this.totalEnergy.toFixed(2)
+        };
+
+        this.historyData.push(record);
+        
+        // Update DOM Table
+        const tbody = document.getElementById('history-body');
+        const row = document.createElement('tr');
+        row.style.borderBottom = "1px solid var(--card-border)";
+        row.innerHTML = `
+            <td style="padding: 1rem;">${record.day}</td>
+            <td style="padding: 1rem;">${record.min}°C</td>
+            <td style="padding: 1rem;">${record.max}°C</td>
+            <td style="padding: 1rem;">${record.ac}°C</td>
+            <td style="padding: 1rem;">${record.mean}°C</td>
+            <td style="padding: 1rem;">${record.energy} kWh</td>
+        `;
+        tbody.prepend(row); // Most recent at top
+
+        // Reset accumulation for next run
+        this.indoorTempSum = 0;
+        this.tickCount = 0;
+    }
+
+    downloadCSV() {
+        if (this.historyData.length === 0) {
+            alert('Henüz kaydedilmiş veri yok.');
+            return;
+        }
+
+        const headers = ["Gun", "Min Dis (C)", "Max Dis (C)", "AC Ayari (C)", "Ort Ic Sicaklik (C)", "Toplam Enerji (kWh)"];
+        const rows = this.historyData.map(d => [d.day, d.min, d.max, d.ac, d.mean, d.energy]);
+        
+        let csvContent = "data:text/csv;charset=utf-8," 
+            + headers.join(",") + "\n"
+            + rows.map(r => r.join(",")).join("\n");
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "simulasyon_verileri.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
 }
 

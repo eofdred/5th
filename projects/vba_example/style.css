@@ -358,3 +358,12 @@ input:focus {
     outline: none;
     border-bottom-color: var(--accent-blue) !important;
 }
+
+#history-table tr:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+#history-table td {
+    font-size: 0.95rem;
+    transition: background 0.2s;
+}

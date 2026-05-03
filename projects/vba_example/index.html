@@ -120,6 +120,28 @@
         </div>
     </section>
 
+    <section class="panel history-section" style="width: 95%; max-width: 1400px; margin: 2rem auto; margin-bottom: 4rem;">
+        <div class="panel-title">Simülasyon Geçmişi & Veri Kayıtları</div>
+        <div style="overflow-x: auto;">
+            <table id="history-table" style="width: 100%; border-collapse: collapse; margin-top: 1rem; color: var(--text-primary);">
+                <thead>
+                    <tr style="border-bottom: 2px solid var(--card-border); text-align: left; color: var(--text-secondary);">
+                        <th style="padding: 1rem;">Gün</th>
+                        <th style="padding: 1rem;">Min Dış (°C)</th>
+                        <th style="padding: 1rem;">Max Dış (°C)</th>
+                        <th style="padding: 1rem;">AC Ayarı (°C)</th>
+                        <th style="padding: 1rem;">Ort. İç Sıcaklık (°C)</th>
+                        <th style="padding: 1rem;">Toplam Enerji (kWh)</th>
+                    </tr>
+                </thead>
+                <tbody id="history-body">
+                    <!-- Rows added dynamically -->
+                </tbody>
+            </table>
+        </div>
+        <button id="btn-download-csv" style="margin-top: 2rem; width: 200px; background: var(--accent-green); color: #000; border: none;">CSV OLARAK İNDİR</button>
+    </section>
+
     <footer>
         <p>&copy; 2026 VBA Simulation Framework. Veri Bilimi ve Analitiği Öğrencileri için Tasarlanmıştır.</p>
     </footer>
