@@ -1,5 +1,23 @@
 [
     {
+        "id": "tubitak_2540-tubitak-sas-slovakya-ikili-birligi-cagrisi-acildi-0",
+        "title": "2540 TÜBİTAK–SAS (Slovakya) İkili İş Birliği Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2540-tubitak-sas-slovakya-ikili-birligi-cagrisi-acildi-0",
+        "date": "2026-05-05 00:00:00",
+        "display_date": "05 May 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_1707-siparis-ar-ge-2026-2-cagrisi-acildi",
+        "title": "1707 Sipariş Ar-Ge 2026-2 Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/1707-siparis-ar-ge-2026-2-cagrisi-acildi",
+        "date": "2026-05-05 00:00:00",
+        "display_date": "05 May 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_tubitak-bilim-merkezi-sergi-tasarim-yarismasi-basvuru-sureci-uzatildi",
         "title": "TÜBİTAK Bilim Merkezi Sergi Tasarım Yarışması Başvuru Süreci Uzatıldı",
         "link": "https://tubitak.gov.tr/tr/duyuru/tubitak-bilim-merkezi-sergi-tasarim-yarismasi-basvuru-sureci-uzatildi",
@@ -144,24 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_bilim-merkezi-sergi-tasarim-yarismasi-basvurulari-basladi",
-        "title": "Bilim Merkezi Sergi Tasarım Yarışması Başvuruları Başladı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/bilim-merkezi-sergi-tasarim-yarismasi-basvurulari-basladi",
-        "date": "2026-04-09 00:00:00",
-        "display_date": "09 Nis 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
-        "id": "tubitak_1601-kuresel-temiz-teknolojiler-girisimcilik-programi-teknoloji-olcekleme-ve-ticarilestirme-destegi-cagrisi-acildi",
-        "title": "1601–Küresel Temiz Teknolojiler Girişimcilik Programı Teknoloji Ölçekleme ve Ticarileştirme Desteği Çağrısı Açıldı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/1601-kuresel-temiz-teknolojiler-girisimcilik-programi-teknoloji-olcekleme-ve-ticarilestirme-destegi-cagrisi-acildi",
-        "date": "2026-04-07 00:00:00",
-        "display_date": "07 Nis 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_mesleki-mukemmeliyet-merkezleri-cove-projesi-iletisim-formu",
         "title": "Mesleki Mükemmeliyet Merkezleri (CoVE) Projesi İletişim Formu",
         "link": "https://www.ua.gov.tr/haber/mesleki-mukemmeliyet-merkezleri-cove-projesi-iletisim-formu/",
@@ -249,6 +249,24 @@
         "date": "2026-02-04 00:00:00",
         "display_date": "04.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_bilim-merkezi-sergi-tasarim-yarismasi-basvurulari-basladi",
+        "title": "Bilim Merkezi Sergi Tasarım Yarışması Başvuruları Başladı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/bilim-merkezi-sergi-tasarim-yarismasi-basvurulari-basladi",
+        "date": "2026-04-09 00:00:00",
+        "display_date": "09 Nis 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_1601-kuresel-temiz-teknolojiler-girisimcilik-programi-teknoloji-olcekleme-ve-ticarilestirme-destegi-cagrisi-acildi",
+        "title": "1601–Küresel Temiz Teknolojiler Girişimcilik Programı Teknoloji Ölçekleme ve Ticarileştirme Desteği Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/1601-kuresel-temiz-teknolojiler-girisimcilik-programi-teknoloji-olcekleme-ve-ticarilestirme-destegi-cagrisi-acildi",
+        "date": "2026-04-07 00:00:00",
+        "display_date": "07 Nis 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {

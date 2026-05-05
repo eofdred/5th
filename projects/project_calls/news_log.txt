@@ -93,3 +93,5 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-04-28 08:37:05.547015] NEW (TUBITAK): 4008 Özel Gereksinimli Bireylere Yönelik Kapsayıcı Toplum Uygulamaları Destekleme Programı Çağrısı Sonuçlandı
 [2026-04-28 08:37:05.547043] NEW (TUBITAK): Eureka–Xecs 6. Çağrısı Açıldı
 [2026-05-05 08:22:13.431952] NEW (TUBITAK): TÜBİTAK Bilim Merkezi Sergi Tasarım Yarışması Başvuru Süreci Uzatıldı
+[2026-05-05 19:46:38.444886] NEW (TUBITAK): 2540 TÜBİTAK–SAS (Slovakya) İkili İş Birliği Çağrısı Açıldı
+[2026-05-05 19:46:38.444947] NEW (TUBITAK): 1707 Sipariş Ar-Ge 2026-2 Çağrısı Açıldı
