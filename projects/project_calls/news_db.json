@@ -1,5 +1,14 @@
 [
     {
+        "id": "tubitak_2574-tubitak-lasr-libya-ikili-birligi-cagrisi-acildi",
+        "title": "2574 TÜBİTAK–LASR (Libya) İkili İş Birliği Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2574-tubitak-lasr-libya-ikili-birligi-cagrisi-acildi",
+        "date": "2026-05-06 00:00:00",
+        "display_date": "06 May 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_2540-tubitak-sas-slovakya-ikili-birligi-cagrisi-acildi-0",
         "title": "2540 TÜBİTAK–SAS (Slovakya) İkili İş Birliği Çağrısı Açıldı",
         "link": "https://tubitak.gov.tr/tr/duyuru/2540-tubitak-sas-slovakya-ikili-birligi-cagrisi-acildi-0",
@@ -153,15 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_dikey-inisli-roket-yarismasi-tasarim-raporu-sonuclari-aciklandi-0",
-        "title": "Dikey İnişli Roket Yarışması Ön Tasarım Raporu Sonuçları Açıklandı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/dikey-inisli-roket-yarismasi-tasarim-raporu-sonuclari-aciklandi-0",
-        "date": "2026-04-09 00:00:00",
-        "display_date": "09 Nis 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_mesleki-mukemmeliyet-merkezleri-cove-projesi-iletisim-formu",
         "title": "Mesleki Mükemmeliyet Merkezleri (CoVE) Projesi İletişim Formu",
         "link": "https://www.ua.gov.tr/haber/mesleki-mukemmeliyet-merkezleri-cove-projesi-iletisim-formu/",
@@ -249,6 +249,15 @@
         "date": "2026-02-04 00:00:00",
         "display_date": "04.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_dikey-inisli-roket-yarismasi-tasarim-raporu-sonuclari-aciklandi-0",
+        "title": "Dikey İnişli Roket Yarışması Ön Tasarım Raporu Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/dikey-inisli-roket-yarismasi-tasarim-raporu-sonuclari-aciklandi-0",
+        "date": "2026-04-09 00:00:00",
+        "display_date": "09 Nis 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
