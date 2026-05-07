@@ -89,6 +89,24 @@
             box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
         }
 
+        .text-input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+        }
+
         .actions {
             display: flex;
             gap: 1rem;
@@ -277,6 +295,12 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <label for="instToken">Institutional Token (instToken - optional for off-campus/remote access):</label>
+            <input type="text" id="instToken" class="text-input"
+                placeholder="Enter your university's Elsevier instToken if not connected to university VPN">
+        </div>
+
         <div id="errorAlert"></div>
 
         <div class="actions">
@@ -451,20 +475,27 @@
             }
 
             const apiKey = "d5ab23e213d36b6d6ed306463072e475";
+            const instToken = document.getElementById('instToken')?.value.trim();
             let start = 0;
             const count = 25;
             const maxResults = 200;
 
+            const headers = {
+                'Accept': 'application/json'
+            };
+            if (instToken) {
+                headers['X-ELS-Insttoken'] = instToken;
+            }
+
             while (start < maxResults) {
                 const url = `https://api.elsevier.com/content/search/scopus?query=${encodeURIComponent(scopusQuery)}&apiKey=${apiKey}&view=COMPLETE&count=${count}&start=${start}&sort=-coverDate`;
 
-                const response = await fetch(url, {
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
+                const response = await fetch(url, { headers });
 
                 if (!response.ok) {
+                    if (response.status === 401) {
+                        throw new Error("Scopus API error: 401 Unauthorized. Accessing complete subscriber data off-campus typically requires a university VPN connection or an institutional token (instToken). Please connect to your university VPN or enter your instToken.");
+                    }
                     throw new Error(`Scopus API error: ${response.status} ${response.statusText}`);
                 }
 
