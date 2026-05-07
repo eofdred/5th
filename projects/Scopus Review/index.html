@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Systematic Review Paper Fetcher</title>
+    <title>Scopus Review Paper Fetcher</title>
     <style>
         :root {
             --background: #09090b;
@@ -249,8 +249,8 @@
     <div class="container">
         <div class="app-header">
             <a href="../../index.html" class="home-link">← Back to Home</a>
-            <img src="app_icon.png" alt="Systematic Review Engine Logo" class="app-logo">
-            <h1>Systematic Review Engine</h1>
+            <img src="app_icon.png" alt="Scopus Review Engine Logo" class="app-logo">
+            <h1>Scopus Review Engine</h1>
         </div>
         <p class="description">Fetch research papers instantly, automatically filter out non-primary research, fetch
             abstracts, and export to CSV.</p>
@@ -342,13 +342,12 @@
             updateStats(0, 0, 0);
 
             try {
-                const pubmedResults = await fetchPubMed(query);
+                const scopusResults = await fetchScopus(query);
 
                 // Post-filter: validate each paper actually contains the query terms
-                // This catches any thesaurus/MeSH expansion leakage
-                const filteredPubmed = pubmedResults.filter(p => matchesQuery(query, searchTitle, searchAbstract, p));
+                const filteredScopus = scopusResults.filter(p => matchesQuery(query, searchTitle, searchAbstract, p));
 
-                globalPapers = filteredPubmed;
+                globalPapers = filteredScopus;
 
                 const seenTitles = new Set();
                 const seenDois = new Set();
@@ -373,9 +372,6 @@
                     if (cleanTitle) seenTitles.add(cleanTitle);
                 }
 
-                // Fetch missing Abstracts for PubMed papers
-                await fetchPubMedAbstracts(uniquePapers);
-
                 const itemsRemoved = globalPapers.length - uniquePapers.length;
 
                 updateStats(globalPapers.length, itemsRemoved, uniquePapers.length);
@@ -397,17 +393,13 @@
         /**
          * Client-side Boolean query validator.
          * Safely evaluates complex AND/OR/NOT boolean queries using a JS parser.
-         * This is the definitive guard against API thesaurus/MeSH expansion leakage.
          */
         function matchesQuery(query, searchTitle, searchAbstract, paper) {
             let text = '';
             if (searchTitle) text += ' ' + paper.title.toLowerCase();
             if (searchAbstract) text += ' ' + (paper.abstract || '').toLowerCase();
             
-            // Remove common PubMed tags like [tiab] or [ti:noexp] just in case
-            let cleanQuery = query.replace(/\[[a-zA-Z:]+\]/g, '');
-            
-            return evaluateBoolean(cleanQuery, text);
+            return evaluateBoolean(query, text);
         }
 
         function evaluateBoolean(query, text) {
@@ -441,132 +433,82 @@
             }
         }
 
-        async function fetchPubMed(query) {
+        async function fetchScopus(query) {
             let records = [];
 
             const searchTitle = document.getElementById('searchTitle').checked;
             const searchAbstract = document.getElementById('searchAbstract').checked;
 
-            let modifier = '';
-            if (searchTitle && searchAbstract) modifier = '[tiab:noexp]';
-            else if (searchTitle) modifier = '[ti:noexp]';
-            else if (searchAbstract) modifier = '[ab:noexp]';
+            let scopusQuery = '';
+            if (searchTitle && searchAbstract) {
+                scopusQuery = `TITLE-ABS-KEY(${query})`;
+            } else if (searchTitle) {
+                scopusQuery = `TITLE(${query})`;
+            } else if (searchAbstract) {
+                scopusQuery = `ABS(${query})`;
+            } else {
+                scopusQuery = query;
+            }
 
-            const pubmedQuery = modifier ? `(${query})${modifier}` : query;
-            const encodedQuery = encodeURIComponent(pubmedQuery);
-            // Request up to 100,000 IDs (effectively 'unlimited' for most topics)
-            const searchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=${encodedQuery}&retmode=json&retmax=100000&sort=date`;
+            const apiKey = "d5ab23e213d36b6d6ed306463072e475";
+            let start = 0;
+            const count = 25;
+            const maxResults = 200;
 
-            const searchRes = await fetch(searchUrl);
-            const searchData = await searchRes.json();
-            const idList = searchData.esearchresult?.idlist || [];
+            while (start < maxResults) {
+                const url = `https://api.elsevier.com/content/search/scopus?query=${encodeURIComponent(scopusQuery)}&apiKey=${apiKey}&view=COMPLETE&count=${count}&start=${start}&sort=-coverDate`;
 
-            if (idList.length === 0) return records;
-
-            // Fetch Summaries in 100-item chunks
-            const chunkSize = 100;
-            for (let i = 0; i < idList.length; i += chunkSize) {
-                const chunk = idList.slice(i, i + chunkSize);
-                const idsStr = chunk.join(',');
-                const summaryUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=${idsStr}&retmode=json`;
-
-                const summRes = await fetch(summaryUrl);
-                const summData = await summRes.json();
-
-                chunk.forEach(uid => {
-                    const r = summData.result[uid];
-                    if (r) {
-                        let title = r.title || '';
-                        title = title.replace(/<[^>]*>?/gm, ''); // strip HTML tags
-
-                        let year = '';
-                        if (r.pubdate) year = r.pubdate.split(' ')[0];
-
-                        let doi = '';
-                        if (r.articleids) {
-                            const doiObj = r.articleids.find(id => id.idtype === 'doi');
-                            if (doiObj) doi = doiObj.value;
-                        }
-                        if (!doi && r.elocationid && r.elocationid.startsWith('doi:')) {
-                            doi = r.elocationid.replace('doi:', '').trim();
-                        }
-
-                        // Parse Document Type
-                        let type = 'Other';
-                        const pubtypes = r.pubtype || [];
-                        const typeStr = pubtypes.join(' ').toLowerCase();
-                        if (typeStr.includes('review') || typeStr.includes('meta-analysis')) {
-                            type = 'Review';
-                        } else if (typeStr.includes('journal article')) {
-                            type = 'Research Paper';
-                        }
-
-                        if (title) records.push({ title, doi, year, source: 'PubMed', type, uid, abstract: '' });
+                const response = await fetch(url, {
+                    headers: {
+                        'Accept': 'application/json'
                     }
                 });
 
-                await new Promise(r => setTimeout(r, 300));
-            }
-            return records;
-        }
-
-
-
-        async function fetchPubMedAbstracts(papers) {
-            // Filter out papers from PubMed that don't have an abstract yet
-            const pubmedPapers = papers.filter(p => p.source === 'PubMed' && !p.abstract && p.uid);
-
-            if (pubmedPapers.length === 0) return;
-
-            const chunkSize = 200;
-            for (let i = 0; i < pubmedPapers.length; i += chunkSize) {
-                const chunk = pubmedPapers.slice(i, i + chunkSize);
-                const ids = chunk.map(p => p.uid).join(',');
-
-                const fetchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=${ids}&retmode=xml`;
-
-                try {
-                    const response = await fetch(fetchUrl);
-                    const xmlText = await response.text();
-
-                    const parser = new DOMParser();
-                    const xmlDoc = parser.parseFromString(xmlText, "text/xml");
-
-                    const articles = xmlDoc.getElementsByTagName("PubmedArticle");
-                    for (let j = 0; j < articles.length; j++) {
-                        const article = articles[j];
-                        const pmidNode = article.querySelector("PMID");
-                        if (!pmidNode) continue;
-
-                        const pmid = pmidNode.textContent;
-
-                        // Extract abstract components and combine
-                        const abstractTexts = article.querySelectorAll("AbstractText");
-                        let abstractContent = [];
-                        abstractTexts.forEach(node => {
-                            const label = node.getAttribute("Label") || '';
-                            const text = node.textContent;
-                            if (label) {
-                                abstractContent.push(`${label}: ${text}`);
-                            } else {
-                                abstractContent.push(text);
-                            }
-                        });
-
-                        const fullAbstract = abstractContent.join(" ");
-
-                        // Map back to our paper object
-                        const matchingPaper = pubmedPapers.find(p => p.uid === pmid);
-                        if (matchingPaper && fullAbstract) {
-                            matchingPaper.abstract = fullAbstract;
-                        }
-                    }
-                } catch (e) {
-                    console.error("Error fetching pubmed abstracts for chunk", e);
+                if (!response.ok) {
+                    throw new Error(`Scopus API error: ${response.status} ${response.statusText}`);
                 }
 
-                await new Promise(r => setTimeout(r, 400)); // Respect rate limits
+                const data = await response.json();
+                const entries = data['search-results']?.entry || [];
+                if (entries.length === 0) {
+                    break;
+                }
+
+                for (const article of entries) {
+                    let title = article['dc:title'] || '';
+                    title = title.replace(/<[^>]*>?/gm, ''); // strip HTML tags
+
+                    let doi = article['prism:doi'] || '';
+                    let coverDate = article['prism:coverDate'] || '';
+                    let year = coverDate ? coverDate.split('-')[0] : '';
+
+                    let subType = article['subtypeDescription'] || '';
+                    let type = 'Other';
+                    if (subType.toLowerCase().includes('review')) {
+                        type = 'Review';
+                    } else if (subType.toLowerCase().includes('article') || subType.toLowerCase().includes('conference paper') || subType.toLowerCase().includes('cp')) {
+                        type = 'Research Paper';
+                    }
+
+                    let abstract = article['dc:description'] || '';
+
+                    if (title) {
+                        records.push({
+                            title,
+                            doi,
+                            year,
+                            source: 'Scopus',
+                            type,
+                            uid: article['dc:identifier'] || '',
+                            abstract
+                        });
+                    }
+                }
+
+                start += count;
+                await new Promise(r => setTimeout(r, 100)); // Sleep brief moment to respect rate limits
             }
+            return records;
         }
 
         function downloadCSV() {
@@ -590,7 +532,7 @@
 
             const link = document.createElement("a");
             link.setAttribute("href", url);
-            link.setAttribute("download", "systematic_review_results.csv");
+            link.setAttribute("download", "scopus_review_results.csv");
             link.style.visibility = 'hidden';
             document.body.appendChild(link);
             link.click();
@@ -615,7 +557,7 @@
             const worksheet = XLSX.utils.json_to_sheet(data);
             const workbook = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(workbook, worksheet, "Papers");
-            XLSX.writeFile(workbook, "systematic_review_results.xlsx");
+            XLSX.writeFile(workbook, "scopus_review_results.xlsx");
         }
 
         function updateStats(raw, dupes, unique) {

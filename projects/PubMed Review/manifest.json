@@ -1,6 +1,6 @@
 {
-  "name": "Systematic Review",
-  "short_name": "Sys Review",
+  "name": "PubMed Review",
+  "short_name": "PubMed Rev",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#121212",
