@@ -97,3 +97,4 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-05-05 19:46:38.444947] NEW (TUBITAK): 1707 Sipariş Ar-Ge 2026-2 Çağrısı Açıldı
 [2026-05-06 08:38:49.515769] NEW (TUBITAK): 2574 TÜBİTAK–LASR (Libya) İkili İş Birliği Çağrısı Açıldı
 [2026-05-07 08:45:28.043036] NEW (UA): 2026 Dönemi Yükseköğretim Hareketlilik Konsorsiyumu Akreditasyonu (KA130) Başvuru Sonuçları
+[2026-05-07 14:38:19.139155] NEW (TUBITAK): 2566 TÜBİTAK–NSFC (Çin) İkili İş Birliği Çağrısı Açıldı

@@ -1,5 +1,14 @@
 [
     {
+        "id": "tubitak_2566-tubitak-nsfc-cin-ikili-birligi-cagrisi-acildi-1",
+        "title": "2566 TÜBİTAK–NSFC (Çin) İkili İş Birliği Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2566-tubitak-nsfc-cin-ikili-birligi-cagrisi-acildi-1",
+        "date": "2026-05-07 00:00:00",
+        "display_date": "07 May 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_2574-tubitak-lasr-libya-ikili-birligi-cagrisi-acildi",
         "title": "2574 TÜBİTAK–LASR (Libya) İkili İş Birliği Çağrısı Açıldı",
         "link": "https://tubitak.gov.tr/tr/duyuru/2574-tubitak-lasr-libya-ikili-birligi-cagrisi-acildi",
@@ -153,15 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_1833-sayem-yesil-donusum-2026-1-cagrisi-2-asamasi-basvuruya-acildi",
-        "title": "1833 SAYEM Yeşil Dönüşüm 2026-1 Çağrısı 2. Aşaması Başvuruya Açıldı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/1833-sayem-yesil-donusum-2026-1-cagrisi-2-asamasi-basvuruya-acildi",
-        "date": "2026-04-10 00:00:00",
-        "display_date": "10 Nis 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_2026-donemi-yuksekogretim-hareketlilik-konsorsiyumu-akreditasyonu-ka130-basvuru-sonuclari",
         "title": "2026 Dönemi Yükseköğretim Hareketlilik Konsorsiyumu Akreditasyonu (KA130) Başvuru Sonuçları",
         "link": "https://www.ua.gov.tr/haber/2026-donemi-yuksekogretim-hareketlilik-konsorsiyumu-akreditasyonu-ka130-basvuru-sonuclari/",
@@ -249,6 +249,15 @@
         "date": "2026-02-04 00:00:00",
         "display_date": "04.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_1833-sayem-yesil-donusum-2026-1-cagrisi-2-asamasi-basvuruya-acildi",
+        "title": "1833 SAYEM Yeşil Dönüşüm 2026-1 Çağrısı 2. Aşaması Başvuruya Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/1833-sayem-yesil-donusum-2026-1-cagrisi-2-asamasi-basvuruya-acildi",
+        "date": "2026-04-10 00:00:00",
+        "display_date": "10 Nis 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
