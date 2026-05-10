@@ -113,6 +113,63 @@
             line-height: 1.2;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
         }
+
+        /* Special rows for portal sites (ThinkingBottle & BiligOba) */
+        .special-row {
+            display: flex;
+            justify-content: center;
+            gap: 3.5rem;
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .special-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .special-item:hover {
+            transform: translateY(-8px) scale(1.08);
+        }
+
+        .special-icon {
+            width: 140px;
+            height: 140px;
+            border-radius: 28px;
+            background-color: #ffffff;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+            object-fit: contain;
+            padding: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .special-item:hover .special-icon {
+            box-shadow: 0 12px 32px rgba(0, 229, 255, 0.4), 0 0 20px rgba(212, 0, 249, 0.3);
+            border-color: rgba(255, 255, 255, 0.45);
+        }
+
+        .special-label {
+            color: #ffffff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-align: center;
+            margin-top: 12px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .section-divider {
+            width: 85%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+            margin: 2rem auto;
+        }
     </style>
     <link rel="manifest" href="./manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -135,6 +192,17 @@
                 href="https://biligoba.tr"
                 style="color: #ffdacc; text-decoration: none; font-weight: bold;">BiligOba</a> for my Turkish web site.
         </p>
+        <div class="special-row">
+            <a href="https://thinkingbottle.com" class="special-item">
+                <img src="thinking_bottle_logo.png" class="special-icon" alt="ThinkingBottle Logo">
+                <span class="special-label">ThinkingBottle</span>
+            </a>
+            <a href="https://biligoba.tr" class="special-item">
+                <img src="biligoba_logo.png" class="special-icon" alt="BiligOba Logo">
+                <span class="special-label">BiligOba</span>
+            </a>
+        </div>
+        <div class="section-divider"></div>
         <div class="app-grid">
             <a href="projects/GHG-simulator/index.html" class="app-item">
                 <img src="projects/GHG-simulator/app_icon.png" class="app-icon" alt="GHG Sim">
@@ -175,10 +243,6 @@
             <a href="projects/tesvik/index.html" class="app-item">
                 <img src="projects/tesvik/app_icon.png" class="app-icon" alt="Teşvik">
                 <span class="app-label">Teşvik Calc</span>
-            </a>
-            <a href="projects/vba_example/index.html" class="app-item">
-                <img src="projects/vba_example/app_icon.png" class="app-icon" alt="VBA Sim">
-                <span class="app-label">VBA Simulation</span>
             </a>
             <a href="projects/vetxr/out/index.html" class="app-item">
                 <img src="projects/vetxr/out/app_icon.png" class="app-icon" alt="VetXR">
