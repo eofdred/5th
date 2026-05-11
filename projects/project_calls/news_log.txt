@@ -99,3 +99,4 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-05-07 08:45:28.043036] NEW (UA): 2026 Dönemi Yükseköğretim Hareketlilik Konsorsiyumu Akreditasyonu (KA130) Başvuru Sonuçları
 [2026-05-07 14:38:19.139155] NEW (TUBITAK): 2566 TÜBİTAK–NSFC (Çin) İkili İş Birliği Çağrısı Açıldı
 [2026-05-08 07:51:39.641455] NEW (TUBITAK): CONCERT Japan 2026 Yılı Çağrısı Açıldı
+[2026-05-11 15:30:42.922386] NEW (TUBITAK): 4007 Bilim Şenlikleri Destekleme Programı Çağrısı Sonuçlandı

@@ -1,5 +1,14 @@
 [
     {
+        "id": "tubitak_4007-bilim-senlikleri-destekleme-programi-cagrisi-sonuclandi-0",
+        "title": "4007 Bilim Şenlikleri Destekleme Programı Çağrısı Sonuçlandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/4007-bilim-senlikleri-destekleme-programi-cagrisi-sonuclandi-0",
+        "date": "2026-05-11 00:00:00",
+        "display_date": "11 May 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_concert-japan-2026-yili-cagrisi-acildi",
         "title": "CONCERT Japan 2026 Yılı Çağrısı Açıldı",
         "link": "https://tubitak.gov.tr/tr/duyuru/concert-japan-2026-yili-cagrisi-acildi",
@@ -153,15 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_robotaksi-binek-otonom-arac-yarismasi-teknik-yeterlilik-formu-sonuclari-aciklandi-0",
-        "title": "Robotaksi-Binek Otonom Araç Yarışması Teknik Yeterlilik Formu Sonuçları Açıklandı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/robotaksi-binek-otonom-arac-yarismasi-teknik-yeterlilik-formu-sonuclari-aciklandi-0",
-        "date": "2026-04-14 00:00:00",
-        "display_date": "14 Nis 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_2026-donemi-yuksekogretim-hareketlilik-konsorsiyumu-akreditasyonu-ka130-basvuru-sonuclari",
         "title": "2026 Dönemi Yükseköğretim Hareketlilik Konsorsiyumu Akreditasyonu (KA130) Başvuru Sonuçları",
         "link": "https://www.ua.gov.tr/haber/2026-donemi-yuksekogretim-hareketlilik-konsorsiyumu-akreditasyonu-ka130-basvuru-sonuclari/",
@@ -249,6 +249,15 @@
         "date": "2026-02-04 00:00:00",
         "display_date": "04.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_robotaksi-binek-otonom-arac-yarismasi-teknik-yeterlilik-formu-sonuclari-aciklandi-0",
+        "title": "Robotaksi-Binek Otonom Araç Yarışması Teknik Yeterlilik Formu Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/robotaksi-binek-otonom-arac-yarismasi-teknik-yeterlilik-formu-sonuclari-aciklandi-0",
+        "date": "2026-04-14 00:00:00",
+        "display_date": "14 Nis 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
