@@ -1,5 +1,23 @@
 [
     {
+        "id": "tubitak_blokzincir-yarismasi-proje-degerlendirme-raporu-sonuclari-aciklandi-0",
+        "title": "Blokzincir Yarışması Proje Ön Değerlendirme Raporu Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/blokzincir-yarismasi-proje-degerlendirme-raporu-sonuclari-aciklandi-0",
+        "date": "2026-05-12 00:00:00",
+        "display_date": "12 May 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_2247-c-stajyer-arastirmaci-burs-programi-star-2026-yili-1-donem-star-lisans-ve-star-ogretmen-cagrilari-basvuru-tarihi-guncellendi",
+        "title": "2247-C Stajyer Araştırmacı Burs Programı (STAR) 2026 Yılı 1. Dönem STAR Lisans ve STAR Öğretmen Çağrıları Başvuru Tarihi Güncellendi",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2247-c-stajyer-arastirmaci-burs-programi-star-2026-yili-1-donem-star-lisans-ve-star-ogretmen-cagrilari-basvuru-tarihi-guncellendi",
+        "date": "2026-05-12 00:00:00",
+        "display_date": "12 May 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_4007-bilim-senlikleri-destekleme-programi-cagrisi-sonuclandi-0",
         "title": "4007 Bilim Şenlikleri Destekleme Programı Çağrısı Sonuçlandı",
         "link": "https://tubitak.gov.tr/tr/duyuru/4007-bilim-senlikleri-destekleme-programi-cagrisi-sonuclandi-0",
@@ -144,24 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_bilim-olimpiyatlari-programi-birinci-asama-sinavi-basvuru-takvimi-guncellendi",
-        "title": "Bilim Olimpiyatları Programı Birinci Aşama Sınavı Başvuru Takvimi Güncellendi",
-        "link": "https://tubitak.gov.tr/tr/duyuru/bilim-olimpiyatlari-programi-birinci-asama-sinavi-basvuru-takvimi-guncellendi",
-        "date": "2026-04-17 00:00:00",
-        "display_date": "17 Nis 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
-        "id": "tubitak_embo-bilimsel-degisim-hibelerine-basvurular-devam-ediyor-1",
-        "title": "EMBO Bilimsel Değişim Hibelerine Başvurular Devam Ediyor",
-        "link": "https://tubitak.gov.tr/tr/duyuru/embo-bilimsel-degisim-hibelerine-basvurular-devam-ediyor-1",
-        "date": "2026-04-15 00:00:00",
-        "display_date": "15 Nis 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_2026-donemi-yuksekogretim-hareketlilik-konsorsiyumu-akreditasyonu-ka130-basvuru-sonuclari",
         "title": "2026 Dönemi Yükseköğretim Hareketlilik Konsorsiyumu Akreditasyonu (KA130) Başvuru Sonuçları",
         "link": "https://www.ua.gov.tr/haber/2026-donemi-yuksekogretim-hareketlilik-konsorsiyumu-akreditasyonu-ka130-basvuru-sonuclari/",
@@ -249,6 +249,24 @@
         "date": "2026-02-04 00:00:00",
         "display_date": "04.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_bilim-olimpiyatlari-programi-birinci-asama-sinavi-basvuru-takvimi-guncellendi",
+        "title": "Bilim Olimpiyatları Programı Birinci Aşama Sınavı Başvuru Takvimi Güncellendi",
+        "link": "https://tubitak.gov.tr/tr/duyuru/bilim-olimpiyatlari-programi-birinci-asama-sinavi-basvuru-takvimi-guncellendi",
+        "date": "2026-04-17 00:00:00",
+        "display_date": "17 Nis 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_embo-bilimsel-degisim-hibelerine-basvurular-devam-ediyor-1",
+        "title": "EMBO Bilimsel Değişim Hibelerine Başvurular Devam Ediyor",
+        "link": "https://tubitak.gov.tr/tr/duyuru/embo-bilimsel-degisim-hibelerine-basvurular-devam-ediyor-1",
+        "date": "2026-04-15 00:00:00",
+        "display_date": "15 Nis 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
