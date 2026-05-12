@@ -1,5 +1,14 @@
 [
     {
+        "id": "tubitak_ufuk-avrupa-programi-marlen-denizcilikte-sifir-emisyon-projesi-2026-yili-cagrisi-acildi",
+        "title": "Ufuk Avrupa Programı MaRLEN: Denizcilikte Sıfır Emisyon Projesi 2026 Yılı Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/ufuk-avrupa-programi-marlen-denizcilikte-sifir-emisyon-projesi-2026-yili-cagrisi-acildi",
+        "date": "2026-05-12 00:00:00",
+        "display_date": "12 May 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_blokzincir-yarismasi-proje-degerlendirme-raporu-sonuclari-aciklandi-0",
         "title": "Blokzincir Yarışması Proje Ön Değerlendirme Raporu Sonuçları Açıklandı",
         "link": "https://tubitak.gov.tr/tr/duyuru/blokzincir-yarismasi-proje-degerlendirme-raporu-sonuclari-aciklandi-0",
@@ -153,15 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_2026-yili-tubitak-bilim-ozel-hizmet-ve-tesvik-odulleri-basvurulari-basladi",
-        "title": "2026 Yılı TÜBİTAK Bilim, Özel, Hizmet ve Teşvik Ödülleri Başvuruları Başladı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/2026-yili-tubitak-bilim-ozel-hizmet-ve-tesvik-odulleri-basvurulari-basladi",
-        "date": "2026-04-17 00:00:00",
-        "display_date": "17 Nis 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_2026-donemi-yuksekogretim-hareketlilik-konsorsiyumu-akreditasyonu-ka130-basvuru-sonuclari",
         "title": "2026 Dönemi Yükseköğretim Hareketlilik Konsorsiyumu Akreditasyonu (KA130) Başvuru Sonuçları",
         "link": "https://www.ua.gov.tr/haber/2026-donemi-yuksekogretim-hareketlilik-konsorsiyumu-akreditasyonu-ka130-basvuru-sonuclari/",
@@ -249,6 +249,15 @@
         "date": "2026-02-04 00:00:00",
         "display_date": "04.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_2026-yili-tubitak-bilim-ozel-hizmet-ve-tesvik-odulleri-basvurulari-basladi",
+        "title": "2026 Yılı TÜBİTAK Bilim, Özel, Hizmet ve Teşvik Ödülleri Başvuruları Başladı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2026-yili-tubitak-bilim-ozel-hizmet-ve-tesvik-odulleri-basvurulari-basladi",
+        "date": "2026-04-17 00:00:00",
+        "display_date": "17 Nis 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
