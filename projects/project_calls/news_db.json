@@ -1,5 +1,32 @@
 [
     {
+        "id": "tubitak_2209-universite-ogrencileri-arastirma-projeleri-destekleme-programi-basvuru-sonuclari-aciklandi",
+        "title": "2209-A Üniversite Öğrencileri Araştırma Projeleri Destekleme Programı Başvuru Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2209-universite-ogrencileri-arastirma-projeleri-destekleme-programi-basvuru-sonuclari-aciklandi",
+        "date": "2026-05-13 00:00:00",
+        "display_date": "13 May 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_2209-b-universite-ogrencileri-sanayiye-yonelik-arastirma-projeleri-destegi-programi-basvuru-sonuclari-aciklandi",
+        "title": "2209-B Üniversite Öğrencileri Sanayiye Yönelik Araştırma Projeleri Desteği Programı Başvuru Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2209-b-universite-ogrencileri-sanayiye-yonelik-arastirma-projeleri-destegi-programi-basvuru-sonuclari-aciklandi",
+        "date": "2026-05-13 00:00:00",
+        "display_date": "13 May 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_4006-c-bilim-fuarlari-festivali-cagrisi-sonuclari-aciklandi-0",
+        "title": "4006-C Bilim Fuarları Festivali Çağrısı Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/4006-c-bilim-fuarlari-festivali-cagrisi-sonuclari-aciklandi-0",
+        "date": "2026-05-13 00:00:00",
+        "display_date": "13 May 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_ufuk-avrupa-programi-marlen-denizcilikte-sifir-emisyon-projesi-2026-yili-cagrisi-acildi",
         "title": "Ufuk Avrupa Programı MaRLEN: Denizcilikte Sıfır Emisyon Projesi 2026 Yılı Çağrısı Açıldı",
         "link": "https://tubitak.gov.tr/tr/duyuru/ufuk-avrupa-programi-marlen-denizcilikte-sifir-emisyon-projesi-2026-yili-cagrisi-acildi",
@@ -135,33 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_1007-programi-kapsaminda-savunma-ve-guvenlik-teknolojileri-alaninda-yeni-bir-proje-cagrisi-acildi",
-        "title": "1007 Programı Kapsamında, Savunma ve Güvenlik Teknolojileri Alanında Yeni Bir Proje Çağrısı Açıldı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/1007-programi-kapsaminda-savunma-ve-guvenlik-teknolojileri-alaninda-yeni-bir-proje-cagrisi-acildi",
-        "date": "2026-04-24 00:00:00",
-        "display_date": "24 Nis 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
-        "id": "tubitak_2523-tubitak-kore-ulusal-arastirma-vakfi-nrf-ikili-birligi-seyahat-destek-cagrisi-acildi-0",
-        "title": "2523 TÜBİTAK–Kore Ulusal Araştırma Vakfı (NRF) İkili İş Birliği Seyahat Destek Çağrısı Açıldı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/2523-tubitak-kore-ulusal-arastirma-vakfi-nrf-ikili-birligi-seyahat-destek-cagrisi-acildi-0",
-        "date": "2026-04-20 00:00:00",
-        "display_date": "20 Nis 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
-        "id": "tubitak_cip-tasarim-yarismasi-tasarim-raporu-sonuclari-aciklandi-0",
-        "title": "Çip Tasarım Yarışması Ön Tasarım Raporu Sonuçları Açıklandı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/cip-tasarim-yarismasi-tasarim-raporu-sonuclari-aciklandi-0",
-        "date": "2026-04-20 00:00:00",
-        "display_date": "20 Nis 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_2026-donemi-yuksekogretim-hareketlilik-konsorsiyumu-akreditasyonu-ka130-basvuru-sonuclari",
         "title": "2026 Dönemi Yükseköğretim Hareketlilik Konsorsiyumu Akreditasyonu (KA130) Başvuru Sonuçları",
         "link": "https://www.ua.gov.tr/haber/2026-donemi-yuksekogretim-hareketlilik-konsorsiyumu-akreditasyonu-ka130-basvuru-sonuclari/",
@@ -249,6 +249,33 @@
         "date": "2026-02-04 00:00:00",
         "display_date": "04.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_1007-programi-kapsaminda-savunma-ve-guvenlik-teknolojileri-alaninda-yeni-bir-proje-cagrisi-acildi",
+        "title": "1007 Programı Kapsamında, Savunma ve Güvenlik Teknolojileri Alanında Yeni Bir Proje Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/1007-programi-kapsaminda-savunma-ve-guvenlik-teknolojileri-alaninda-yeni-bir-proje-cagrisi-acildi",
+        "date": "2026-04-24 00:00:00",
+        "display_date": "24 Nis 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_2523-tubitak-kore-ulusal-arastirma-vakfi-nrf-ikili-birligi-seyahat-destek-cagrisi-acildi-0",
+        "title": "2523 TÜBİTAK–Kore Ulusal Araştırma Vakfı (NRF) İkili İş Birliği Seyahat Destek Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2523-tubitak-kore-ulusal-arastirma-vakfi-nrf-ikili-birligi-seyahat-destek-cagrisi-acildi-0",
+        "date": "2026-04-20 00:00:00",
+        "display_date": "20 Nis 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_cip-tasarim-yarismasi-tasarim-raporu-sonuclari-aciklandi-0",
+        "title": "Çip Tasarım Yarışması Ön Tasarım Raporu Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/cip-tasarim-yarismasi-tasarim-raporu-sonuclari-aciklandi-0",
+        "date": "2026-04-20 00:00:00",
+        "display_date": "20 Nis 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
