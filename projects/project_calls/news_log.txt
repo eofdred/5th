@@ -106,3 +106,5 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-05-13 20:04:51.021379] NEW (TUBITAK): 2209-A Üniversite Öğrencileri Araştırma Projeleri Destekleme Programı Başvuru Sonuçları Açıklandı
 [2026-05-13 20:04:51.021442] NEW (TUBITAK): 2209-B Üniversite Öğrencileri Sanayiye Yönelik Araştırma Projeleri Desteği Programı Başvuru Sonuçları Açıklandı
 [2026-05-13 20:04:51.021468] NEW (TUBITAK): 4006-C Bilim Fuarları Festivali Çağrısı Sonuçları Açıklandı
+[2026-05-14 14:32:27.509124] NEW (UA): 2026 DEOR Toplantısı Gerçekleştirildi
+[2026-05-14 14:32:27.509185] NEW (UA): “Yıldızlar Ligi: Erasmus+ Merkezi Projeler” Etkinliği Ankara’da Gerçekleştirildi
