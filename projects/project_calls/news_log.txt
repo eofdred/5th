@@ -108,3 +108,4 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-05-13 20:04:51.021468] NEW (TUBITAK): 4006-C Bilim Fuarları Festivali Çağrısı Sonuçları Açıklandı
 [2026-05-14 14:32:27.509124] NEW (UA): 2026 DEOR Toplantısı Gerçekleştirildi
 [2026-05-14 14:32:27.509185] NEW (UA): “Yıldızlar Ligi: Erasmus+ Merkezi Projeler” Etkinliği Ankara’da Gerçekleştirildi
+[2026-05-18 10:21:13.172676] NEW (TUBITAK): Eureka Network Hafifletme Teknolojileri 2026 Yılı Çağrısı Açıldı

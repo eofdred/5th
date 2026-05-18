@@ -1,5 +1,14 @@
 [
     {
+        "id": "tubitak_eureka-network-hafifletme-teknolojileri-2026-yili-cagrisi-acildi",
+        "title": "Eureka Network Hafifletme Teknolojileri 2026 Yılı Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/eureka-network-hafifletme-teknolojileri-2026-yili-cagrisi-acildi",
+        "date": "2026-05-18 00:00:00",
+        "display_date": "18 May 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_2209-universite-ogrencileri-arastirma-projeleri-destekleme-programi-basvuru-sonuclari-aciklandi",
         "title": "2209-A Üniversite Öğrencileri Araştırma Projeleri Destekleme Programı Başvuru Sonuçları Açıklandı",
         "link": "https://tubitak.gov.tr/tr/duyuru/2209-universite-ogrencileri-arastirma-projeleri-destekleme-programi-basvuru-sonuclari-aciklandi",
@@ -153,15 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_uluslararasi-insansiz-hava-araclari-yarismasi-ile-liseler-arasi-insansiz-hava-araclari-yarismasi-proje-sunum-raporu-sonuclari-aciklandi-0",
-        "title": "Uluslararası İnsansız Hava Araçları Yarışması ile Liseler Arası İnsansız Hava Araçları Yarışması Proje Sunum Raporu Sonuçları Açıklandı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/uluslararasi-insansiz-hava-araclari-yarismasi-ile-liseler-arasi-insansiz-hava-araclari-yarismasi-proje-sunum-raporu-sonuclari-aciklandi-0",
-        "date": "2026-04-24 00:00:00",
-        "display_date": "24 Nis 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_2026-deor-toplantisi-gerceklestirildi",
         "title": "2026 DEOR Toplantısı Gerçekleştirildi",
         "link": "https://www.ua.gov.tr/haber/2026-deor-toplantisi-gerceklestirildi/",
@@ -249,6 +249,15 @@
         "date": "2026-02-05 00:00:00",
         "display_date": "05.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_uluslararasi-insansiz-hava-araclari-yarismasi-ile-liseler-arasi-insansiz-hava-araclari-yarismasi-proje-sunum-raporu-sonuclari-aciklandi-0",
+        "title": "Uluslararası İnsansız Hava Araçları Yarışması ile Liseler Arası İnsansız Hava Araçları Yarışması Proje Sunum Raporu Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/uluslararasi-insansiz-hava-araclari-yarismasi-ile-liseler-arasi-insansiz-hava-araclari-yarismasi-proje-sunum-raporu-sonuclari-aciklandi-0",
+        "date": "2026-04-24 00:00:00",
+        "display_date": "24 Nis 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
