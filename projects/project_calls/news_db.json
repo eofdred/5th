@@ -1,5 +1,14 @@
 [
     {
+        "id": "tubitak_2517-tubitak-azerbaycan-bilim-vakfi-asf-ikili-birligi-destek-programi-2025-yili-basvuru-sonuclari-aciklandi",
+        "title": "2517 TÜBİTAK–Azerbaycan Bilim Vakfı (ASF) İkili İş Birliği Destek Programı  2025 Yılı Başvuru Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2517-tubitak-azerbaycan-bilim-vakfi-asf-ikili-birligi-destek-programi-2025-yili-basvuru-sonuclari-aciklandi",
+        "date": "2026-05-20 00:00:00",
+        "display_date": "20 May 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_hyperloop-gelistirme-yarismasi-performans-kategorisi-teknik-tasarim-raporu-sonuclari-aciklandi",
         "title": "Hyperloop Geliştirme Yarışması Performans Kategorisi Teknik Tasarım Raporu Sonuçları Açıklandı",
         "link": "https://tubitak.gov.tr/tr/duyuru/hyperloop-gelistirme-yarismasi-performans-kategorisi-teknik-tasarim-raporu-sonuclari-aciklandi",
@@ -153,15 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_eureka-xecs-6-cagrisi-acildi",
-        "title": "Eureka–Xecs 6. Çağrısı Açıldı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/eureka-xecs-6-cagrisi-acildi",
-        "date": "2026-04-28 00:00:00",
-        "display_date": "28 Nis 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_2026-deor-toplantisi-gerceklestirildi",
         "title": "2026 DEOR Toplantısı Gerçekleştirildi",
         "link": "https://www.ua.gov.tr/haber/2026-deor-toplantisi-gerceklestirildi/",
@@ -249,6 +249,15 @@
         "date": "2026-02-05 00:00:00",
         "display_date": "05.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_eureka-xecs-6-cagrisi-acildi",
+        "title": "Eureka–Xecs 6. Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/eureka-xecs-6-cagrisi-acildi",
+        "date": "2026-04-28 00:00:00",
+        "display_date": "28 Nis 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
