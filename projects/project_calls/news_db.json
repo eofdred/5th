@@ -1,5 +1,14 @@
 [
     {
+        "id": "tubitak_biyoteknoloji-inovasyon-yarismasi-proje-degerlendirme-raporu-sonuclari-aciklandi",
+        "title": "Biyoteknoloji İnovasyon Yarışması Proje Ön Değerlendirme Raporu Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/biyoteknoloji-inovasyon-yarismasi-proje-degerlendirme-raporu-sonuclari-aciklandi",
+        "date": "2026-05-21 00:00:00",
+        "display_date": "21 May 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_2517-tubitak-azerbaycan-bilim-vakfi-asf-ikili-birligi-destek-programi-2025-yili-basvuru-sonuclari-aciklandi",
         "title": "2517 TÜBİTAK–Azerbaycan Bilim Vakfı (ASF) İkili İş Birliği Destek Programı  2025 Yılı Başvuru Sonuçları Açıklandı",
         "link": "https://tubitak.gov.tr/tr/duyuru/2517-tubitak-azerbaycan-bilim-vakfi-asf-ikili-birligi-destek-programi-2025-yili-basvuru-sonuclari-aciklandi",
@@ -153,15 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_4008-ozel-gereksinimli-bireylere-yonelik-kapsayici-toplum-uygulamalari-destekleme-programi-cagrisi-sonuclandi-0",
-        "title": "4008 Özel Gereksinimli Bireylere Yönelik Kapsayıcı Toplum Uygulamaları Destekleme Programı Çağrısı Sonuçlandı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/4008-ozel-gereksinimli-bireylere-yonelik-kapsayici-toplum-uygulamalari-destekleme-programi-cagrisi-sonuclandi-0",
-        "date": "2026-04-28 00:00:00",
-        "display_date": "28 Nis 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_2026-deor-toplantisi-gerceklestirildi",
         "title": "2026 DEOR Toplantısı Gerçekleştirildi",
         "link": "https://www.ua.gov.tr/haber/2026-deor-toplantisi-gerceklestirildi/",
@@ -249,6 +249,15 @@
         "date": "2026-02-05 00:00:00",
         "display_date": "05.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_4008-ozel-gereksinimli-bireylere-yonelik-kapsayici-toplum-uygulamalari-destekleme-programi-cagrisi-sonuclandi-0",
+        "title": "4008 Özel Gereksinimli Bireylere Yönelik Kapsayıcı Toplum Uygulamaları Destekleme Programı Çağrısı Sonuçlandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/4008-ozel-gereksinimli-bireylere-yonelik-kapsayici-toplum-uygulamalari-destekleme-programi-cagrisi-sonuclandi-0",
+        "date": "2026-04-28 00:00:00",
+        "display_date": "28 Nis 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {

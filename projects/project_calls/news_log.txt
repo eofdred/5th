@@ -111,3 +111,4 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-05-18 10:21:13.172676] NEW (TUBITAK): Eureka Network Hafifletme Teknolojileri 2026 Yılı Çağrısı Açıldı
 [2026-05-18 15:51:10.769484] NEW (TUBITAK): Hyperloop Geliştirme Yarışması Performans Kategorisi Teknik Tasarım Raporu Sonuçları Açıklandı
 [2026-05-20 09:50:26.576167] NEW (TUBITAK): 2517 TÜBİTAK–Azerbaycan Bilim Vakfı (ASF) İkili İş Birliği Destek Programı  2025 Yılı Başvuru Sonuçları Açıklandı
+[2026-05-21 09:57:39.174349] NEW (TUBITAK): Biyoteknoloji İnovasyon Yarışması Proje Ön Değerlendirme Raporu Sonuçları Açıklandı
