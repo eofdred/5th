@@ -1,5 +1,23 @@
 [
     {
+        "id": "tubitak_2026-yili-cost-aksiyonlari-onaylandi",
+        "title": "2026 Yılı COST Aksiyonları Onaylandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2026-yili-cost-aksiyonlari-onaylandi",
+        "date": "2026-06-01 00:00:00",
+        "display_date": "01 Haz 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_4009-koy-okullarina-yonelik-destek-programi-cagrisi-sonuclandi",
+        "title": "4009 - Köy Okullarına Yönelik Destek Programı Çağrısı Sonuçlandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/4009-koy-okullarina-yonelik-destek-programi-cagrisi-sonuclandi",
+        "date": "2026-06-01 00:00:00",
+        "display_date": "01 Haz 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_biyoteknoloji-inovasyon-yarismasi-proje-degerlendirme-raporu-sonuclari-aciklandi",
         "title": "Biyoteknoloji İnovasyon Yarışması Proje Ön Değerlendirme Raporu Sonuçları Açıklandı",
         "link": "https://tubitak.gov.tr/tr/duyuru/biyoteknoloji-inovasyon-yarismasi-proje-degerlendirme-raporu-sonuclari-aciklandi",
@@ -144,24 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_tubitak-bilim-merkezi-sergi-tasarim-yarismasi-basvuru-sureci-uzatildi",
-        "title": "TÜBİTAK Bilim Merkezi Sergi Tasarım Yarışması Başvuru Süreci Uzatıldı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/tubitak-bilim-merkezi-sergi-tasarim-yarismasi-basvuru-sureci-uzatildi",
-        "date": "2026-05-05 00:00:00",
-        "display_date": "05 May 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
-        "id": "tubitak_2537-tubitak-cek-bilimler-akademisi-cas-ikili-birligi-seyahat-destek-cagrisi-acildi",
-        "title": "2537 TÜBİTAK–Çek Bilimler Akademisi (CAS) İkili İş Birliği Seyahat Destek Çağrısı Açıldı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/2537-tubitak-cek-bilimler-akademisi-cas-ikili-birligi-seyahat-destek-cagrisi-acildi",
-        "date": "2026-04-28 00:00:00",
-        "display_date": "28 Nis 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_2025-r3-donemi-avrupa-dayanisma-programi-dayanisma-projeleri-esc30-basvuru-sonuclari",
         "title": "2025/R3 Dönemi Avrupa Dayanışma Programı Dayanışma Projeleri (ESC30) Başvuru Sonuçları",
         "link": "https://www.ua.gov.tr/haber/2025-r3-donemi-avrupa-dayanisma-programi-dayanisma-projeleri-esc30-basvuru-sonuclari/",
@@ -249,6 +249,24 @@
         "date": "2026-02-06 00:00:00",
         "display_date": "06.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_tubitak-bilim-merkezi-sergi-tasarim-yarismasi-basvuru-sureci-uzatildi",
+        "title": "TÜBİTAK Bilim Merkezi Sergi Tasarım Yarışması Başvuru Süreci Uzatıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/tubitak-bilim-merkezi-sergi-tasarim-yarismasi-basvuru-sureci-uzatildi",
+        "date": "2026-05-05 00:00:00",
+        "display_date": "05 May 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_2537-tubitak-cek-bilimler-akademisi-cas-ikili-birligi-seyahat-destek-cagrisi-acildi",
+        "title": "2537 TÜBİTAK–Çek Bilimler Akademisi (CAS) İkili İş Birliği Seyahat Destek Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2537-tubitak-cek-bilimler-akademisi-cas-ikili-birligi-seyahat-destek-cagrisi-acildi",
+        "date": "2026-04-28 00:00:00",
+        "display_date": "28 Nis 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
