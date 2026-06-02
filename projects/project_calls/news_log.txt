@@ -115,3 +115,4 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-05-22 14:56:04.000216] NEW (UA): 2025/R3 Dönemi Avrupa Dayanışma Programı Dayanışma Projeleri (ESC30) Başvuru Sonuçları
 [2026-06-01 17:57:32.901796] NEW (TUBITAK): 2026 Yılı COST Aksiyonları Onaylandı
 [2026-06-01 17:57:32.901856] NEW (TUBITAK): 4009 - Köy Okullarına Yönelik Destek Programı Çağrısı Sonuçlandı
+[2026-06-02 16:49:04.824111] NEW (TUBITAK): İnsanlık Yararına Teknolojiler Yarışması İlkokul Seviyesi Proje Ön Değerlendirme Raporu Sonuçları Açıklandı
