@@ -116,3 +116,4 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-06-01 17:57:32.901796] NEW (TUBITAK): 2026 Yılı COST Aksiyonları Onaylandı
 [2026-06-01 17:57:32.901856] NEW (TUBITAK): 4009 - Köy Okullarına Yönelik Destek Programı Çağrısı Sonuçlandı
 [2026-06-02 16:49:04.824111] NEW (TUBITAK): İnsanlık Yararına Teknolojiler Yarışması İlkokul Seviyesi Proje Ön Değerlendirme Raporu Sonuçları Açıklandı
+[2026-06-03 21:25:34.159119] NEW (TUBITAK): Eurostars Koordinatörlük Desteği Programı 2026 Yılı 2. Ulusal Çağrısı Açıldı
