@@ -1,5 +1,23 @@
 [
     {
+        "id": "tubitak_2223-yurt-ici-bilimsel-etkinlikleri-destekleme-programlari-2026-yili-2-donem-cagrilari-acildi",
+        "title": "2223–Yurt İçi Bilimsel Etkinlikleri Destekleme Programları 2026 Yılı 2. Dönem Çağrıları Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2223-yurt-ici-bilimsel-etkinlikleri-destekleme-programlari-2026-yili-2-donem-cagrilari-acildi",
+        "date": "2026-06-09 00:00:00",
+        "display_date": "09 Haz 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_2224-bilimsel-etkinliklere-katilimi-destekleme-programlari-2026-yili-2-donem-cagrilari-acildi",
+        "title": "2224–Bilimsel Etkinliklere Katılımı Destekleme Programları 2026 Yılı 2. Dönem Çağrıları Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2224-bilimsel-etkinliklere-katilimi-destekleme-programlari-2026-yili-2-donem-cagrilari-acildi",
+        "date": "2026-06-09 00:00:00",
+        "display_date": "09 Haz 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_eurostars-koordinatorluk-destegi-programi-2026-yili-2-ulusal-cagrisi-acildi",
         "title": "Eurostars Koordinatörlük Desteği Programı 2026 Yılı 2. Ulusal Çağrısı Açıldı",
         "link": "https://tubitak.gov.tr/tr/duyuru/eurostars-koordinatorluk-destegi-programi-2026-yili-2-ulusal-cagrisi-acildi",
@@ -144,24 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_2566-tubitak-nsfc-cin-ikili-birligi-cagrisi-acildi-1",
-        "title": "2566 TÜBİTAK–NSFC (Çin) İkili İş Birliği Çağrısı Açıldı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/2566-tubitak-nsfc-cin-ikili-birligi-cagrisi-acildi-1",
-        "date": "2026-05-07 00:00:00",
-        "display_date": "07 May 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
-        "id": "tubitak_2574-tubitak-lasr-libya-ikili-birligi-cagrisi-acildi",
-        "title": "2574 TÜBİTAK–LASR (Libya) İkili İş Birliği Çağrısı Açıldı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/2574-tubitak-lasr-libya-ikili-birligi-cagrisi-acildi",
-        "date": "2026-05-06 00:00:00",
-        "display_date": "06 May 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_2025-r3-donemi-avrupa-dayanisma-programi-dayanisma-projeleri-esc30-basvuru-sonuclari",
         "title": "2025/R3 Dönemi Avrupa Dayanışma Programı Dayanışma Projeleri (ESC30) Başvuru Sonuçları",
         "link": "https://www.ua.gov.tr/haber/2025-r3-donemi-avrupa-dayanisma-programi-dayanisma-projeleri-esc30-basvuru-sonuclari/",
@@ -249,6 +249,24 @@
         "date": "2026-02-06 00:00:00",
         "display_date": "06.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_2566-tubitak-nsfc-cin-ikili-birligi-cagrisi-acildi-1",
+        "title": "2566 TÜBİTAK–NSFC (Çin) İkili İş Birliği Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2566-tubitak-nsfc-cin-ikili-birligi-cagrisi-acildi-1",
+        "date": "2026-05-07 00:00:00",
+        "display_date": "07 May 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_2574-tubitak-lasr-libya-ikili-birligi-cagrisi-acildi",
+        "title": "2574 TÜBİTAK–LASR (Libya) İkili İş Birliği Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2574-tubitak-lasr-libya-ikili-birligi-cagrisi-acildi",
+        "date": "2026-05-06 00:00:00",
+        "display_date": "06 May 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
