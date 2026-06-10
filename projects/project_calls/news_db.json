@@ -1,5 +1,32 @@
 [
     {
+        "id": "tubitak_2204-d-lise-ogrencileri-iklim-degisikligi-arastirma-projeleri-yarismasi-degerlendirme-sonuclari-aciklandi",
+        "title": "2204-D Lise Öğrencileri İklim Değişikliği Araştırma Projeleri Yarışması Ön Değerlendirme Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2204-d-lise-ogrencileri-iklim-degisikligi-arastirma-projeleri-yarismasi-degerlendirme-sonuclari-aciklandi",
+        "date": "2026-06-10 00:00:00",
+        "display_date": "10 Haz 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_2204-c-lise-ogrencileri-kutup-arastirma-projeleri-yarismasi-degerlendirme-sonuclari-aciklandi-0",
+        "title": "2204-C Lise Öğrencileri Kutup Araştırma Projeleri Yarışması Ön Değerlendirme Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2204-c-lise-ogrencileri-kutup-arastirma-projeleri-yarismasi-degerlendirme-sonuclari-aciklandi-0",
+        "date": "2026-06-10 00:00:00",
+        "display_date": "10 Haz 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_cetpartnership-ortakligi-2026-yili-ortak-cagrisi-acildi",
+        "title": "CETPartnership Ortaklığı 2026 Yılı Ortak Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/cetpartnership-ortakligi-2026-yili-ortak-cagrisi-acildi",
+        "date": "2026-06-10 00:00:00",
+        "display_date": "10 Haz 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_2223-yurt-ici-bilimsel-etkinlikleri-destekleme-programlari-2026-yili-2-donem-cagrilari-acildi",
         "title": "2223–Yurt İçi Bilimsel Etkinlikleri Destekleme Programları 2026 Yılı 2. Dönem Çağrıları Açıldı",
         "link": "https://tubitak.gov.tr/tr/duyuru/2223-yurt-ici-bilimsel-etkinlikleri-destekleme-programlari-2026-yili-2-donem-cagrilari-acildi",
@@ -135,33 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_2247-c-stajyer-arastirmaci-burs-programi-star-2026-yili-1-donem-star-lisans-ve-star-ogretmen-cagrilari-basvuru-tarihi-guncellendi",
-        "title": "2247-C Stajyer Araştırmacı Burs Programı (STAR) 2026 Yılı 1. Dönem STAR Lisans ve STAR Öğretmen Çağrıları Başvuru Tarihi Güncellendi",
-        "link": "https://tubitak.gov.tr/tr/duyuru/2247-c-stajyer-arastirmaci-burs-programi-star-2026-yili-1-donem-star-lisans-ve-star-ogretmen-cagrilari-basvuru-tarihi-guncellendi",
-        "date": "2026-05-12 00:00:00",
-        "display_date": "12 May 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
-        "id": "tubitak_4007-bilim-senlikleri-destekleme-programi-cagrisi-sonuclandi-0",
-        "title": "4007 Bilim Şenlikleri Destekleme Programı Çağrısı Sonuçlandı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/4007-bilim-senlikleri-destekleme-programi-cagrisi-sonuclandi-0",
-        "date": "2026-05-11 00:00:00",
-        "display_date": "11 May 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
-        "id": "tubitak_concert-japan-2026-yili-cagrisi-acildi",
-        "title": "CONCERT Japan 2026 Yılı Çağrısı Açıldı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/concert-japan-2026-yili-cagrisi-acildi",
-        "date": "2026-05-08 00:00:00",
-        "display_date": "08 May 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_2025-r3-donemi-avrupa-dayanisma-programi-dayanisma-projeleri-esc30-basvuru-sonuclari",
         "title": "2025/R3 Dönemi Avrupa Dayanışma Programı Dayanışma Projeleri (ESC30) Başvuru Sonuçları",
         "link": "https://www.ua.gov.tr/haber/2025-r3-donemi-avrupa-dayanisma-programi-dayanisma-projeleri-esc30-basvuru-sonuclari/",
@@ -249,6 +249,33 @@
         "date": "2026-02-06 00:00:00",
         "display_date": "06.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_2247-c-stajyer-arastirmaci-burs-programi-star-2026-yili-1-donem-star-lisans-ve-star-ogretmen-cagrilari-basvuru-tarihi-guncellendi",
+        "title": "2247-C Stajyer Araştırmacı Burs Programı (STAR) 2026 Yılı 1. Dönem STAR Lisans ve STAR Öğretmen Çağrıları Başvuru Tarihi Güncellendi",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2247-c-stajyer-arastirmaci-burs-programi-star-2026-yili-1-donem-star-lisans-ve-star-ogretmen-cagrilari-basvuru-tarihi-guncellendi",
+        "date": "2026-05-12 00:00:00",
+        "display_date": "12 May 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_4007-bilim-senlikleri-destekleme-programi-cagrisi-sonuclandi-0",
+        "title": "4007 Bilim Şenlikleri Destekleme Programı Çağrısı Sonuçlandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/4007-bilim-senlikleri-destekleme-programi-cagrisi-sonuclandi-0",
+        "date": "2026-05-11 00:00:00",
+        "display_date": "11 May 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_concert-japan-2026-yili-cagrisi-acildi",
+        "title": "CONCERT Japan 2026 Yılı Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/concert-japan-2026-yili-cagrisi-acildi",
+        "date": "2026-05-08 00:00:00",
+        "display_date": "08 May 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
