@@ -162,15 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_blokzincir-yarismasi-proje-degerlendirme-raporu-sonuclari-aciklandi-0",
-        "title": "Blokzincir Yarışması Proje Ön Değerlendirme Raporu Sonuçları Açıklandı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/blokzincir-yarismasi-proje-degerlendirme-raporu-sonuclari-aciklandi-0",
-        "date": "2026-05-12 00:00:00",
-        "display_date": "12 May 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_2025-r3-donemi-avrupa-dayanisma-programi-dayanisma-projeleri-esc30-basvuru-sonuclari",
         "title": "2025/R3 Dönemi Avrupa Dayanışma Programı Dayanışma Projeleri (ESC30) Başvuru Sonuçları",
         "link": "https://www.ua.gov.tr/haber/2025-r3-donemi-avrupa-dayanisma-programi-dayanisma-projeleri-esc30-basvuru-sonuclari/",
@@ -258,6 +249,15 @@
         "date": "2026-02-06 00:00:00",
         "display_date": "06.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_blokzincir-yarismasi-proje-degerlendirme-raporu-sonuclari-aciklandi-0",
+        "title": "Blokzincir Yarışması Proje Ön Değerlendirme Raporu Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/blokzincir-yarismasi-proje-degerlendirme-raporu-sonuclari-aciklandi-0",
+        "date": "2026-05-12 00:00:00",
+        "display_date": "12 May 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
