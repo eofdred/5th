@@ -122,3 +122,4 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-06-10 15:57:01.839905] NEW (TUBITAK): 2204-D Lise Öğrencileri İklim Değişikliği Araştırma Projeleri Yarışması Ön Değerlendirme Sonuçları Açıklandı
 [2026-06-10 15:57:01.839965] NEW (TUBITAK): 2204-C Lise Öğrencileri Kutup Araştırma Projeleri Yarışması Ön Değerlendirme Sonuçları Açıklandı
 [2026-06-10 15:57:01.839993] NEW (TUBITAK): CETPartnership Ortaklığı 2026 Yılı Ortak Çağrısı Açıldı
+[2026-06-11 10:52:24.550494] NEW (TUBITAK): 2568 TÜBİTAK–CAS (Çin) İkili İş Birliği Çağrısı Açıldı
