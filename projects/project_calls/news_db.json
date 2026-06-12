@@ -1,5 +1,32 @@
 [
     {
+        "id": "tubitak_2544-tubitak-jsps-japonya-ikili-birligi-cagrisi-acildi-1",
+        "title": "2544 TÜBİTAK–JSPS (Japonya) İkili İş Birliği Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2544-tubitak-jsps-japonya-ikili-birligi-cagrisi-acildi-1",
+        "date": "2026-06-12 00:00:00",
+        "display_date": "12 Haz 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_ira-sme-38-cagrisi-basvuruya-acildi",
+        "title": "IRA-SME 38. Çağrısı Başvuruya Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/ira-sme-38-cagrisi-basvuruya-acildi",
+        "date": "2026-06-12 00:00:00",
+        "display_date": "12 Haz 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_kamu-yapay-zeka-ekosistemi-2026-cagrisinda-son-asamaya-gecildi",
+        "title": "Kamu Yapay Zekâ Ekosistemi 2026 Çağrısı’nda Son Aşamaya Geçildi",
+        "link": "https://tubitak.gov.tr/tr/duyuru/kamu-yapay-zeka-ekosistemi-2026-cagrisinda-son-asamaya-gecildi",
+        "date": "2026-06-12 00:00:00",
+        "display_date": "12 Haz 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_2568-tubitak-cas-cin-ikili-birligi-cagrisi-acildi-1",
         "title": "2568 TÜBİTAK–CAS (Çin) İkili İş Birliği Çağrısı Açıldı",
         "link": "https://tubitak.gov.tr/tr/duyuru/2568-tubitak-cas-cin-ikili-birligi-cagrisi-acildi-1",
@@ -135,33 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_2209-b-universite-ogrencileri-sanayiye-yonelik-arastirma-projeleri-destegi-programi-basvuru-sonuclari-aciklandi",
-        "title": "2209-B Üniversite Öğrencileri Sanayiye Yönelik Araştırma Projeleri Desteği Programı Başvuru Sonuçları Açıklandı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/2209-b-universite-ogrencileri-sanayiye-yonelik-arastirma-projeleri-destegi-programi-basvuru-sonuclari-aciklandi",
-        "date": "2026-05-13 00:00:00",
-        "display_date": "13 May 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
-        "id": "tubitak_4006-c-bilim-fuarlari-festivali-cagrisi-sonuclari-aciklandi-0",
-        "title": "4006-C Bilim Fuarları Festivali Çağrısı Sonuçları Açıklandı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/4006-c-bilim-fuarlari-festivali-cagrisi-sonuclari-aciklandi-0",
-        "date": "2026-05-13 00:00:00",
-        "display_date": "13 May 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
-        "id": "tubitak_ufuk-avrupa-programi-marlen-denizcilikte-sifir-emisyon-projesi-2026-yili-cagrisi-acildi",
-        "title": "Ufuk Avrupa Programı MaRLEN: Denizcilikte Sıfır Emisyon Projesi 2026 Yılı Çağrısı Açıldı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/ufuk-avrupa-programi-marlen-denizcilikte-sifir-emisyon-projesi-2026-yili-cagrisi-acildi",
-        "date": "2026-05-12 00:00:00",
-        "display_date": "12 May 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_2025-r3-donemi-avrupa-dayanisma-programi-dayanisma-projeleri-esc30-basvuru-sonuclari",
         "title": "2025/R3 Dönemi Avrupa Dayanışma Programı Dayanışma Projeleri (ESC30) Başvuru Sonuçları",
         "link": "https://www.ua.gov.tr/haber/2025-r3-donemi-avrupa-dayanisma-programi-dayanisma-projeleri-esc30-basvuru-sonuclari/",
@@ -249,6 +249,33 @@
         "date": "2026-02-06 00:00:00",
         "display_date": "06.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_2209-b-universite-ogrencileri-sanayiye-yonelik-arastirma-projeleri-destegi-programi-basvuru-sonuclari-aciklandi",
+        "title": "2209-B Üniversite Öğrencileri Sanayiye Yönelik Araştırma Projeleri Desteği Programı Başvuru Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2209-b-universite-ogrencileri-sanayiye-yonelik-arastirma-projeleri-destegi-programi-basvuru-sonuclari-aciklandi",
+        "date": "2026-05-13 00:00:00",
+        "display_date": "13 May 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_4006-c-bilim-fuarlari-festivali-cagrisi-sonuclari-aciklandi-0",
+        "title": "4006-C Bilim Fuarları Festivali Çağrısı Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/4006-c-bilim-fuarlari-festivali-cagrisi-sonuclari-aciklandi-0",
+        "date": "2026-05-13 00:00:00",
+        "display_date": "13 May 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_ufuk-avrupa-programi-marlen-denizcilikte-sifir-emisyon-projesi-2026-yili-cagrisi-acildi",
+        "title": "Ufuk Avrupa Programı MaRLEN: Denizcilikte Sıfır Emisyon Projesi 2026 Yılı Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/ufuk-avrupa-programi-marlen-denizcilikte-sifir-emisyon-projesi-2026-yili-cagrisi-acildi",
+        "date": "2026-05-12 00:00:00",
+        "display_date": "12 May 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
