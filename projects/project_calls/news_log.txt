@@ -126,3 +126,5 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-06-12 15:33:06.312465] NEW (TUBITAK): 2544 TÜBİTAK–JSPS (Japonya) İkili İş Birliği Çağrısı Açıldı
 [2026-06-12 15:33:06.312534] NEW (TUBITAK): IRA-SME 38. Çağrısı Başvuruya Açıldı
 [2026-06-12 15:33:06.312570] NEW (TUBITAK): Kamu Yapay Zekâ Ekosistemi 2026 Çağrısı’nda Son Aşamaya Geçildi
+[2026-06-16 11:27:47.788471] NEW (TUBITAK): Uluslararası Elektrikli Araç Yarışları Takım Gelişim ve Teknolojik Olgunluk Değerlendirme Videosu ile Teknik Tasarım Raporu Sonuçları Açıklandı
+[2026-06-16 11:27:47.788538] NEW (TUBITAK): Robotaksi-Binek Otonom Araç Yarışması Kritik Tasarım Raporu Sonuçları Açıklandı
