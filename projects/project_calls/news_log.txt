@@ -128,3 +128,6 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-06-12 15:33:06.312570] NEW (TUBITAK): Kamu Yapay Zekâ Ekosistemi 2026 Çağrısı’nda Son Aşamaya Geçildi
 [2026-06-16 11:27:47.788471] NEW (TUBITAK): Uluslararası Elektrikli Araç Yarışları Takım Gelişim ve Teknolojik Olgunluk Değerlendirme Videosu ile Teknik Tasarım Raporu Sonuçları Açıklandı
 [2026-06-16 11:27:47.788538] NEW (TUBITAK): Robotaksi-Binek Otonom Araç Yarışması Kritik Tasarım Raporu Sonuçları Açıklandı
+[2026-06-16 17:12:24.199696] NEW (TUBITAK): 1711 - Yapay Zekâ Ekosistem 2026 Yılı Çağrısı Açıldı
+[2026-06-16 17:12:24.199760] NEW (TUBITAK): ITEA Proje Pazarı Günleri 2026 Yılı Etkinliği İstanbul’da Gerçekleştiriliyor
+[2026-06-16 17:12:24.199799] NEW (TUBITAK): 2530–Moldova Ulusal Araştırma ve Geliştirme Ajansı (NARD) ile İkili İşbirliği Programı Başvuru Sonuçları Açıklandı!

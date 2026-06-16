@@ -1,5 +1,32 @@
 [
     {
+        "id": "tubitak_1711-yapay-zeka-ekosistem-2026-yili-cagrisi-acildi",
+        "title": "1711 - Yapay Zekâ Ekosistem 2026 Yılı Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/1711-yapay-zeka-ekosistem-2026-yili-cagrisi-acildi",
+        "date": "2026-06-16 00:00:00",
+        "display_date": "16 Haz 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_itea-proje-pazari-gunleri-2026-yili-etkinligi-istanbulda-gerceklestiriliyor",
+        "title": "ITEA Proje Pazarı Günleri 2026 Yılı Etkinliği İstanbul’da Gerçekleştiriliyor",
+        "link": "https://tubitak.gov.tr/tr/duyuru/itea-proje-pazari-gunleri-2026-yili-etkinligi-istanbulda-gerceklestiriliyor",
+        "date": "2026-06-16 00:00:00",
+        "display_date": "16 Haz 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_2530-moldova-ulusal-arastirma-ve-gelistirme-ajansi-nard-ile-ikili-isbirligi-programi-basvuru-sonuclari-aciklandi",
+        "title": "2530–Moldova Ulusal Araştırma ve Geliştirme Ajansı (NARD) ile İkili İşbirliği Programı Başvuru Sonuçları Açıklandı!",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2530-moldova-ulusal-arastirma-ve-gelistirme-ajansi-nard-ile-ikili-isbirligi-programi-basvuru-sonuclari-aciklandi",
+        "date": "2026-06-16 00:00:00",
+        "display_date": "16 Haz 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_uluslararasi-elektrikli-arac-yarislari-takim-gelisim-ve-teknolojik-olgunluk-degerlendirme-videosu-ile-teknik-tasarim-raporu-sonuclari-aciklandi",
         "title": "Uluslararası Elektrikli Araç Yarışları Takım Gelişim ve Teknolojik Olgunluk Değerlendirme Videosu ile Teknik Tasarım Raporu Sonuçları Açıklandı",
         "link": "https://tubitak.gov.tr/tr/duyuru/uluslararasi-elektrikli-arac-yarislari-takim-gelisim-ve-teknolojik-olgunluk-degerlendirme-videosu-ile-teknik-tasarim-raporu-sonuclari-aciklandi",
@@ -135,33 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_biyoteknoloji-inovasyon-yarismasi-proje-degerlendirme-raporu-sonuclari-aciklandi",
-        "title": "Biyoteknoloji İnovasyon Yarışması Proje Ön Değerlendirme Raporu Sonuçları Açıklandı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/biyoteknoloji-inovasyon-yarismasi-proje-degerlendirme-raporu-sonuclari-aciklandi",
-        "date": "2026-05-21 00:00:00",
-        "display_date": "21 May 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
-        "id": "tubitak_2517-tubitak-azerbaycan-bilim-vakfi-asf-ikili-birligi-destek-programi-2025-yili-basvuru-sonuclari-aciklandi",
-        "title": "2517 TÜBİTAK–Azerbaycan Bilim Vakfı (ASF) İkili İş Birliği Destek Programı  2025 Yılı Başvuru Sonuçları Açıklandı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/2517-tubitak-azerbaycan-bilim-vakfi-asf-ikili-birligi-destek-programi-2025-yili-basvuru-sonuclari-aciklandi",
-        "date": "2026-05-20 00:00:00",
-        "display_date": "20 May 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
-        "id": "tubitak_hyperloop-gelistirme-yarismasi-performans-kategorisi-teknik-tasarim-raporu-sonuclari-aciklandi",
-        "title": "Hyperloop Geliştirme Yarışması Performans Kategorisi Teknik Tasarım Raporu Sonuçları Açıklandı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/hyperloop-gelistirme-yarismasi-performans-kategorisi-teknik-tasarim-raporu-sonuclari-aciklandi",
-        "date": "2026-05-18 00:00:00",
-        "display_date": "18 May 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_2025-r3-donemi-avrupa-dayanisma-programi-dayanisma-projeleri-esc30-basvuru-sonuclari",
         "title": "2025/R3 Dönemi Avrupa Dayanışma Programı Dayanışma Projeleri (ESC30) Başvuru Sonuçları",
         "link": "https://www.ua.gov.tr/haber/2025-r3-donemi-avrupa-dayanisma-programi-dayanisma-projeleri-esc30-basvuru-sonuclari/",
@@ -249,6 +249,33 @@
         "date": "2026-02-06 00:00:00",
         "display_date": "06.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_biyoteknoloji-inovasyon-yarismasi-proje-degerlendirme-raporu-sonuclari-aciklandi",
+        "title": "Biyoteknoloji İnovasyon Yarışması Proje Ön Değerlendirme Raporu Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/biyoteknoloji-inovasyon-yarismasi-proje-degerlendirme-raporu-sonuclari-aciklandi",
+        "date": "2026-05-21 00:00:00",
+        "display_date": "21 May 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_2517-tubitak-azerbaycan-bilim-vakfi-asf-ikili-birligi-destek-programi-2025-yili-basvuru-sonuclari-aciklandi",
+        "title": "2517 TÜBİTAK–Azerbaycan Bilim Vakfı (ASF) İkili İş Birliği Destek Programı  2025 Yılı Başvuru Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2517-tubitak-azerbaycan-bilim-vakfi-asf-ikili-birligi-destek-programi-2025-yili-basvuru-sonuclari-aciklandi",
+        "date": "2026-05-20 00:00:00",
+        "display_date": "20 May 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_hyperloop-gelistirme-yarismasi-performans-kategorisi-teknik-tasarim-raporu-sonuclari-aciklandi",
+        "title": "Hyperloop Geliştirme Yarışması Performans Kategorisi Teknik Tasarım Raporu Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/hyperloop-gelistirme-yarismasi-performans-kategorisi-teknik-tasarim-raporu-sonuclari-aciklandi",
+        "date": "2026-05-18 00:00:00",
+        "display_date": "18 May 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
