@@ -131,3 +131,4 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-06-16 17:12:24.199696] NEW (TUBITAK): 1711 - Yapay Zekâ Ekosistem 2026 Yılı Çağrısı Açıldı
 [2026-06-16 17:12:24.199760] NEW (TUBITAK): ITEA Proje Pazarı Günleri 2026 Yılı Etkinliği İstanbul’da Gerçekleştiriliyor
 [2026-06-16 17:12:24.199799] NEW (TUBITAK): 2530–Moldova Ulusal Araştırma ve Geliştirme Ajansı (NARD) ile İkili İşbirliği Programı Başvuru Sonuçları Açıklandı!
+[2026-06-18 10:41:52.472799] NEW (UA): Erasmus+ Yararlanıcıları İçin Anket
