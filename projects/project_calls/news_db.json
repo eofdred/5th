@@ -1,5 +1,14 @@
 [
     {
+        "id": "tubitak_eureka-network-afetlerde-direnclilik-2026-cagrisi-acildi",
+        "title": "Eureka Network Afetlerde Dirençlilik 2026 Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/eureka-network-afetlerde-direnclilik-2026-cagrisi-acildi",
+        "date": "2026-06-19 00:00:00",
+        "display_date": "19 Haz 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_1711-yapay-zeka-ekosistem-2026-yili-cagrisi-acildi",
         "title": "1711 - Yapay Zekâ Ekosistem 2026 Yılı Çağrısı Açıldı",
         "link": "https://tubitak.gov.tr/tr/duyuru/1711-yapay-zeka-ekosistem-2026-yili-cagrisi-acildi",
@@ -153,15 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_4009-koy-okullarina-yonelik-destek-programi-cagrisi-sonuclandi",
-        "title": "4009 - Köy Okullarına Yönelik Destek Programı Çağrısı Sonuçlandı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/4009-koy-okullarina-yonelik-destek-programi-cagrisi-sonuclandi",
-        "date": "2026-06-01 00:00:00",
-        "display_date": "01 Haz 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_erasmus-yararlanicilari-icin-anket",
         "title": "Erasmus+ Yararlanıcıları İçin Anket",
         "link": "https://www.ua.gov.tr/haber/erasmus-yararlanicilari-icin-anket/",
@@ -249,6 +249,15 @@
         "date": "2026-02-06 00:00:00",
         "display_date": "06.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_4009-koy-okullarina-yonelik-destek-programi-cagrisi-sonuclandi",
+        "title": "4009 - Köy Okullarına Yönelik Destek Programı Çağrısı Sonuçlandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/4009-koy-okullarina-yonelik-destek-programi-cagrisi-sonuclandi",
+        "date": "2026-06-01 00:00:00",
+        "display_date": "01 Haz 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
