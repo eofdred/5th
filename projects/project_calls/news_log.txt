@@ -134,3 +134,4 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-06-18 10:41:52.472799] NEW (UA): Erasmus+ Yararlanıcıları İçin Anket
 [2026-06-19 05:10:53.586995] NEW (TUBITAK): Eureka Network Afetlerde Dirençlilik 2026 Çağrısı Açıldı
 [2026-06-22 21:09:14.691656] NEW (TUBITAK): TÜBİTAK Fen Lisesi Tanıtım Seminerleri Başlıyor
+[2026-06-30 09:54:54.480436] NEW (TUBITAK): 34. Bilim Olimpiyatları Birinci Aşama Sınav Sonuçları Açıklandı
