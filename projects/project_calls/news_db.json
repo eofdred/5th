@@ -1,5 +1,14 @@
 [
     {
+        "id": "tubitak_5-turkiye-bilim-ve-teknoloji-merkezleri-zirvesi-basliyor",
+        "title": "5. Türkiye Bilim ve Teknoloji Merkezleri Zirvesi Başlıyor",
+        "link": "https://tubitak.gov.tr/tr/duyuru/5-turkiye-bilim-ve-teknoloji-merkezleri-zirvesi-basliyor",
+        "date": "2026-07-01 00:00:00",
+        "display_date": "01 Tem 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_2247-c-stajyer-arastirmaci-burs-programi-star-2026-yili-1-donem-basvuru-sonuclari-aciklandi",
         "title": "2247-C Stajyer Araştırmacı Burs Programı (STAR) 2026 Yılı 1. Dönem Başvuru Sonuçları Açıklandı!",
         "link": "https://tubitak.gov.tr/tr/duyuru/2247-c-stajyer-arastirmaci-burs-programi-star-2026-yili-1-donem-basvuru-sonuclari-aciklandi",
@@ -153,15 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_2223-yurt-ici-bilimsel-etkinlikleri-destekleme-programlari-2026-yili-2-donem-cagrilari-acildi",
-        "title": "2223–Yurt İçi Bilimsel Etkinlikleri Destekleme Programları 2026 Yılı 2. Dönem Çağrıları Açıldı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/2223-yurt-ici-bilimsel-etkinlikleri-destekleme-programlari-2026-yili-2-donem-cagrilari-acildi",
-        "date": "2026-06-09 00:00:00",
-        "display_date": "09 Haz 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_erasmus-yararlanicilari-icin-anket",
         "title": "Erasmus+ Yararlanıcıları İçin Anket",
         "link": "https://www.ua.gov.tr/haber/erasmus-yararlanicilari-icin-anket/",
@@ -249,6 +249,15 @@
         "date": "2026-02-06 00:00:00",
         "display_date": "06.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_2223-yurt-ici-bilimsel-etkinlikleri-destekleme-programlari-2026-yili-2-donem-cagrilari-acildi",
+        "title": "2223–Yurt İçi Bilimsel Etkinlikleri Destekleme Programları 2026 Yılı 2. Dönem Çağrıları Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2223-yurt-ici-bilimsel-etkinlikleri-destekleme-programlari-2026-yili-2-donem-cagrilari-acildi",
+        "date": "2026-06-09 00:00:00",
+        "display_date": "09 Haz 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
