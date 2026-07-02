@@ -1,5 +1,23 @@
 [
     {
+        "id": "tubitak_yesil-ve-dijital-gecis-icin-ham-maddeler-ortakligi-raw-materials-partnership-green-and-digital-transition-ramp-2026-yili-cagrisi-acildi",
+        "title": "Yeşil ve Dijital Geçiş için Ham Maddeler Ortaklığı (Raw Materials Partnership for the Green and Digital Transition-RAMP) 2026 Yılı Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/yesil-ve-dijital-gecis-icin-ham-maddeler-ortakligi-raw-materials-partnership-green-and-digital-transition-ramp-2026-yili-cagrisi-acildi",
+        "date": "2026-07-02 00:00:00",
+        "display_date": "02 Tem 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_2218-yurt-ici-doktora-sonrasi-arastirma-burs-programi-2026-yili-cagrisi-acildi",
+        "title": "2218 Yurt İçi Doktora Sonrası Araştırma Burs Programı 2026 Yılı Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2218-yurt-ici-doktora-sonrasi-arastirma-burs-programi-2026-yili-cagrisi-acildi",
+        "date": "2026-07-02 00:00:00",
+        "display_date": "02 Tem 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_5-turkiye-bilim-ve-teknoloji-merkezleri-zirvesi-basliyor",
         "title": "5. Türkiye Bilim ve Teknoloji Merkezleri Zirvesi Başlıyor",
         "link": "https://tubitak.gov.tr/tr/duyuru/5-turkiye-bilim-ve-teknoloji-merkezleri-zirvesi-basliyor",
@@ -144,24 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_2204-c-lise-ogrencileri-kutup-arastirma-projeleri-yarismasi-degerlendirme-sonuclari-aciklandi-0",
-        "title": "2204-C Lise Öğrencileri Kutup Araştırma Projeleri Yarışması Ön Değerlendirme Sonuçları Açıklandı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/2204-c-lise-ogrencileri-kutup-arastirma-projeleri-yarismasi-degerlendirme-sonuclari-aciklandi-0",
-        "date": "2026-06-10 00:00:00",
-        "display_date": "10 Haz 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
-        "id": "tubitak_cetpartnership-ortakligi-2026-yili-ortak-cagrisi-acildi",
-        "title": "CETPartnership Ortaklığı 2026 Yılı Ortak Çağrısı Açıldı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/cetpartnership-ortakligi-2026-yili-ortak-cagrisi-acildi",
-        "date": "2026-06-10 00:00:00",
-        "display_date": "10 Haz 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_erasmus-yararlanicilari-icin-anket",
         "title": "Erasmus+ Yararlanıcıları İçin Anket",
         "link": "https://www.ua.gov.tr/haber/erasmus-yararlanicilari-icin-anket/",
@@ -249,6 +249,24 @@
         "date": "2026-02-06 00:00:00",
         "display_date": "06.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_2204-c-lise-ogrencileri-kutup-arastirma-projeleri-yarismasi-degerlendirme-sonuclari-aciklandi-0",
+        "title": "2204-C Lise Öğrencileri Kutup Araştırma Projeleri Yarışması Ön Değerlendirme Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2204-c-lise-ogrencileri-kutup-arastirma-projeleri-yarismasi-degerlendirme-sonuclari-aciklandi-0",
+        "date": "2026-06-10 00:00:00",
+        "display_date": "10 Haz 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_cetpartnership-ortakligi-2026-yili-ortak-cagrisi-acildi",
+        "title": "CETPartnership Ortaklığı 2026 Yılı Ortak Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/cetpartnership-ortakligi-2026-yili-ortak-cagrisi-acildi",
+        "date": "2026-06-10 00:00:00",
+        "display_date": "10 Haz 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
