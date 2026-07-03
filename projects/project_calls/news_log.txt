@@ -142,3 +142,7 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-07-02 14:22:15.115399] NEW (TUBITAK): 2218 Yurt İçi Doktora Sonrası Araştırma Burs Programı 2026 Yılı Çağrısı Açıldı
 [2026-07-03 09:30:38.482465] NEW (TUBITAK): Dikey İnişli Roket Yarışması Kritik Tasarım Raporu Sonuçları Açıklandı
 [2026-07-03 09:30:38.482536] NEW (TUBITAK): Kuantum Teknolojileri Yarışması Donanım Kategorisi Ön Aşama Raporu Sonuçları Açıklandı
+[2026-07-03 14:26:10.119994] NEW (TUBITAK): Eureka Xecs 2026 Uygulamalı Kuantum Teknolojileri Çağrısı Açıldı
+[2026-07-03 14:26:10.120055] NEW (TUBITAK): EUREKA–SMART Kümesi 10. Çağrısı Açıldı!
+[2026-07-03 14:26:10.120084] NEW (TUBITAK): Japonya’da Gerçekleştirilecek 18. Hope Toplantısına Katılım için Doktora Öğrencisi ve Doktora Sonrası Genç Araştırmacılara Destek Verilecektir
+[2026-07-03 14:26:10.120110] NEW (TUBITAK): KOBİ’lerin İhtiyaçlarına Yönelik CORNET 42. Çağrısı Açıldı

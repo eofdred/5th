@@ -1,5 +1,41 @@
 [
     {
+        "id": "tubitak_eureka-xecs-2026-uygulamali-kuantum-teknolojileri-cagrisi-acildi",
+        "title": "Eureka Xecs 2026 Uygulamalı Kuantum Teknolojileri Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/eureka-xecs-2026-uygulamali-kuantum-teknolojileri-cagrisi-acildi",
+        "date": "2026-07-03 00:00:00",
+        "display_date": "03 Tem 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_eureka-smart-kumesi-10-cagrisi-acildi",
+        "title": "EUREKA–SMART Kümesi 10. Çağrısı Açıldı!",
+        "link": "https://tubitak.gov.tr/tr/duyuru/eureka-smart-kumesi-10-cagrisi-acildi",
+        "date": "2026-07-03 00:00:00",
+        "display_date": "03 Tem 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_japonyada-gerceklestirilecek-18-hope-toplantisina-katilim-icin-doktora-ogrencisi-ve-doktora-sonrasi-genc-arastirmacilara-destek-verilecektir",
+        "title": "Japonya’da Gerçekleştirilecek 18. Hope Toplantısına Katılım için Doktora Öğrencisi ve Doktora Sonrası Genç Araştırmacılara Destek Verilecektir",
+        "link": "https://tubitak.gov.tr/tr/duyuru/japonyada-gerceklestirilecek-18-hope-toplantisina-katilim-icin-doktora-ogrencisi-ve-doktora-sonrasi-genc-arastirmacilara-destek-verilecektir",
+        "date": "2026-07-03 00:00:00",
+        "display_date": "03 Tem 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_kobilerin-ihtiyaclarina-yonelik-cornet-42-cagrisi-acildi",
+        "title": "KOBİ’lerin İhtiyaçlarına Yönelik CORNET 42. Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/kobilerin-ihtiyaclarina-yonelik-cornet-42-cagrisi-acildi",
+        "date": "2026-07-03 00:00:00",
+        "display_date": "03 Tem 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_dikey-inisli-roket-yarismasi-kritik-tasarim-raporu-sonuclari-aciklandi-0",
         "title": "Dikey İnişli Roket Yarışması Kritik Tasarım Raporu Sonuçları Açıklandı",
         "link": "https://tubitak.gov.tr/tr/duyuru/dikey-inisli-roket-yarismasi-kritik-tasarim-raporu-sonuclari-aciklandi-0",
@@ -126,42 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_robotaksi-binek-otonom-arac-yarismasi-kritik-tasarim-raporu-sonuclari-aciklandi-0",
-        "title": "Robotaksi-Binek Otonom Araç Yarışması Kritik Tasarım Raporu Sonuçları Açıklandı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/robotaksi-binek-otonom-arac-yarismasi-kritik-tasarim-raporu-sonuclari-aciklandi-0",
-        "date": "2026-06-16 00:00:00",
-        "display_date": "16 Haz 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
-        "id": "tubitak_2544-tubitak-jsps-japonya-ikili-birligi-cagrisi-acildi-1",
-        "title": "2544 TÜBİTAK–JSPS (Japonya) İkili İş Birliği Çağrısı Açıldı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/2544-tubitak-jsps-japonya-ikili-birligi-cagrisi-acildi-1",
-        "date": "2026-06-12 00:00:00",
-        "display_date": "12 Haz 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
-        "id": "tubitak_ira-sme-38-cagrisi-basvuruya-acildi",
-        "title": "IRA-SME 38. Çağrısı Başvuruya Açıldı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/ira-sme-38-cagrisi-basvuruya-acildi",
-        "date": "2026-06-12 00:00:00",
-        "display_date": "12 Haz 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
-        "id": "tubitak_kamu-yapay-zeka-ekosistemi-2026-cagrisinda-son-asamaya-gecildi",
-        "title": "Kamu Yapay Zekâ Ekosistemi 2026 Çağrısı’nda Son Aşamaya Geçildi",
-        "link": "https://tubitak.gov.tr/tr/duyuru/kamu-yapay-zeka-ekosistemi-2026-cagrisinda-son-asamaya-gecildi",
-        "date": "2026-06-12 00:00:00",
-        "display_date": "12 Haz 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_erasmus-yararlanicilari-icin-anket",
         "title": "Erasmus+ Yararlanıcıları İçin Anket",
         "link": "https://www.ua.gov.tr/haber/erasmus-yararlanicilari-icin-anket/",
@@ -249,6 +249,42 @@
         "date": "2026-02-06 00:00:00",
         "display_date": "06.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_robotaksi-binek-otonom-arac-yarismasi-kritik-tasarim-raporu-sonuclari-aciklandi-0",
+        "title": "Robotaksi-Binek Otonom Araç Yarışması Kritik Tasarım Raporu Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/robotaksi-binek-otonom-arac-yarismasi-kritik-tasarim-raporu-sonuclari-aciklandi-0",
+        "date": "2026-06-16 00:00:00",
+        "display_date": "16 Haz 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_2544-tubitak-jsps-japonya-ikili-birligi-cagrisi-acildi-1",
+        "title": "2544 TÜBİTAK–JSPS (Japonya) İkili İş Birliği Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2544-tubitak-jsps-japonya-ikili-birligi-cagrisi-acildi-1",
+        "date": "2026-06-12 00:00:00",
+        "display_date": "12 Haz 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_ira-sme-38-cagrisi-basvuruya-acildi",
+        "title": "IRA-SME 38. Çağrısı Başvuruya Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/ira-sme-38-cagrisi-basvuruya-acildi",
+        "date": "2026-06-12 00:00:00",
+        "display_date": "12 Haz 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_kamu-yapay-zeka-ekosistemi-2026-cagrisinda-son-asamaya-gecildi",
+        "title": "Kamu Yapay Zekâ Ekosistemi 2026 Çağrısı’nda Son Aşamaya Geçildi",
+        "link": "https://tubitak.gov.tr/tr/duyuru/kamu-yapay-zeka-ekosistemi-2026-cagrisinda-son-asamaya-gecildi",
+        "date": "2026-06-12 00:00:00",
+        "display_date": "12 Haz 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
