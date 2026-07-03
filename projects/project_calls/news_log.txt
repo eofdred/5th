@@ -140,3 +140,5 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-07-01 14:52:11.787679] NEW (TUBITAK): 5. Türkiye Bilim ve Teknoloji Merkezleri Zirvesi Başlıyor
 [2026-07-02 14:22:15.115334] NEW (TUBITAK): Yeşil ve Dijital Geçiş için Ham Maddeler Ortaklığı (Raw Materials Partnership for the Green and Digital Transition-RAMP) 2026 Yılı Çağrısı Açıldı
 [2026-07-02 14:22:15.115399] NEW (TUBITAK): 2218 Yurt İçi Doktora Sonrası Araştırma Burs Programı 2026 Yılı Çağrısı Açıldı
+[2026-07-03 09:30:38.482465] NEW (TUBITAK): Dikey İnişli Roket Yarışması Kritik Tasarım Raporu Sonuçları Açıklandı
+[2026-07-03 09:30:38.482536] NEW (TUBITAK): Kuantum Teknolojileri Yarışması Donanım Kategorisi Ön Aşama Raporu Sonuçları Açıklandı
