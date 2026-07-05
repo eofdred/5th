@@ -1,5 +1,14 @@
 [
     {
+        "id": "tubitak_gcip-turkiye-2026-hizlandiricisi-ve-kapsayici-yesil-gecis-2026-hizlandiricisi-cagrilari-acildi",
+        "title": "GCIP Türkiye 2026 Hızlandırıcısı ve Kapsayıcı Yeşil Geçiş 2026 Hızlandırıcısı Çağrıları Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/gcip-turkiye-2026-hizlandiricisi-ve-kapsayici-yesil-gecis-2026-hizlandiricisi-cagrilari-acildi",
+        "date": "2026-07-05 00:00:00",
+        "display_date": "05 Tem 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_eureka-xecs-2026-uygulamali-kuantum-teknolojileri-cagrisi-acildi",
         "title": "Eureka Xecs 2026 Uygulamalı Kuantum Teknolojileri Çağrısı Açıldı",
         "link": "https://tubitak.gov.tr/tr/duyuru/eureka-xecs-2026-uygulamali-kuantum-teknolojileri-cagrisi-acildi",
@@ -153,15 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_uluslararasi-elektrikli-arac-yarislari-takim-gelisim-ve-teknolojik-olgunluk-degerlendirme-videosu-ile-teknik-tasarim-raporu-sonuclari-aciklandi",
-        "title": "Uluslararası Elektrikli Araç Yarışları Takım Gelişim ve Teknolojik Olgunluk Değerlendirme Videosu ile Teknik Tasarım Raporu Sonuçları Açıklandı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/uluslararasi-elektrikli-arac-yarislari-takim-gelisim-ve-teknolojik-olgunluk-degerlendirme-videosu-ile-teknik-tasarim-raporu-sonuclari-aciklandi",
-        "date": "2026-06-16 00:00:00",
-        "display_date": "16 Haz 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_erasmus-yararlanicilari-icin-anket",
         "title": "Erasmus+ Yararlanıcıları İçin Anket",
         "link": "https://www.ua.gov.tr/haber/erasmus-yararlanicilari-icin-anket/",
@@ -249,6 +249,15 @@
         "date": "2026-02-06 00:00:00",
         "display_date": "06.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_uluslararasi-elektrikli-arac-yarislari-takim-gelisim-ve-teknolojik-olgunluk-degerlendirme-videosu-ile-teknik-tasarim-raporu-sonuclari-aciklandi",
+        "title": "Uluslararası Elektrikli Araç Yarışları Takım Gelişim ve Teknolojik Olgunluk Değerlendirme Videosu ile Teknik Tasarım Raporu Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/uluslararasi-elektrikli-arac-yarislari-takim-gelisim-ve-teknolojik-olgunluk-degerlendirme-videosu-ile-teknik-tasarim-raporu-sonuclari-aciklandi",
+        "date": "2026-06-16 00:00:00",
+        "display_date": "16 Haz 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
