@@ -147,3 +147,4 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-07-03 14:26:10.120084] NEW (TUBITAK): Japonya’da Gerçekleştirilecek 18. Hope Toplantısına Katılım için Doktora Öğrencisi ve Doktora Sonrası Genç Araştırmacılara Destek Verilecektir
 [2026-07-03 14:26:10.120110] NEW (TUBITAK): KOBİ’lerin İhtiyaçlarına Yönelik CORNET 42. Çağrısı Açıldı
 [2026-07-05 13:57:56.643273] NEW (TUBITAK): GCIP Türkiye 2026 Hızlandırıcısı ve Kapsayıcı Yeşil Geçiş 2026 Hızlandırıcısı Çağrıları Açıldı
+[2026-07-07 20:06:40.047769] NEW (TUBITAK): 77. Uluslararası Uzay Kongresi’ne (IAC 2026) Katılım Desteği Başvuruları Başladı

@@ -1,5 +1,14 @@
 [
     {
+        "id": "tubitak_77-uluslararasi-uzay-kongresine-iac-2026-katilim-destegi-basvurulari-basladi",
+        "title": "77. Uluslararası Uzay Kongresi’ne (IAC 2026) Katılım Desteği Başvuruları Başladı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/77-uluslararasi-uzay-kongresine-iac-2026-katilim-destegi-basvurulari-basladi",
+        "date": "2026-07-07 00:00:00",
+        "display_date": "07 Tem 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_gcip-turkiye-2026-hizlandiricisi-ve-kapsayici-yesil-gecis-2026-hizlandiricisi-cagrilari-acildi",
         "title": "GCIP Türkiye 2026 Hızlandırıcısı ve Kapsayıcı Yeşil Geçiş 2026 Hızlandırıcısı Çağrıları Açıldı",
         "link": "https://tubitak.gov.tr/tr/duyuru/gcip-turkiye-2026-hizlandiricisi-ve-kapsayici-yesil-gecis-2026-hizlandiricisi-cagrilari-acildi",
@@ -153,15 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_2530-moldova-ulusal-arastirma-ve-gelistirme-ajansi-nard-ile-ikili-isbirligi-programi-basvuru-sonuclari-aciklandi",
-        "title": "2530–Moldova Ulusal Araştırma ve Geliştirme Ajansı (NARD) ile İkili İşbirliği Programı Başvuru Sonuçları Açıklandı!",
-        "link": "https://tubitak.gov.tr/tr/duyuru/2530-moldova-ulusal-arastirma-ve-gelistirme-ajansi-nard-ile-ikili-isbirligi-programi-basvuru-sonuclari-aciklandi",
-        "date": "2026-06-16 00:00:00",
-        "display_date": "16 Haz 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_erasmus-yararlanicilari-icin-anket",
         "title": "Erasmus+ Yararlanıcıları İçin Anket",
         "link": "https://www.ua.gov.tr/haber/erasmus-yararlanicilari-icin-anket/",
@@ -249,6 +249,15 @@
         "date": "2026-02-06 00:00:00",
         "display_date": "06.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_2530-moldova-ulusal-arastirma-ve-gelistirme-ajansi-nard-ile-ikili-isbirligi-programi-basvuru-sonuclari-aciklandi",
+        "title": "2530–Moldova Ulusal Araştırma ve Geliştirme Ajansı (NARD) ile İkili İşbirliği Programı Başvuru Sonuçları Açıklandı!",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2530-moldova-ulusal-arastirma-ve-gelistirme-ajansi-nard-ile-ikili-isbirligi-programi-basvuru-sonuclari-aciklandi",
+        "date": "2026-06-16 00:00:00",
+        "display_date": "16 Haz 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
