@@ -1,5 +1,14 @@
 [
     {
+        "id": "tubitak_2216c-tuba-tubitak-ozbekistan-aziz-sancar-arastirma-burs-programi-basvuruya-acildi",
+        "title": "2216C – TÜBA-TÜBİTAK Özbekistan Aziz Sancar Araştırma Burs Programı Başvuruya Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2216c-tuba-tubitak-ozbekistan-aziz-sancar-arastirma-burs-programi-basvuruya-acildi",
+        "date": "2026-07-13 00:00:00",
+        "display_date": "13 Tem 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_77-uluslararasi-uzay-kongresine-iac-2026-katilim-destegi-basvurulari-basladi",
         "title": "77. Uluslararası Uzay Kongresi’ne (IAC 2026) Katılım Desteği Başvuruları Başladı",
         "link": "https://tubitak.gov.tr/tr/duyuru/77-uluslararasi-uzay-kongresine-iac-2026-katilim-destegi-basvurulari-basladi",
@@ -153,15 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_itea-proje-pazari-gunleri-2026-yili-etkinligi-istanbulda-gerceklestiriliyor",
-        "title": "ITEA Proje Pazarı Günleri 2026 Yılı Etkinliği İstanbul’da Gerçekleştiriliyor",
-        "link": "https://tubitak.gov.tr/tr/duyuru/itea-proje-pazari-gunleri-2026-yili-etkinligi-istanbulda-gerceklestiriliyor",
-        "date": "2026-06-16 00:00:00",
-        "display_date": "16 Haz 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_erasmus-yararlanicilari-icin-anket",
         "title": "Erasmus+ Yararlanıcıları İçin Anket",
         "link": "https://www.ua.gov.tr/haber/erasmus-yararlanicilari-icin-anket/",
@@ -249,6 +249,15 @@
         "date": "2026-02-06 00:00:00",
         "display_date": "06.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_itea-proje-pazari-gunleri-2026-yili-etkinligi-istanbulda-gerceklestiriliyor",
+        "title": "ITEA Proje Pazarı Günleri 2026 Yılı Etkinliği İstanbul’da Gerçekleştiriliyor",
+        "link": "https://tubitak.gov.tr/tr/duyuru/itea-proje-pazari-gunleri-2026-yili-etkinligi-istanbulda-gerceklestiriliyor",
+        "date": "2026-06-16 00:00:00",
+        "display_date": "16 Haz 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
