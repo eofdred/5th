@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wiki Pop! — Pop a word, discover a world</title>
+  <meta name="description" content="A playful word-discovery journey through Simple English Wikipedia.">
+  <meta property="og:title" content="Wiki Pop!">
+  <meta property="og:description" content="Pop a word. Discover a world.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://muratdogusan.com/projects/wiki-pop/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="./app_icon.png">
+  <link rel="apple-touch-icon" href="./app_icon.png">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <main>
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="Wiki Pop home">
+        <span class="brand-mark" aria-hidden="true">W</span>
+        <span>Wiki Pop!</span>
+      </a>
+      <span class="source-pill">
+        <span class="source-dot" aria-hidden="true"></span> Simple English · Jun 2026
+      </span>
+    </header>
+
+    <section class="playground" id="top" aria-labelledby="word-sky-title">
+      <div class="section-heading">
+        <div>
+          <p class="step-label">01 · Choose a word</p>
+          <h1 id="word-sky-title">Your word sky</h1>
+        </div>
+      </div>
+
+      <div class="bubble-cloud" id="bubble-cloud" aria-label="Floating word bubbles" aria-busy="true">
+        <span class="cloud-scribble cloud-scribble-one" aria-hidden="true">✦</span>
+        <span class="cloud-scribble cloud-scribble-two" aria-hidden="true">✳</span>
+      </div>
+
+      <div class="sentence-stage" id="sentence-stage" aria-live="polite">
+        <div class="empty-discovery">
+          <span class="empty-icon" aria-hidden="true">☝</span>
+          <div>
+            <strong>Go on, pop one!</strong>
+            <p>A real sentence will land here, with a fresh trail of words to follow.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="article-section" aria-labelledby="article-title">
+      <div class="section-heading article-heading">
+        <div>
+          <p class="step-label">02 · Follow the thread</p>
+          <h2 id="article-title">Three doors into Wikipedia</h2>
+        </div>
+        <button class="shuffle-button" id="shuffle-button" type="button">
+          <span aria-hidden="true">↻</span> Shuffle
+        </button>
+      </div>
+      <div class="article-grid" id="article-grid"></div>
+    </section>
+
+    <footer>
+      <span>Made for curious minds.</span>
+      <span>Text sampled from Simple English Wikipedia via Kiwix · CC BY-SA</span>
+    </footer>
+  </main>
+
+  <div class="modal-backdrop" id="modal-backdrop" role="presentation" hidden>
+    <article class="article-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close" id="modal-close" type="button" aria-label="Close article">×</button>
+      <p class="modal-kicker">From the June 2026 Kiwix snapshot</p>
+      <h2 id="modal-title"></h2>
+      <div class="modal-copy" id="modal-copy"></div>
+      <a class="wikipedia-link" id="wikipedia-link" target="_blank" rel="noreferrer">
+        Continue on Simple Wikipedia <span aria-hidden="true">↗</span>
+      </a>
+    </article>
+  </div>
+</body>
+</html>
