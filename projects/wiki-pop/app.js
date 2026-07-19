@@ -16,6 +16,9 @@ const modalClose = document.querySelector("#modal-close");
 const modalTitle = document.querySelector("#modal-title");
 const modalCopy = document.querySelector("#modal-copy");
 const wikipediaLink = document.querySelector("#wikipedia-link");
+const installButton = document.querySelector("#install-button");
+const installBackdrop = document.querySelector("#install-backdrop");
+const installClose = document.querySelector("#install-close");
 
 let articles = [];
 let sentenceRecords = [];
@@ -30,6 +33,56 @@ let nextId = INITIAL_BUBBLES + 1;
 let nextBorn = INITIAL_BUBBLES + 1;
 const motionStates = new Map();
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const isAppleMobile = /iphone|ipad|ipod/i.test(navigator.userAgent)
+  || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+const isInstalled = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+let deferredInstallPrompt = null;
+
+function openInstallInstructions() {
+  installBackdrop.hidden = false;
+  document.body.style.overflow = "hidden";
+  installClose.focus();
+}
+
+function closeInstallInstructions() {
+  installBackdrop.hidden = true;
+  document.body.style.overflow = "";
+  installButton.focus();
+}
+
+async function installApp() {
+  if (!deferredInstallPrompt) {
+    openInstallInstructions();
+    return;
+  }
+
+  deferredInstallPrompt.prompt();
+  const choice = await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt = null;
+  if (choice.outcome === "accepted") installButton.hidden = true;
+}
+
+function configureInstallExperience() {
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./sw.js").catch((error) => console.error("Service worker registration failed", error));
+    });
+  }
+
+  if (isInstalled) return;
+  if (isAppleMobile) installButton.hidden = false;
+
+  window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    installButton.hidden = false;
+  });
+
+  window.addEventListener("appinstalled", () => {
+    deferredInstallPrompt = null;
+    installButton.hidden = true;
+  });
+}
 
 function wordsFrom(sentence) {
   const matches = sentence.match(/[A-Za-z][A-Za-z'-]{3,14}/g) || [];
@@ -322,6 +375,12 @@ modalBackdrop.addEventListener("mousedown", (event) => {
 });
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && !modalBackdrop.hidden) closeArticle();
+  if (event.key === "Escape" && !installBackdrop.hidden) closeInstallInstructions();
+});
+installButton.addEventListener("click", installApp);
+installClose.addEventListener("click", closeInstallInstructions);
+installBackdrop.addEventListener("mousedown", (event) => {
+  if (event.target === installBackdrop) closeInstallInstructions();
 });
 
 async function initialize() {
@@ -367,4 +426,5 @@ async function initialize() {
   }
 }
 
+configureInstallExperience();
 initialize();

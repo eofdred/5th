@@ -1,0 +1,27 @@
+{
+  "id": "/projects/wiki-pop/",
+  "name": "Wiki Pop!",
+  "short_name": "Wiki Pop!",
+  "description": "Pop a word and discover Simple English Wikipedia.",
+  "lang": "en",
+  "start_url": "/projects/wiki-pop/",
+  "scope": "/projects/wiki-pop/",
+  "display": "standalone",
+  "background_color": "#fff8f1",
+  "theme_color": "#ff4fa3",
+  "categories": ["education", "games"],
+  "icons": [
+    {
+      "src": "./app_icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./app_icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

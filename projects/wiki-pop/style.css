@@ -42,6 +42,12 @@ button:focus-visible, a:focus-visible {
   padding: 12px clamp(20px, 5vw, 76px);
 }
 
+.topbar-actions {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+}
+
 .brand {
   align-items: center;
   color: var(--ink);
@@ -86,6 +92,30 @@ button:focus-visible, a:focus-visible {
   border-radius: 50%;
   height: 10px;
   width: 10px;
+}
+
+.install-button {
+  align-items: center;
+  background: var(--yellow);
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  box-shadow: 3px 3px 0 var(--ink);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: .78rem;
+  font-weight: 900;
+  gap: 7px;
+  padding: 9px 14px;
+}
+
+.install-button:hover {
+  background: var(--mint);
+  transform: translate(-1px, -1px);
+}
+
+.install-button span {
+  font-size: 1.15rem;
+  line-height: .7;
 }
 
 .step-label, .modal-kicker {
@@ -288,6 +318,15 @@ footer { align-items: center; background: var(--ink); color: #fff; display: flex
 .modal-close { align-items: center; background: var(--yellow); border: 2px solid var(--ink); border-radius: 50%; cursor: pointer; display: flex; font-size: 1.8rem; height: 44px; justify-content: center; line-height: 1; position: absolute; right: 20px; top: 20px; width: 44px; }
 .wikipedia-link { background: var(--pink); border: 2px solid var(--ink); border-radius: 999px; color: #fff; display: inline-block; font-size: .86rem; font-weight: 900; margin-top: 22px; padding: 12px 18px; text-decoration: none; }
 
+.install-modal { box-shadow: 12px 14px 0 var(--blue); max-width: 680px; }
+.install-modal h2 { max-width: 500px; }
+.install-intro { font-family: "Avenir Next", system-ui, sans-serif; font-size: 1rem; line-height: 1.55; margin: -4px 0 24px; }
+.install-steps { display: grid; gap: 12px; list-style: none; margin: 0; padding: 0; }
+.install-steps li { align-items: center; background: #fff; border: 2px solid var(--ink); border-radius: 18px; display: grid; gap: 2px 14px; grid-template-columns: 44px 1fr; padding: 13px 16px; }
+.install-steps li > span { align-items: center; background: var(--yellow); border: 2px solid var(--ink); border-radius: 50%; display: flex; font-weight: 950; grid-row: 1 / span 2; height: 42px; justify-content: center; width: 42px; }
+.install-steps strong { font-size: 1rem; }
+.install-steps small { color: #5f587c; font-family: "Avenir Next", system-ui, sans-serif; font-size: .8rem; line-height: 1.35; }
+
 @keyframes pop {
   0% { opacity: 1; transform: scale(1) rotate(var(--bubble-rotate)); }
   55% { opacity: 1; transform: scale(1.2) rotate(var(--bubble-rotate)); }
@@ -306,7 +345,9 @@ footer { align-items: center; background: var(--ink); color: #fff; display: flex
 }
 
 @media (max-width: 560px) {
-  .source-pill { font-size: 0; gap: 0; padding: 8px; }
+  .topbar { padding-inline: 16px; }
+  .source-pill { display: none; }
+  .install-button { padding: 9px 12px; }
   .source-dot { height: 12px; width: 12px; }
   .section-heading { align-items: flex-start; flex-direction: column; gap: 18px; }
   .article-heading { align-items: flex-start; }
