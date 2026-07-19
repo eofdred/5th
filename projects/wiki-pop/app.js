@@ -19,6 +19,8 @@ const wikipediaLink = document.querySelector("#wikipedia-link");
 const installButton = document.querySelector("#install-button");
 const installBackdrop = document.querySelector("#install-backdrop");
 const installClose = document.querySelector("#install-close");
+const installIntro = document.querySelector("#install-intro");
+const installSteps = document.querySelector("#install-steps");
 
 let articles = [];
 let sentenceRecords = [];
@@ -35,8 +37,42 @@ const motionStates = new Map();
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const isAppleMobile = /iphone|ipad|ipod/i.test(navigator.userAgent)
   || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+const isSafariBrowser = /safari/i.test(navigator.userAgent)
+  && !/chrome|crios|edg|fxios|opr/i.test(navigator.userAgent);
+const isMacSafari = isSafariBrowser && /macintosh/i.test(navigator.userAgent) && !isAppleMobile;
 const isInstalled = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
 let deferredInstallPrompt = null;
+
+function renderInstallInstructions() {
+  const macSteps = [
+    ["Click Share", "Use the Share button in Safari’s toolbar."],
+    ["Choose “Add to Dock”", "Safari will prepare Wiki Pop! as a web app."],
+    ["Click Add", "The app will appear in the Dock and Spotlight."],
+  ];
+  const mobileSteps = [
+    ["Tap Share", "Use the square with the upward arrow."],
+    ["Choose “Add to Home Screen”", "Scroll down if it is not immediately visible."],
+    ["Turn on “Open as Web App,” then tap Add", "Wiki Pop! will appear with your other apps."],
+  ];
+  const steps = isMacSafari ? macSteps : mobileSteps;
+
+  installIntro.textContent = isMacSafari
+    ? "Safari can add Wiki Pop! to your Mac’s Dock:"
+    : "On iPhone and iPad, Safari installs web apps from the Share menu:";
+  installSteps.replaceChildren();
+  steps.forEach(([title, detail], index) => {
+    const item = document.createElement("li");
+    const number = document.createElement("span");
+    number.setAttribute("aria-hidden", "true");
+    number.textContent = String(index + 1);
+    const strong = document.createElement("strong");
+    strong.textContent = title;
+    const small = document.createElement("small");
+    small.textContent = detail;
+    item.append(number, strong, small);
+    installSteps.append(item);
+  });
+}
 
 function openInstallInstructions() {
   installBackdrop.hidden = false;
@@ -70,7 +106,10 @@ function configureInstallExperience() {
   }
 
   if (isInstalled) return;
-  if (isAppleMobile) installButton.hidden = false;
+  if (isAppleMobile || isMacSafari) {
+    renderInstallInstructions();
+    installButton.hidden = false;
+  }
 
   window.addEventListener("beforeinstallprompt", (event) => {
     event.preventDefault();
