@@ -1,5 +1,32 @@
 [
     {
+        "id": "tubitak_1501-sanayi-ar-ge-destek-programi-ve-1507-kobi-ar-ge-baslangic-destek-programi-2026-yili-2-cagrilari-acildi",
+        "title": "1501-Sanayi Ar-Ge Destek Programı ve 1507-KOBİ Ar-Ge Başlangıç Destek Programı 2026 yılı 2. Çağrıları Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/1501-sanayi-ar-ge-destek-programi-ve-1507-kobi-ar-ge-baslangic-destek-programi-2026-yili-2-cagrilari-acildi",
+        "date": "2026-07-20 00:00:00",
+        "display_date": "20 Tem 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_2219-yurt-disi-doktora-sonrasi-arastirma-burs-programi-2026-yili-cagrisi-acildi",
+        "title": "2219-Yurt Dışı Doktora Sonrası Araştırma Burs Programı 2026 Yılı Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2219-yurt-disi-doktora-sonrasi-arastirma-burs-programi-2026-yili-cagrisi-acildi",
+        "date": "2026-07-20 00:00:00",
+        "display_date": "20 Tem 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_2214-yurt-disi-doktora-sirasi-arastirma-burs-programi-2026-yili-cagrisi-basvuruya-acildi",
+        "title": "2214-A Yurt Dışı Doktora Sırası Araştırma Burs Programı 2026 Yılı Çağrısı Başvuruya Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2214-yurt-disi-doktora-sirasi-arastirma-burs-programi-2026-yili-cagrisi-basvuruya-acildi",
+        "date": "2026-07-20 00:00:00",
+        "display_date": "20 Tem 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_2216c-tuba-tubitak-ozbekistan-aziz-sancar-arastirma-burs-programi-basvuruya-acildi",
         "title": "2216C – TÜBA-TÜBİTAK Özbekistan Aziz Sancar Araştırma Burs Programı Başvuruya Açıldı",
         "link": "https://tubitak.gov.tr/tr/duyuru/2216c-tuba-tubitak-ozbekistan-aziz-sancar-arastirma-burs-programi-basvuruya-acildi",
@@ -135,33 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_tubitak-fen-lisesi-tanitim-seminerleri-basliyor",
-        "title": "TÜBİTAK Fen Lisesi Tanıtım Seminerleri Başlıyor",
-        "link": "https://tubitak.gov.tr/tr/duyuru/tubitak-fen-lisesi-tanitim-seminerleri-basliyor",
-        "date": "2026-06-22 00:00:00",
-        "display_date": "22 Haz 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
-        "id": "tubitak_eureka-network-afetlerde-direnclilik-2026-cagrisi-acildi",
-        "title": "Eureka Network Afetlerde Dirençlilik 2026 Çağrısı Açıldı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/eureka-network-afetlerde-direnclilik-2026-cagrisi-acildi",
-        "date": "2026-06-19 00:00:00",
-        "display_date": "19 Haz 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
-        "id": "tubitak_1711-yapay-zeka-ekosistem-2026-yili-cagrisi-acildi",
-        "title": "1711 - Yapay Zekâ Ekosistem 2026 Yılı Çağrısı Açıldı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/1711-yapay-zeka-ekosistem-2026-yili-cagrisi-acildi",
-        "date": "2026-06-16 00:00:00",
-        "display_date": "16 Haz 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_erasmus-yararlanicilari-icin-anket",
         "title": "Erasmus+ Yararlanıcıları İçin Anket",
         "link": "https://www.ua.gov.tr/haber/erasmus-yararlanicilari-icin-anket/",
@@ -249,6 +249,33 @@
         "date": "2026-02-06 00:00:00",
         "display_date": "06.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_tubitak-fen-lisesi-tanitim-seminerleri-basliyor",
+        "title": "TÜBİTAK Fen Lisesi Tanıtım Seminerleri Başlıyor",
+        "link": "https://tubitak.gov.tr/tr/duyuru/tubitak-fen-lisesi-tanitim-seminerleri-basliyor",
+        "date": "2026-06-22 00:00:00",
+        "display_date": "22 Haz 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_eureka-network-afetlerde-direnclilik-2026-cagrisi-acildi",
+        "title": "Eureka Network Afetlerde Dirençlilik 2026 Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/eureka-network-afetlerde-direnclilik-2026-cagrisi-acildi",
+        "date": "2026-06-19 00:00:00",
+        "display_date": "19 Haz 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_1711-yapay-zeka-ekosistem-2026-yili-cagrisi-acildi",
+        "title": "1711 - Yapay Zekâ Ekosistem 2026 Yılı Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/1711-yapay-zeka-ekosistem-2026-yili-cagrisi-acildi",
+        "date": "2026-06-16 00:00:00",
+        "display_date": "16 Haz 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
