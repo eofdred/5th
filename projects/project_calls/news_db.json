@@ -1,5 +1,14 @@
 [
     {
+        "id": "tubitak_1005-ulusal-yeni-fikirler-ve-urunler-arastirma-destek-programina-iliskin-bilgilendirme",
+        "title": "1005–Ulusal Yeni Fikirler ve Ürünler Araştırma Destek Programı’na İlişkin Bilgilendirme",
+        "link": "https://tubitak.gov.tr/tr/duyuru/1005-ulusal-yeni-fikirler-ve-urunler-arastirma-destek-programina-iliskin-bilgilendirme",
+        "date": "2026-07-21 00:00:00",
+        "display_date": "21 Tem 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_1709-eureka-eurostars-2026-yili-2-cagrisi-acildi",
         "title": "1709-EUREKA-EUROSTARS 2026 Yılı 2. Çağrısı Açıldı",
         "link": "https://tubitak.gov.tr/tr/duyuru/1709-eureka-eurostars-2026-yili-2-cagrisi-acildi",
@@ -153,15 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_kutup-arastirmalari-2027-yili-cagrilari-acildi",
-        "title": "Kutup Araştırmaları 2027 Yılı Çağrıları Açıldı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/kutup-arastirmalari-2027-yili-cagrilari-acildi",
-        "date": "2026-06-30 00:00:00",
-        "display_date": "30 Haz 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_erasmus-yararlanicilari-icin-anket",
         "title": "Erasmus+ Yararlanıcıları İçin Anket",
         "link": "https://www.ua.gov.tr/haber/erasmus-yararlanicilari-icin-anket/",
@@ -249,6 +249,15 @@
         "date": "2026-02-06 00:00:00",
         "display_date": "06.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_kutup-arastirmalari-2027-yili-cagrilari-acildi",
+        "title": "Kutup Araştırmaları 2027 Yılı Çağrıları Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/kutup-arastirmalari-2027-yili-cagrilari-acildi",
+        "date": "2026-06-30 00:00:00",
+        "display_date": "30 Haz 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
