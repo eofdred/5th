@@ -1,5 +1,23 @@
 [
     {
+        "id": "tubitak_ardeb-1001-programi-kapsaminda-udap-ulusal-deprem-arastirmalari-programi-ortak-cagrisi-aciliyor",
+        "title": "ARDEB 1001 Programı Kapsamında “UDAP Ulusal Deprem Araştırmaları Programı Ortak Çağrısı” Açılıyor",
+        "link": "https://tubitak.gov.tr/tr/duyuru/ardeb-1001-programi-kapsaminda-udap-ulusal-deprem-arastirmalari-programi-ortak-cagrisi-aciliyor",
+        "date": "2026-07-23 00:00:00",
+        "display_date": "23 Tem 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_2237-bilimsel-egitim-etkinliklerini-destekleme-programlari-2026-yili-2-donem-cagrilari-acildi",
+        "title": "2237-Bilimsel Eğitim Etkinliklerini Destekleme Programı 2026 Yılı 2. Dönem Çağrıları Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2237-bilimsel-egitim-etkinliklerini-destekleme-programlari-2026-yili-2-donem-cagrilari-acildi",
+        "date": "2026-07-23 00:00:00",
+        "display_date": "23 Tem 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_1005-ulusal-yeni-fikirler-ve-urunler-arastirma-destek-programina-iliskin-bilgilendirme",
         "title": "1005–Ulusal Yeni Fikirler ve Ürünler Araştırma Destek Programı’na İlişkin Bilgilendirme",
         "link": "https://tubitak.gov.tr/tr/duyuru/1005-ulusal-yeni-fikirler-ve-urunler-arastirma-destek-programina-iliskin-bilgilendirme",
@@ -144,24 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_5-turkiye-bilim-ve-teknoloji-merkezleri-zirvesi-basliyor",
-        "title": "5. Türkiye Bilim ve Teknoloji Merkezleri Zirvesi Başlıyor",
-        "link": "https://tubitak.gov.tr/tr/duyuru/5-turkiye-bilim-ve-teknoloji-merkezleri-zirvesi-basliyor",
-        "date": "2026-07-01 00:00:00",
-        "display_date": "01 Tem 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
-        "id": "tubitak_2247-c-stajyer-arastirmaci-burs-programi-star-2026-yili-1-donem-basvuru-sonuclari-aciklandi",
-        "title": "2247-C Stajyer Araştırmacı Burs Programı (STAR) 2026 Yılı 1. Dönem Başvuru Sonuçları Açıklandı!",
-        "link": "https://tubitak.gov.tr/tr/duyuru/2247-c-stajyer-arastirmaci-burs-programi-star-2026-yili-1-donem-basvuru-sonuclari-aciklandi",
-        "date": "2026-06-30 00:00:00",
-        "display_date": "30 Haz 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_erasmus-yararlanicilari-icin-anket",
         "title": "Erasmus+ Yararlanıcıları İçin Anket",
         "link": "https://www.ua.gov.tr/haber/erasmus-yararlanicilari-icin-anket/",
@@ -249,6 +249,24 @@
         "date": "2026-02-06 00:00:00",
         "display_date": "06.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_5-turkiye-bilim-ve-teknoloji-merkezleri-zirvesi-basliyor",
+        "title": "5. Türkiye Bilim ve Teknoloji Merkezleri Zirvesi Başlıyor",
+        "link": "https://tubitak.gov.tr/tr/duyuru/5-turkiye-bilim-ve-teknoloji-merkezleri-zirvesi-basliyor",
+        "date": "2026-07-01 00:00:00",
+        "display_date": "01 Tem 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_2247-c-stajyer-arastirmaci-burs-programi-star-2026-yili-1-donem-basvuru-sonuclari-aciklandi",
+        "title": "2247-C Stajyer Araştırmacı Burs Programı (STAR) 2026 Yılı 1. Dönem Başvuru Sonuçları Açıklandı!",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2247-c-stajyer-arastirmaci-burs-programi-star-2026-yili-1-donem-basvuru-sonuclari-aciklandi",
+        "date": "2026-06-30 00:00:00",
+        "display_date": "30 Haz 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {

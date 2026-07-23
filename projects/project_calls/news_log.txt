@@ -154,3 +154,5 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-07-20 14:24:49.970093] NEW (TUBITAK): 2214-A Yurt Dışı Doktora Sırası Araştırma Burs Programı 2026 Yılı Çağrısı Başvuruya Açıldı
 [2026-07-20 19:51:13.632535] NEW (TUBITAK): 1709-EUREKA-EUROSTARS 2026 Yılı 2. Çağrısı Açıldı
 [2026-07-21 14:10:30.816317] NEW (TUBITAK): 1005–Ulusal Yeni Fikirler ve Ürünler Araştırma Destek Programı’na İlişkin Bilgilendirme
+[2026-07-23 19:37:09.423555] NEW (TUBITAK): ARDEB 1001 Programı Kapsamında “UDAP Ulusal Deprem Araştırmaları Programı Ortak Çağrısı” Açılıyor
+[2026-07-23 19:37:09.423654] NEW (TUBITAK): 2237-Bilimsel Eğitim Etkinliklerini Destekleme Programı 2026 Yılı 2. Dönem Çağrıları Açıldı
