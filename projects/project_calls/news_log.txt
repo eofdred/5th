@@ -159,3 +159,5 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-07-24 14:01:39.850699] NEW (TUBITAK): Havacılıkta Yapay Zekâ Yarışması Ön Tasarım Raporu Sonuçları Açıklandı
 [2026-07-24 14:01:39.850767] NEW (TUBITAK): Hyperloop Geliştirme Yarışması Teknoloji Gösterim Kategorisi Teknoloji Gösterim Raporu Sonuçları Açıklandı
 [2026-07-24 14:01:39.850800] NEW (TUBITAK): 2242-Üniversite Öğrencileri Araştırma Proje Yarışmaları Ön Değerlendirme Sonuçları Açıklandı
+[2026-07-24 19:40:23.996796] NEW (TUBITAK): 2204-C Lise Öğrencileri Kutup Araştırma Projeleri Yarışması Final Değerlendirme Sonuçları Açıklandı
+[2026-07-24 19:40:23.996874] NEW (TUBITAK): 2204-D Lise Öğrencileri İklim Değişikliği Araştırma Projeleri Yarışması Final Değerlendirme Sonuçları Açıklandı
