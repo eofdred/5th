@@ -1,5 +1,14 @@
 [
     {
+        "id": "tubitak_ardeb-1001-programinin-2026-yili-2-donem-basvurulari-basladi",
+        "title": "ARDEB 1001 Programı’nın 2026 Yılı 2. Dönem Başvuruları Başladı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/ardeb-1001-programinin-2026-yili-2-donem-basvurulari-basladi",
+        "date": "2026-07-31 00:00:00",
+        "display_date": "31 Tem 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_robotaksi-binek-otonom-arac-yarismasi-ozgun-arac-kategorisi-test-videosu-simulasyon-raporu-ve-sunum-sonuclari-aciklandi",
         "title": "Robotaksi-Binek Otonom Araç Yarışması Özgün Araç Kategorisi Test Videosu, Simülasyon Raporu ve Sunum Sonuçları Açıklandı",
         "link": "https://tubitak.gov.tr/tr/duyuru/robotaksi-binek-otonom-arac-yarismasi-ozgun-arac-kategorisi-test-videosu-simulasyon-raporu-ve-sunum-sonuclari-aciklandi",
@@ -153,15 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_2216c-tuba-tubitak-ozbekistan-aziz-sancar-arastirma-burs-programi-basvuruya-acildi",
-        "title": "2216C – TÜBA-TÜBİTAK Özbekistan Aziz Sancar Araştırma Burs Programı Başvuruya Açıldı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/2216c-tuba-tubitak-ozbekistan-aziz-sancar-arastirma-burs-programi-basvuruya-acildi",
-        "date": "2026-07-13 00:00:00",
-        "display_date": "13 Tem 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_erasmus-yararlanicilari-icin-anket",
         "title": "Erasmus+ Yararlanıcıları İçin Anket",
         "link": "https://www.ua.gov.tr/haber/erasmus-yararlanicilari-icin-anket/",
@@ -249,6 +249,15 @@
         "date": "2026-02-06 00:00:00",
         "display_date": "06.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_2216c-tuba-tubitak-ozbekistan-aziz-sancar-arastirma-burs-programi-basvuruya-acildi",
+        "title": "2216C – TÜBA-TÜBİTAK Özbekistan Aziz Sancar Araştırma Burs Programı Başvuruya Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2216c-tuba-tubitak-ozbekistan-aziz-sancar-arastirma-burs-programi-basvuruya-acildi",
+        "date": "2026-07-13 00:00:00",
+        "display_date": "13 Tem 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {

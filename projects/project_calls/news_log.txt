@@ -166,3 +166,4 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-07-29 14:25:28.353810] NEW (TUBITAK): ARDEB 1001 Programı 2026 Yılı 1. Dönem Değerlendirme Sonuçları Açıklandı
 [2026-07-30 14:22:57.186165] NEW (TUBITAK): Robotaksi-Binek Otonom Araç Yarışması Özgün Araç Kategorisi Test Videosu, Simülasyon Raporu ve Sunum Sonuçları Açıklandı
 [2026-07-30 14:22:57.186251] NEW (TUBITAK): Havacılıkta Yapay Zeka Yarışması Çevrim İçi Simülasyon Sonuçları Açıklandı
+[2026-07-31 19:44:38.346318] NEW (TUBITAK): ARDEB 1001 Programı’nın 2026 Yılı 2. Dönem Başvuruları Başladı
