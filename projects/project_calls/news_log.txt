@@ -168,3 +168,4 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-07-30 14:22:57.186251] NEW (TUBITAK): Havacılıkta Yapay Zeka Yarışması Çevrim İçi Simülasyon Sonuçları Açıklandı
 [2026-07-31 19:44:38.346318] NEW (TUBITAK): ARDEB 1001 Programı’nın 2026 Yılı 2. Dönem Başvuruları Başladı
 [2026-08-01 13:44:13.284767] NEW (TUBITAK): EUREKA – EUROGIA2030 Kümesi’nin 31. Çağrısı Başvuruya Açıldı!
+[2026-08-03 19:47:35.954473] NEW (TUBITAK): 1507–TÜBİTAK KOBİ Ar-Ge Başlangıç Destek Programı 2026 Yılı 1. Çağrısının Değerlendirme Sonuçları Açıklandı
