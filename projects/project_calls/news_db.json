@@ -1,5 +1,14 @@
 [
     {
+        "id": "tubitak_bideb-2250-lisansustu-burslari-performans-programi-2026-yili-2-donem-cagrisi-acildi",
+        "title": "BİDEB 2250–Lisansüstü Bursları Performans Programı 2026 Yılı 2. Dönem Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/bideb-2250-lisansustu-burslari-performans-programi-2026-yili-2-donem-cagrisi-acildi",
+        "date": "2026-08-05 00:00:00",
+        "display_date": "05 Ağu 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_2232-uluslararasi-lider-arastirmacilar-programi-ve-2232-b-uluslararasi-genc-arastirmacilar-programi-2025-yili-1-donem-basvuru-sonuclari-aciklandi",
         "title": "2232-A Uluslararası Lider Araştırmacılar Programı ve 2232-B Uluslararası Genç Araştırmacılar Programı 2025 Yılı 1. Dönem Başvuru Sonuçları Açıklandı",
         "link": "https://tubitak.gov.tr/tr/duyuru/2232-uluslararasi-lider-arastirmacilar-programi-ve-2232-b-uluslararasi-genc-arastirmacilar-programi-2025-yili-1-donem-basvuru-sonuclari-aciklandi",
@@ -153,15 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_1709-eureka-eurostars-2026-yili-2-cagrisi-acildi",
-        "title": "1709-EUREKA-EUROSTARS 2026 Yılı 2. Çağrısı Açıldı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/1709-eureka-eurostars-2026-yili-2-cagrisi-acildi",
-        "date": "2026-07-20 00:00:00",
-        "display_date": "20 Tem 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_erasmus-yararlanicilari-icin-anket",
         "title": "Erasmus+ Yararlanıcıları İçin Anket",
         "link": "https://www.ua.gov.tr/haber/erasmus-yararlanicilari-icin-anket/",
@@ -249,6 +249,15 @@
         "date": "2026-02-06 00:00:00",
         "display_date": "06.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_1709-eureka-eurostars-2026-yili-2-cagrisi-acildi",
+        "title": "1709-EUREKA-EUROSTARS 2026 Yılı 2. Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/1709-eureka-eurostars-2026-yili-2-cagrisi-acildi",
+        "date": "2026-07-20 00:00:00",
+        "display_date": "20 Tem 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
