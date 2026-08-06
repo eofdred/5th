@@ -1,5 +1,23 @@
 [
     {
+        "id": "tubitak_bigg-tohum-yatirim-2026-yili-1-cagrisi-aciliyor",
+        "title": "BiGG+ Tohum Yatırım 2026 Yılı 1. Çağrısı Açılıyor",
+        "link": "https://tubitak.gov.tr/tr/duyuru/bigg-tohum-yatirim-2026-yili-1-cagrisi-aciliyor",
+        "date": "2026-08-06 00:00:00",
+        "display_date": "06 Ağu 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_1707-siparis-ar-ge-2026-yili-1-donem-cagri-sonuclari-aciklandi",
+        "title": "1707–Sipariş Ar-Ge 2026 Yılı 1. Dönem Çağrı Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/1707-siparis-ar-ge-2026-yili-1-donem-cagri-sonuclari-aciklandi",
+        "date": "2026-08-06 00:00:00",
+        "display_date": "06 Ağu 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_bideb-2250-lisansustu-burslari-performans-programi-2026-yili-2-donem-cagrisi-acildi",
         "title": "BİDEB 2250–Lisansüstü Bursları Performans Programı 2026 Yılı 2. Dönem Çağrısı Açıldı",
         "link": "https://tubitak.gov.tr/tr/duyuru/bideb-2250-lisansustu-burslari-performans-programi-2026-yili-2-donem-cagrisi-acildi",
@@ -144,24 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_2237-bilimsel-egitim-etkinliklerini-destekleme-programlari-2026-yili-2-donem-cagrilari-acildi",
-        "title": "2237-Bilimsel Eğitim Etkinliklerini Destekleme Programı 2026 Yılı 2. Dönem Çağrıları Açıldı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/2237-bilimsel-egitim-etkinliklerini-destekleme-programlari-2026-yili-2-donem-cagrilari-acildi",
-        "date": "2026-07-23 00:00:00",
-        "display_date": "23 Tem 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
-        "id": "tubitak_1005-ulusal-yeni-fikirler-ve-urunler-arastirma-destek-programina-iliskin-bilgilendirme",
-        "title": "1005–Ulusal Yeni Fikirler ve Ürünler Araştırma Destek Programı’na İlişkin Bilgilendirme",
-        "link": "https://tubitak.gov.tr/tr/duyuru/1005-ulusal-yeni-fikirler-ve-urunler-arastirma-destek-programina-iliskin-bilgilendirme",
-        "date": "2026-07-21 00:00:00",
-        "display_date": "21 Tem 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_erasmus-yararlanicilari-icin-anket",
         "title": "Erasmus+ Yararlanıcıları İçin Anket",
         "link": "https://www.ua.gov.tr/haber/erasmus-yararlanicilari-icin-anket/",
@@ -249,6 +249,24 @@
         "date": "2026-02-06 00:00:00",
         "display_date": "06.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_2237-bilimsel-egitim-etkinliklerini-destekleme-programlari-2026-yili-2-donem-cagrilari-acildi",
+        "title": "2237-Bilimsel Eğitim Etkinliklerini Destekleme Programı 2026 Yılı 2. Dönem Çağrıları Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/2237-bilimsel-egitim-etkinliklerini-destekleme-programlari-2026-yili-2-donem-cagrilari-acildi",
+        "date": "2026-07-23 00:00:00",
+        "display_date": "23 Tem 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_1005-ulusal-yeni-fikirler-ve-urunler-arastirma-destek-programina-iliskin-bilgilendirme",
+        "title": "1005–Ulusal Yeni Fikirler ve Ürünler Araştırma Destek Programı’na İlişkin Bilgilendirme",
+        "link": "https://tubitak.gov.tr/tr/duyuru/1005-ulusal-yeni-fikirler-ve-urunler-arastirma-destek-programina-iliskin-bilgilendirme",
+        "date": "2026-07-21 00:00:00",
+        "display_date": "21 Tem 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {

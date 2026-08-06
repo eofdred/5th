@@ -171,3 +171,5 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-08-03 19:47:35.954473] NEW (TUBITAK): 1507–TÜBİTAK KOBİ Ar-Ge Başlangıç Destek Programı 2026 Yılı 1. Çağrısının Değerlendirme Sonuçları Açıklandı
 [2026-08-04 08:49:48.821573] NEW (TUBITAK): 2232-A Uluslararası Lider Araştırmacılar Programı ve 2232-B Uluslararası Genç Araştırmacılar Programı 2025 Yılı 1. Dönem Başvuru Sonuçları Açıklandı
 [2026-08-05 19:46:01.561761] NEW (TUBITAK): BİDEB 2250–Lisansüstü Bursları Performans Programı 2026 Yılı 2. Dönem Çağrısı Açıldı
+[2026-08-06 14:28:43.693373] NEW (TUBITAK): BiGG+ Tohum Yatırım 2026 Yılı 1. Çağrısı Açılıyor
+[2026-08-06 14:28:43.693439] NEW (TUBITAK): 1707–Sipariş Ar-Ge 2026 Yılı 1. Dönem Çağrı Sonuçları Açıklandı
