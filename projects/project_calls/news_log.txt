@@ -173,3 +173,9 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-08-05 19:46:01.561761] NEW (TUBITAK): BİDEB 2250–Lisansüstü Bursları Performans Programı 2026 Yılı 2. Dönem Çağrısı Açıldı
 [2026-08-06 14:28:43.693373] NEW (TUBITAK): BiGG+ Tohum Yatırım 2026 Yılı 1. Çağrısı Açılıyor
 [2026-08-06 14:28:43.693439] NEW (TUBITAK): 1707–Sipariş Ar-Ge 2026 Yılı 1. Dönem Çağrı Sonuçları Açıklandı
+[2026-08-08 02:07:02.143401] NEW (TUBITAK): Blokzincir Yarışması Proje Sunum Sonuçları Açıklandı
+[2026-08-08 02:07:02.143470] NEW (TUBITAK): Biyoteknoloji İnovasyon Yarışması Proje Detay Raporu Sonuçları Açıklandı
+[2026-08-08 02:07:02.143497] NEW (TUBITAK): Çip Tasarım Yarışması Detay Tasarım Raporu Sonuçları Açıklandı
+[2026-08-08 02:07:02.143520] NEW (TUBITAK): İnsanlık Yararına Teknolojiler Yarışması – İlkokul Seviyesi Proje Sunum Sonuçları Açıklandı
+[2026-08-08 02:07:02.143542] NEW (TUBITAK): 2242–Üniversite Öğrencileri Araştırma Proje Yarışmaları Final Değerlendirme Sonuçları Açıklandı
+[2026-08-08 02:07:02.143562] NEW (TUBITAK): Hyperloop Geliştirme Yarışması Performans, Teknoloji Gösterim ve Tanımlı Problem Çözümü Kategorilerinde Finalist Takımlar Belli Oldu
