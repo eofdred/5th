@@ -149,3 +149,34 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-07-05 13:57:56.643273] NEW (TUBITAK): GCIP Türkiye 2026 Hızlandırıcısı ve Kapsayıcı Yeşil Geçiş 2026 Hızlandırıcısı Çağrıları Açıldı
 [2026-07-07 20:06:40.047769] NEW (TUBITAK): 77. Uluslararası Uzay Kongresi’ne (IAC 2026) Katılım Desteği Başvuruları Başladı
 [2026-07-13 19:39:47.663938] NEW (TUBITAK): 2216C – TÜBA-TÜBİTAK Özbekistan Aziz Sancar Araştırma Burs Programı Başvuruya Açıldı
+[2026-07-20 14:24:49.969996] NEW (TUBITAK): 1501-Sanayi Ar-Ge Destek Programı ve 1507-KOBİ Ar-Ge Başlangıç Destek Programı 2026 yılı 2. Çağrıları Açıldı
+[2026-07-20 14:24:49.970066] NEW (TUBITAK): 2219-Yurt Dışı Doktora Sonrası Araştırma Burs Programı 2026 Yılı Çağrısı Açıldı
+[2026-07-20 14:24:49.970093] NEW (TUBITAK): 2214-A Yurt Dışı Doktora Sırası Araştırma Burs Programı 2026 Yılı Çağrısı Başvuruya Açıldı
+[2026-07-20 19:51:13.632535] NEW (TUBITAK): 1709-EUREKA-EUROSTARS 2026 Yılı 2. Çağrısı Açıldı
+[2026-07-21 14:10:30.816317] NEW (TUBITAK): 1005–Ulusal Yeni Fikirler ve Ürünler Araştırma Destek Programı’na İlişkin Bilgilendirme
+[2026-07-23 19:37:09.423555] NEW (TUBITAK): ARDEB 1001 Programı Kapsamında “UDAP Ulusal Deprem Araştırmaları Programı Ortak Çağrısı” Açılıyor
+[2026-07-23 19:37:09.423654] NEW (TUBITAK): 2237-Bilimsel Eğitim Etkinliklerini Destekleme Programı 2026 Yılı 2. Dönem Çağrıları Açıldı
+[2026-07-24 14:01:39.850699] NEW (TUBITAK): Havacılıkta Yapay Zekâ Yarışması Ön Tasarım Raporu Sonuçları Açıklandı
+[2026-07-24 14:01:39.850767] NEW (TUBITAK): Hyperloop Geliştirme Yarışması Teknoloji Gösterim Kategorisi Teknoloji Gösterim Raporu Sonuçları Açıklandı
+[2026-07-24 14:01:39.850800] NEW (TUBITAK): 2242-Üniversite Öğrencileri Araştırma Proje Yarışmaları Ön Değerlendirme Sonuçları Açıklandı
+[2026-07-24 19:40:23.996796] NEW (TUBITAK): 2204-C Lise Öğrencileri Kutup Araştırma Projeleri Yarışması Final Değerlendirme Sonuçları Açıklandı
+[2026-07-24 19:40:23.996874] NEW (TUBITAK): 2204-D Lise Öğrencileri İklim Değişikliği Araştırma Projeleri Yarışması Final Değerlendirme Sonuçları Açıklandı
+[2026-07-27 14:53:05.560332] NEW (TUBITAK): Eureka-Celtic-Next 2026 Sonbahar Çağrısı Açıldı
+[2026-07-27 14:53:05.560427] NEW (TUBITAK): Robotaksi-Binek Otonom Araç Yarışması Hazır Araç Kategorisi Simülasyon Raporu ve Sunum Sonuçları Açıklandı
+[2026-07-29 14:25:28.353810] NEW (TUBITAK): ARDEB 1001 Programı 2026 Yılı 1. Dönem Değerlendirme Sonuçları Açıklandı
+[2026-07-30 14:22:57.186165] NEW (TUBITAK): Robotaksi-Binek Otonom Araç Yarışması Özgün Araç Kategorisi Test Videosu, Simülasyon Raporu ve Sunum Sonuçları Açıklandı
+[2026-07-30 14:22:57.186251] NEW (TUBITAK): Havacılıkta Yapay Zeka Yarışması Çevrim İçi Simülasyon Sonuçları Açıklandı
+[2026-07-31 19:44:38.346318] NEW (TUBITAK): ARDEB 1001 Programı’nın 2026 Yılı 2. Dönem Başvuruları Başladı
+[2026-08-01 13:44:13.284767] NEW (TUBITAK): EUREKA – EUROGIA2030 Kümesi’nin 31. Çağrısı Başvuruya Açıldı!
+[2026-08-03 19:47:35.954473] NEW (TUBITAK): 1507–TÜBİTAK KOBİ Ar-Ge Başlangıç Destek Programı 2026 Yılı 1. Çağrısının Değerlendirme Sonuçları Açıklandı
+[2026-08-04 08:49:48.821573] NEW (TUBITAK): 2232-A Uluslararası Lider Araştırmacılar Programı ve 2232-B Uluslararası Genç Araştırmacılar Programı 2025 Yılı 1. Dönem Başvuru Sonuçları Açıklandı
+[2026-08-05 19:46:01.561761] NEW (TUBITAK): BİDEB 2250–Lisansüstü Bursları Performans Programı 2026 Yılı 2. Dönem Çağrısı Açıldı
+[2026-08-06 14:28:43.693373] NEW (TUBITAK): BiGG+ Tohum Yatırım 2026 Yılı 1. Çağrısı Açılıyor
+[2026-08-06 14:28:43.693439] NEW (TUBITAK): 1707–Sipariş Ar-Ge 2026 Yılı 1. Dönem Çağrı Sonuçları Açıklandı
+[2026-08-08 02:07:02.143401] NEW (TUBITAK): Blokzincir Yarışması Proje Sunum Sonuçları Açıklandı
+[2026-08-08 02:07:02.143470] NEW (TUBITAK): Biyoteknoloji İnovasyon Yarışması Proje Detay Raporu Sonuçları Açıklandı
+[2026-08-08 02:07:02.143497] NEW (TUBITAK): Çip Tasarım Yarışması Detay Tasarım Raporu Sonuçları Açıklandı
+[2026-08-08 02:07:02.143520] NEW (TUBITAK): İnsanlık Yararına Teknolojiler Yarışması – İlkokul Seviyesi Proje Sunum Sonuçları Açıklandı
+[2026-08-08 02:07:02.143542] NEW (TUBITAK): 2242–Üniversite Öğrencileri Araştırma Proje Yarışmaları Final Değerlendirme Sonuçları Açıklandı
+[2026-08-08 02:07:02.143562] NEW (TUBITAK): Hyperloop Geliştirme Yarışması Performans, Teknoloji Gösterim ve Tanımlı Problem Çözümü Kategorilerinde Finalist Takımlar Belli Oldu
+[2026-08-12 13:26:02.988351] NEW (UA): #️ErasmusDays 2026 Yaklaşıyor: 12-17 Ekim 2026
