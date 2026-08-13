@@ -33,6 +33,7 @@ let activeWord = null;
 let popping = false;
 let nextId = INITIAL_BUBBLES + 1;
 let nextBorn = INITIAL_BUBBLES + 1;
+const visitedSentenceKeys = new Set();
 const motionStates = new Map();
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const isAppleMobile = /iphone|ipad|ipod/i.test(navigator.userAgent)
@@ -134,12 +135,111 @@ function wordsFrom(sentence) {
   );
 }
 
+
+function sentenceEnglish(sentence) {
+  return typeof sentence === "string" ? sentence : sentence.en;
+}
+
+function createTranslationReveal(sentence, id, { blockquote = false } = {}) {
+  const reveal = document.createElement("div");
+  reveal.className = "sentence-reveal";
+
+  const english = document.createElement(blockquote ? "blockquote" : "p");
+  english.className = "sentence-english";
+  english.textContent = sentenceEnglish(sentence);
+
+  const translation = document.createElement("p");
+  translation.className = "sentence-translation";
+  translation.id = `${id}-translation`;
+  translation.textContent = sentence.tr || "Bu cümlenin Türkçe çevirisi henüz eklenmedi.";
+  translation.hidden = true;
+
+  const button = document.createElement("button");
+  button.className = "translation-toggle";
+  button.type = "button";
+  button.textContent = sentence.tr ? "Türkçesini göster" : "Çeviri bekleniyor";
+  button.disabled = !sentence.tr;
+  button.setAttribute("aria-controls", translation.id);
+  button.setAttribute("aria-expanded", "false");
+  button.addEventListener("click", () => {
+    const isOpening = translation.hidden;
+    translation.hidden = !isOpening;
+    button.textContent = isOpening ? "Türkçesini gizle" : "Türkçesini göster";
+    button.setAttribute("aria-expanded", String(isOpening));
+  });
+
+  reveal.append(english, button, translation);
+  return reveal;
+}
+
 function shuffled(items) {
   return [...items].sort(() => Math.random() - 0.5);
 }
 
 function randomItem(items) {
   return items[Math.floor(Math.random() * items.length)];
+}
+
+function sentenceTextKey(record) {
+  return sentenceEnglish(record.sentence)
+    .trim()
+    .replace(/\s+/g, " ")
+    .toLowerCase();
+}
+
+function eligibleRecordsForWord(word, excludedSentenceKeys = new Set()) {
+  return (sentenceIndex.get(word.toLowerCase()) || [])
+    .filter((record) => !excludedSentenceKeys.has(sentenceTextKey(record)));
+}
+
+function createInitialBubbles() {
+  const reservedTargetKeys = new Set();
+  const usedWords = new Set();
+  const result = [];
+
+  for (const word of shuffled(initialWordPool)) {
+    const wordKey = word.toLowerCase();
+    if (usedWords.has(wordKey)) continue;
+    const targetRecord = randomItem(
+      shuffled(eligibleRecordsForWord(word))
+        .filter((record) => !reservedTargetKeys.has(sentenceTextKey(record))),
+    );
+    if (!targetRecord) continue;
+    usedWords.add(wordKey);
+    reservedTargetKeys.add(sentenceTextKey(targetRecord));
+    result.push({
+      id: result.length + 1,
+      word,
+      targetRecord,
+      born: result.length + 1,
+      color: Math.floor(Math.random() * 6),
+    });
+    if (result.length === INITIAL_BUBBLES) break;
+  }
+  return result;
+}
+
+function createBubblesForWords(words, excludedKeys, reservedTargetKeys, reservedWords) {
+  const additions = [];
+  for (const word of words) {
+    const wordKey = word.toLowerCase();
+    if (reservedWords.has(wordKey)) continue;
+    const targetRecord = randomItem(
+      shuffled(eligibleRecordsForWord(word, excludedKeys))
+        .filter((record) => !reservedTargetKeys.has(sentenceTextKey(record))),
+    );
+    if (!targetRecord) continue;
+    reservedWords.add(wordKey);
+    reservedTargetKeys.add(sentenceTextKey(targetRecord));
+    additions.push({
+      id: nextId++,
+      word,
+      targetRecord,
+      born: nextBorn++,
+      color: Math.floor(Math.random() * 6),
+    });
+  }
+  return additions;
 }
 
 function displayWord(word) {
@@ -159,7 +259,7 @@ function bubbleMetrics(bubble) {
 
 function relatedArticlesFor(word, record) {
   const key = word.toLowerCase();
-  const contextWords = new Set(wordsFrom(record.sentence).map((item) => item.toLowerCase()));
+  const contextWords = new Set(wordsFrom(sentenceEnglish(record.sentence)).map((item) => item.toLowerCase()));
   const directMap = new Map();
 
   for (const item of sentenceIndex.get(key) || []) {
@@ -173,7 +273,7 @@ function relatedArticlesFor(word, record) {
     )
     .map((article) => {
       const articleWords = new Set(
-        wordsFrom(`${article.title} ${article.sentences.join(" ")}`).map((item) => item.toLowerCase()),
+        wordsFrom(`${article.title} ${article.sentences.map(sentenceEnglish).join(" ")}`).map((item) => item.toLowerCase()),
       );
       let score = 0;
       for (const contextWord of contextWords) {
@@ -182,7 +282,7 @@ function relatedArticlesFor(word, record) {
       if (article.title.toLowerCase().includes(key)) score += 24;
       if (
         article.sentences.some((sentence) =>
-          wordsFrom(sentence).some((item) => item.toLowerCase() === key),
+          wordsFrom(sentenceEnglish(sentence)).some((item) => item.toLowerCase() === key),
         )
       ) {
         score += 14;
@@ -294,8 +394,11 @@ function renderSentence() {
   strong.textContent = displayWord(activeWord);
   label.append(strong);
 
-  const quote = document.createElement("blockquote");
-  quote.textContent = discovery.sentence;
+  const sentenceReveal = createTranslationReveal(
+    discovery.sentence,
+    `discovery-${discovery.article.slug}`,
+    { blockquote: true },
+  );
   const origin = document.createElement("button");
   origin.className = "article-origin";
   origin.type = "button";
@@ -308,7 +411,7 @@ function renderSentence() {
   const hint = document.createElement("p");
   hint.className = "next-hint";
   hint.textContent = "Fresh words from this sentence just floated into your sky.";
-  sentenceStage.append(label, quote, origin, hint);
+  sentenceStage.append(label, sentenceReveal, origin, hint);
 }
 
 function renderArticles() {
@@ -340,7 +443,7 @@ function renderArticles() {
     title.textContent = article.title;
     const preview = document.createElement("span");
     preview.className = "article-preview";
-    preview.textContent = article.sentences[0];
+    preview.textContent = sentenceEnglish(article.sentences[0]);
     const open = document.createElement("span");
     open.className = "open-label";
     open.textContent = "Open article ↗";
@@ -355,17 +458,39 @@ function popBubble(bubble, element) {
   element.classList.add("is-popping");
 
   window.setTimeout(() => {
-    const choices = sentenceIndex.get(bubble.word.toLowerCase()) || [];
-    const record = choices.length ? randomItem(choices) : randomItem(sentenceRecords);
-    const newWords = shuffled(wordsFrom(record.sentence))
+    const excludedKeys = new Set(visitedSentenceKeys);
+    const record = bubble.targetRecord
+      && !excludedKeys.has(sentenceTextKey(bubble.targetRecord))
+      ? bubble.targetRecord
+      : randomItem(eligibleRecordsForWord(bubble.word, excludedKeys));
+    if (!record) {
+      popping = false;
+      return;
+    }
+
+    excludedKeys.add(sentenceTextKey(record));
+    visitedSentenceKeys.add(sentenceTextKey(record));
+    const reservedTargetKeys = new Set(
+      bubbles
+        .filter((item) => item.id !== bubble.id)
+        .map((item) => item.targetRecord)
+        .filter(Boolean)
+        .map(sentenceTextKey),
+    );
+    const reservedWords = new Set(
+      bubbles
+        .filter((item) => item.id !== bubble.id)
+        .map((item) => item.word.toLowerCase()),
+    );
+    const newWords = shuffled(wordsFrom(sentenceEnglish(record.sentence)))
       .filter((word) => word.toLowerCase() !== bubble.word.toLowerCase())
-      .slice(0, 7);
-    const additions = newWords.map((word) => ({
-      id: nextId++,
-      word,
-      born: nextBorn++,
-      color: Math.floor(Math.random() * 6),
-    }));
+      .slice(0, 12);
+    const additions = createBubblesForWords(
+      newWords,
+      excludedKeys,
+      reservedTargetKeys,
+      reservedWords,
+    ).slice(0, 7);
 
     discovery = record;
     activeWord = bubble.word;
@@ -386,11 +511,11 @@ function popBubble(bubble, element) {
 function openArticle(article) {
   modalTitle.textContent = article.title;
   modalCopy.replaceChildren();
-  for (const sentence of article.sentences) {
-    const paragraph = document.createElement("p");
-    paragraph.textContent = sentence;
-    modalCopy.append(paragraph);
-  }
+  article.sentences.forEach((sentence, index) => {
+    modalCopy.append(
+      createTranslationReveal(sentence, `article-${article.slug}-${index}`),
+    );
+  });
   wikipediaLink.href = `https://simple.wikipedia.org/wiki/${encodeURIComponent(article.slug)}`;
   modalBackdrop.hidden = false;
   document.body.style.overflow = "hidden";
@@ -429,11 +554,15 @@ async function initialize() {
     const data = await response.json();
     articles = data.articles;
     sentenceRecords = articles.flatMap((article) =>
-      article.sentences.map((sentence) => ({ article, sentence })),
+      article.sentences.map((sentence, index) => ({
+        article,
+        sentence,
+        key: `${article.slug}:${index}`,
+      })),
     );
     sentenceIndex = new Map();
     for (const record of sentenceRecords) {
-      for (const word of wordsFrom(record.sentence)) {
+      for (const word of wordsFrom(sentenceEnglish(record.sentence))) {
         const key = word.toLowerCase();
         const group = sentenceIndex.get(key) || [];
         group.push(record);
@@ -444,12 +573,7 @@ async function initialize() {
       .filter(([word, records]) => word.length >= 5 && records.length >= 2 && records.length <= 45)
       .map(([word]) => word);
 
-    bubbles = shuffled(initialWordPool).slice(0, INITIAL_BUBBLES).map((word, index) => ({
-      id: index + 1,
-      word,
-      born: index + 1,
-      color: Math.floor(Math.random() * 6),
-    }));
+    bubbles = createInitialBubbles();
     suggestions = shuffled(articles).slice(0, 3);
     cloud.setAttribute("aria-busy", "false");
     renderBubbles();

@@ -275,6 +275,8 @@ button:focus-visible, a:focus-visible {
 .sentence-label { align-items: center; display: flex; font-size: .8rem; font-weight: 800; gap: 9px; letter-spacing: .03em; text-transform: uppercase; }
 .pop-spark { align-items: center; background: var(--yellow); border: 2px solid var(--ink); border-radius: 50%; display: inline-flex; height: 30px; justify-content: center; width: 30px; }
 .sentence-stage blockquote { font-family: Georgia, serif; font-size: clamp(1.45rem, 3vw, 2.55rem); font-weight: 600; letter-spacing: -.035em; line-height: 1.2; margin: 24px 0 22px; max-width: 1040px; }
+.sentence-stage .sentence-reveal { margin-bottom: 18px; }
+.sentence-stage .sentence-translation { background: rgb(255 255 255 / 72%); color: var(--ink); margin-top: 18px; }
 .article-origin { background: transparent; border: 0; border-bottom: 2px solid currentColor; cursor: pointer; padding: 0 0 3px; }
 .article-origin:hover { color: #694ec6; }
 .next-hint { background: var(--yellow); border: 2px solid var(--ink); border-radius: 999px; display: table; font-size: .74rem; font-weight: 900; margin: 28px 0 0; padding: 7px 12px; }
@@ -314,7 +316,18 @@ footer { align-items: center; background: var(--ink); color: #fff; display: flex
 .article-modal { background: var(--paper); border: var(--border); border-radius: 30px; box-shadow: 12px 14px 0 var(--pink); max-height: min(780px, 88vh); max-width: 760px; overflow: auto; padding: clamp(28px, 5vw, 55px); position: relative; width: 100%; }
 .article-modal h2 { font-size: clamp(2.1rem, 5vw, 4rem); letter-spacing: -.06em; line-height: .95; margin: 0 55px 28px 0; }
 .modal-kicker { color: #694ec6; }
+
 .modal-copy { font-family: Georgia, serif; font-size: 1.08rem; line-height: 1.68; }
+.sentence-reveal { margin: 0 0 28px; }
+.sentence-reveal:last-child { margin-bottom: 0; }
+.sentence-english { margin: 0 0 10px; }
+.sentence-reveal blockquote.sentence-english { margin: 24px 0 12px; max-width: 1040px; }
+.translation-toggle { background: transparent; border: 1.5px solid currentColor; border-radius: 999px; color: #694ec6; cursor: pointer; font-family: "Avenir Next", system-ui, sans-serif; font-size: .75rem; font-weight: 850; padding: 7px 12px; transition: background .18s ease, color .18s ease, transform .18s ease; }
+.translation-toggle:hover:not(:disabled), .translation-toggle:focus-visible:not(:disabled) { background: #694ec6; color: #fff; transform: translateY(-1px); }
+.translation-toggle:disabled { cursor: not-allowed; opacity: .46; }
+.sentence-translation { background: #fff; border-left: 4px solid var(--mint); font-family: "Avenir Next", system-ui, sans-serif; font-size: .96rem; line-height: 1.58; margin: 12px 0 0; padding: 12px 16px; }
+.sentence-translation[hidden] { display: none; }
+
 .modal-close { align-items: center; background: var(--yellow); border: 2px solid var(--ink); border-radius: 50%; cursor: pointer; display: flex; font-size: 1.8rem; height: 44px; justify-content: center; line-height: 1; position: absolute; right: 20px; top: 20px; width: 44px; }
 .wikipedia-link { background: var(--pink); border: 2px solid var(--ink); border-radius: 999px; color: #fff; display: inline-block; font-size: .86rem; font-weight: 900; margin-top: 22px; padding: 12px 18px; text-decoration: none; }
 
