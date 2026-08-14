@@ -1,5 +1,14 @@
 [
     {
+        "id": "tubitak_tubitak-ulusal-gokyuzu-gozlem-etkinliklerini-destekleme-cagrisi-basvurulari-acildi",
+        "title": "TÜBİTAK Ulusal Gökyüzü Gözlem Etkinliklerini Destekleme Çağrısı Başvuruları Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/tubitak-ulusal-gokyuzu-gozlem-etkinliklerini-destekleme-cagrisi-basvurulari-acildi",
+        "date": "2026-08-14 00:00:00",
+        "display_date": "14 Ağu 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_blokzincir-yarismasi-proje-sunum-sonuclari-aciklandi",
         "title": "Blokzincir Yarışması Proje Sunum Sonuçları Açıklandı",
         "link": "https://tubitak.gov.tr/tr/duyuru/blokzincir-yarismasi-proje-sunum-sonuclari-aciklandi",
@@ -153,15 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_robotaksi-binek-otonom-arac-yarismasi-hazir-arac-kategorisi-simulasyon-raporu-ve-sunum-sonuclari-aciklandi",
-        "title": "Robotaksi-Binek Otonom Araç Yarışması Hazır Araç Kategorisi Simülasyon Raporu ve Sunum Sonuçları Açıklandı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/robotaksi-binek-otonom-arac-yarismasi-hazir-arac-kategorisi-simulasyon-raporu-ve-sunum-sonuclari-aciklandi",
-        "date": "2026-07-27 00:00:00",
-        "display_date": "27 Tem 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_erasmusdays-2026-yaklaşıyor-12-17-ekim-2026",
         "title": "#️ErasmusDays 2026 Yaklaşıyor: 12-17 Ekim 2026",
         "link": "https://www.ua.gov.tr/haber/erasmusdays-2026-yaklaşıyor-12-17-ekim-2026/",
@@ -249,6 +249,15 @@
         "date": "2026-02-17 00:00:00",
         "display_date": "17.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_robotaksi-binek-otonom-arac-yarismasi-hazir-arac-kategorisi-simulasyon-raporu-ve-sunum-sonuclari-aciklandi",
+        "title": "Robotaksi-Binek Otonom Araç Yarışması Hazır Araç Kategorisi Simülasyon Raporu ve Sunum Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/robotaksi-binek-otonom-arac-yarismasi-hazir-arac-kategorisi-simulasyon-raporu-ve-sunum-sonuclari-aciklandi",
+        "date": "2026-07-27 00:00:00",
+        "display_date": "27 Tem 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
