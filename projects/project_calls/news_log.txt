@@ -181,3 +181,4 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-08-08 02:07:02.143562] NEW (TUBITAK): Hyperloop Geliştirme Yarışması Performans, Teknoloji Gösterim ve Tanımlı Problem Çözümü Kategorilerinde Finalist Takımlar Belli Oldu
 [2026-08-12 13:26:02.988351] NEW (UA): #️ErasmusDays 2026 Yaklaşıyor: 12-17 Ekim 2026
 [2026-08-14 19:03:29.565763] NEW (TUBITAK): TÜBİTAK Ulusal Gökyüzü Gözlem Etkinliklerini Destekleme Çağrısı Başvuruları Açıldı
+[2026-08-17 18:50:00.574098] NEW (TUBITAK): Kutup Araştırmaları 2027 Yılı Çağrılarının Başvuru Süresi Uzatıldı

@@ -1,5 +1,14 @@
 [
     {
+        "id": "tubitak_kutup-arastirmalari-2027-yili-cagrilarinin-basvuru-suresi-uzatildi",
+        "title": "Kutup Araştırmaları 2027 Yılı Çağrılarının Başvuru Süresi Uzatıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/kutup-arastirmalari-2027-yili-cagrilarinin-basvuru-suresi-uzatildi",
+        "date": "2026-08-17 00:00:00",
+        "display_date": "17 Ağu 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_tubitak-ulusal-gokyuzu-gozlem-etkinliklerini-destekleme-cagrisi-basvurulari-acildi",
         "title": "TÜBİTAK Ulusal Gökyüzü Gözlem Etkinliklerini Destekleme Çağrısı Başvuruları Açıldı",
         "link": "https://tubitak.gov.tr/tr/duyuru/tubitak-ulusal-gokyuzu-gozlem-etkinliklerini-destekleme-cagrisi-basvurulari-acildi",
@@ -153,15 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_eureka-celtic-next-2026-sonbahar-cagrisi-acildi",
-        "title": "Eureka-Celtic-Next 2026 Sonbahar Çağrısı Açıldı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/eureka-celtic-next-2026-sonbahar-cagrisi-acildi",
-        "date": "2026-07-27 00:00:00",
-        "display_date": "27 Tem 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_erasmusdays-2026-yaklaşıyor-12-17-ekim-2026",
         "title": "#️ErasmusDays 2026 Yaklaşıyor: 12-17 Ekim 2026",
         "link": "https://www.ua.gov.tr/haber/erasmusdays-2026-yaklaşıyor-12-17-ekim-2026/",
@@ -249,6 +249,15 @@
         "date": "2026-02-17 00:00:00",
         "display_date": "17.02.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_eureka-celtic-next-2026-sonbahar-cagrisi-acildi",
+        "title": "Eureka-Celtic-Next 2026 Sonbahar Çağrısı Açıldı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/eureka-celtic-next-2026-sonbahar-cagrisi-acildi",
+        "date": "2026-07-27 00:00:00",
+        "display_date": "27 Tem 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
