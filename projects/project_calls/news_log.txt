@@ -182,3 +182,13 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-08-12 13:26:02.988351] NEW (UA): #️ErasmusDays 2026 Yaklaşıyor: 12-17 Ekim 2026
 [2026-08-14 19:03:29.565763] NEW (TUBITAK): TÜBİTAK Ulusal Gökyüzü Gözlem Etkinliklerini Destekleme Çağrısı Başvuruları Açıldı
 [2026-08-17 18:50:00.574098] NEW (TUBITAK): Kutup Araştırmaları 2027 Yılı Çağrılarının Başvuru Süresi Uzatıldı
+[2026-08-18 18:48:45.033323] NEW (UA): 2026/R1 Spor Alanında Personel Hareketliliği Başvuru Sonuçları
+[2026-08-18 18:48:45.033398] NEW (UA): 2026/R1 Erasmus+ Gençlik Alanında Erasmus Akreditasyonuna Sahip Kurum ve Kuruluşlar İçin Gençlik Hareketliliği, Gençlik Değişimleri, Gençlik Çalışanlarının Hareketliliği ve Gençlik Katılımı Başvuru Sonuçları
+[2026-08-18 18:48:45.033430] NEW (UA): 2026/R1 Dönemi Avrupa Dayanışma Programı Dayanışma (ESC30) Projeleri Başvuru Sonuçları
+[2026-08-18 18:48:45.033452] NEW (UA): Avrupa Dayanışma Programı 2026 Yılı Kalite Sertifikasına Sahip Kurum ve Kuruluşlar İçin Gönüllülük Projeleri (ESC51) 1. Dönem (R1) Başvuru Sonuçları
+[2026-08-18 18:48:45.033473] NEW (UA): 2026/R1 Dönemi Erasmus+ DiscoverEU Dahil Etme Faaliyeti (KA155) Başvuru Sonuçları
+[2026-08-18 18:48:45.033494] NEW (UA): 2026 Başvuru Dönemi Yükseköğretimde Hareketlilik Projeleri (KA131) Başvuru Sonuçları
+[2026-08-18 18:48:45.033526] NEW (UA): 2026 Yılı Okul Eğitimi Alanında Erasmus Akreditasyonuna Sahip Kuruluşlar için Öğrenci ve Personel Hareketliliği Hibe Başvurularına (KA121-SCH) İlişkin Sonuçlar
+[2026-08-18 18:48:45.033545] NEW (UA): 2026 Yılı Erasmus+ Okul Eğitiminde Kısa Dönemli Öğrenci ve Personel Hareketliliği Projeleri (KA122-SCH) Başvuru Sonuçları
+[2026-08-18 18:48:45.033565] NEW (UA): 2026 Yılı Mesleki Eğitim Alanında Erasmus Akreditasyonuna Sahip Kuruluşlar için Öğrenici ve Personel Hareketliliği (KA121-VET) Hibe Başvurularına İlişkin Sonuçlar
+[2026-08-18 18:48:45.033584] NEW (UA): 2026 Yılı Yetişkin Eğitimi Alanında Erasmus Akreditasyonuna Sahip Kuruluşlar için Öğrenici ve Personel Hareketliliği (KA121-ADU) Hibe Başvurularına İlişkin Sonuçlar
