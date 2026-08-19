@@ -192,3 +192,4 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-08-18 18:48:45.033545] NEW (UA): 2026 Yılı Erasmus+ Okul Eğitiminde Kısa Dönemli Öğrenci ve Personel Hareketliliği Projeleri (KA122-SCH) Başvuru Sonuçları
 [2026-08-18 18:48:45.033565] NEW (UA): 2026 Yılı Mesleki Eğitim Alanında Erasmus Akreditasyonuna Sahip Kuruluşlar için Öğrenici ve Personel Hareketliliği (KA121-VET) Hibe Başvurularına İlişkin Sonuçlar
 [2026-08-18 18:48:45.033584] NEW (UA): 2026 Yılı Yetişkin Eğitimi Alanında Erasmus Akreditasyonuna Sahip Kuruluşlar için Öğrenici ve Personel Hareketliliği (KA121-ADU) Hibe Başvurularına İlişkin Sonuçlar
+[2026-08-19 13:00:07.077535] NEW (UA): 2026 Başvuru Dönemi Yükseköğretimde Hareketlilik Projeleri (KA171) Başvuru Sonuçları
