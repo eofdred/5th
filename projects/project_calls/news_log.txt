@@ -193,3 +193,7 @@ Link: https://mehmetakif.edu.tr/tr/content/12958/4b-sozlesmeli-personelden-yedek
 [2026-08-18 18:48:45.033565] NEW (UA): 2026 Yılı Mesleki Eğitim Alanında Erasmus Akreditasyonuna Sahip Kuruluşlar için Öğrenici ve Personel Hareketliliği (KA121-VET) Hibe Başvurularına İlişkin Sonuçlar
 [2026-08-18 18:48:45.033584] NEW (UA): 2026 Yılı Yetişkin Eğitimi Alanında Erasmus Akreditasyonuna Sahip Kuruluşlar için Öğrenici ve Personel Hareketliliği (KA121-ADU) Hibe Başvurularına İlişkin Sonuçlar
 [2026-08-19 13:00:07.077535] NEW (UA): 2026 Başvuru Dönemi Yükseköğretimde Hareketlilik Projeleri (KA171) Başvuru Sonuçları
+[2026-08-22 12:52:55.529591] NEW (TUBITAK): Uluslararası Elektrikli Araç Yarışları Teknik Onay Videosu Sonuçları Açıklandı
+[2026-08-22 12:52:55.529655] NEW (TUBITAK): Uluslararası İnsansız Hava Araçları Yarışması ve Liseler Arası İnsansız Hava Araçları Yarışması Hazırlık ve Görev Videosu Sonuçları Açıklandı
+[2026-08-22 12:52:55.529667] NEW (TUBITAK): Dikey İnişli Roket Yarışması Atışa Hazırlık Raporu Sonuçları Açıklandı
+[2026-08-22 12:52:55.529677] NEW (TUBITAK): Kuantum Teknolojileri Yarışması Donanım Kategorisi Eğitim ve İkinci Eleme Aşaması Sonuçları Açıklandı

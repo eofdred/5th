@@ -1,5 +1,41 @@
 [
     {
+        "id": "tubitak_uluslararasi-elektrikli-arac-yarislari-teknik-onay-videosu-sonuclari-aciklandi",
+        "title": "Uluslararası Elektrikli Araç Yarışları Teknik Onay Videosu Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/uluslararasi-elektrikli-arac-yarislari-teknik-onay-videosu-sonuclari-aciklandi",
+        "date": "2026-08-22 00:00:00",
+        "display_date": "22 Ağu 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_uluslararasi-insansiz-hava-araclari-yarismasi-ve-liseler-arasi-insansiz-hava-araclari-yarismasi-hazirlik-ve-gorev-videosu-sonuclari-aciklandi",
+        "title": "Uluslararası İnsansız Hava Araçları Yarışması ve Liseler Arası İnsansız Hava Araçları Yarışması Hazırlık ve Görev Videosu Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/uluslararasi-insansiz-hava-araclari-yarismasi-ve-liseler-arasi-insansiz-hava-araclari-yarismasi-hazirlik-ve-gorev-videosu-sonuclari-aciklandi",
+        "date": "2026-08-22 00:00:00",
+        "display_date": "22 Ağu 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_dikey-inisli-roket-yarismasi-atisa-hazirlik-raporu-sonuclari-aciklandi-0",
+        "title": "Dikey İnişli Roket Yarışması Atışa Hazırlık Raporu Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/dikey-inisli-roket-yarismasi-atisa-hazirlik-raporu-sonuclari-aciklandi-0",
+        "date": "2026-08-22 00:00:00",
+        "display_date": "22 Ağu 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_kuantum-teknolojileri-yarismasi-donanim-kategorisi-egitim-ve-ikinci-eleme-asamasi-sonuclari-aciklandi",
+        "title": "Kuantum Teknolojileri Yarışması Donanım Kategorisi Eğitim ve İkinci Eleme Aşaması Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/kuantum-teknolojileri-yarismasi-donanim-kategorisi-egitim-ve-ikinci-eleme-asamasi-sonuclari-aciklandi",
+        "date": "2026-08-22 00:00:00",
+        "display_date": "22 Ağu 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
         "id": "tubitak_kutup-arastirmalari-2027-yili-cagrilarinin-basvuru-suresi-uzatildi",
         "title": "Kutup Araştırmaları 2027 Yılı Çağrılarının Başvuru Süresi Uzatıldı",
         "link": "https://tubitak.gov.tr/tr/duyuru/kutup-arastirmalari-2027-yili-cagrilarinin-basvuru-suresi-uzatildi",
@@ -126,42 +162,6 @@
         "read": false
     },
     {
-        "id": "tubitak_ardeb-1001-programinin-2026-yili-2-donem-basvurulari-basladi",
-        "title": "ARDEB 1001 Programı’nın 2026 Yılı 2. Dönem Başvuruları Başladı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/ardeb-1001-programinin-2026-yili-2-donem-basvurulari-basladi",
-        "date": "2026-07-31 00:00:00",
-        "display_date": "31 Tem 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
-        "id": "tubitak_robotaksi-binek-otonom-arac-yarismasi-ozgun-arac-kategorisi-test-videosu-simulasyon-raporu-ve-sunum-sonuclari-aciklandi",
-        "title": "Robotaksi-Binek Otonom Araç Yarışması Özgün Araç Kategorisi Test Videosu, Simülasyon Raporu ve Sunum Sonuçları Açıklandı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/robotaksi-binek-otonom-arac-yarismasi-ozgun-arac-kategorisi-test-videosu-simulasyon-raporu-ve-sunum-sonuclari-aciklandi",
-        "date": "2026-07-30 00:00:00",
-        "display_date": "30 Tem 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
-        "id": "tubitak_havacilikta-yapay-zeka-yarismasi-cevrim-ici-simulasyon-sonuclari-aciklandi",
-        "title": "Havacılıkta Yapay Zeka Yarışması Çevrim İçi Simülasyon Sonuçları Açıklandı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/havacilikta-yapay-zeka-yarismasi-cevrim-ici-simulasyon-sonuclari-aciklandi",
-        "date": "2026-07-30 00:00:00",
-        "display_date": "30 Tem 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
-        "id": "tubitak_ardeb-1001-programi-2026-yili-1-donem-degerlendirme-sonuclari-aciklandi",
-        "title": "ARDEB 1001 Programı 2026 Yılı 1. Dönem Değerlendirme Sonuçları Açıklandı",
-        "link": "https://tubitak.gov.tr/tr/duyuru/ardeb-1001-programi-2026-yili-1-donem-degerlendirme-sonuclari-aciklandi",
-        "date": "2026-07-29 00:00:00",
-        "display_date": "29 Tem 2026",
-        "source": "TUBITAK",
-        "read": false
-    },
-    {
         "id": "ua_2026-basvuru-donemi-yuksekogretimde-hareketlilik-projeleri-ka171-basvuru-sonuclari",
         "title": "2026 Başvuru Dönemi Yükseköğretimde Hareketlilik Projeleri (KA171) Başvuru Sonuçları",
         "link": "https://www.ua.gov.tr/haber/2026-basvuru-donemi-yuksekogretimde-hareketlilik-projeleri-ka171-basvuru-sonuclari/",
@@ -249,6 +249,42 @@
         "date": "2026-08-18 00:00:00",
         "display_date": "18.08.2026",
         "source": "UA",
+        "read": false
+    },
+    {
+        "id": "tubitak_ardeb-1001-programinin-2026-yili-2-donem-basvurulari-basladi",
+        "title": "ARDEB 1001 Programı’nın 2026 Yılı 2. Dönem Başvuruları Başladı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/ardeb-1001-programinin-2026-yili-2-donem-basvurulari-basladi",
+        "date": "2026-07-31 00:00:00",
+        "display_date": "31 Tem 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_robotaksi-binek-otonom-arac-yarismasi-ozgun-arac-kategorisi-test-videosu-simulasyon-raporu-ve-sunum-sonuclari-aciklandi",
+        "title": "Robotaksi-Binek Otonom Araç Yarışması Özgün Araç Kategorisi Test Videosu, Simülasyon Raporu ve Sunum Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/robotaksi-binek-otonom-arac-yarismasi-ozgun-arac-kategorisi-test-videosu-simulasyon-raporu-ve-sunum-sonuclari-aciklandi",
+        "date": "2026-07-30 00:00:00",
+        "display_date": "30 Tem 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_havacilikta-yapay-zeka-yarismasi-cevrim-ici-simulasyon-sonuclari-aciklandi",
+        "title": "Havacılıkta Yapay Zeka Yarışması Çevrim İçi Simülasyon Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/havacilikta-yapay-zeka-yarismasi-cevrim-ici-simulasyon-sonuclari-aciklandi",
+        "date": "2026-07-30 00:00:00",
+        "display_date": "30 Tem 2026",
+        "source": "TUBITAK",
+        "read": false
+    },
+    {
+        "id": "tubitak_ardeb-1001-programi-2026-yili-1-donem-degerlendirme-sonuclari-aciklandi",
+        "title": "ARDEB 1001 Programı 2026 Yılı 1. Dönem Değerlendirme Sonuçları Açıklandı",
+        "link": "https://tubitak.gov.tr/tr/duyuru/ardeb-1001-programi-2026-yili-1-donem-degerlendirme-sonuclari-aciklandi",
+        "date": "2026-07-29 00:00:00",
+        "display_date": "29 Tem 2026",
+        "source": "TUBITAK",
         "read": false
     },
     {
